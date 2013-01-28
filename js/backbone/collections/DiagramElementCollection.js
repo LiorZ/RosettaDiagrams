@@ -16,6 +16,7 @@ var app = app || {};
 //		invokeChangeEvent: function(model,attributes) { 
 //			console.log("The collection recorded a model change" + model);
 //		}
+		
 	});
 	
 	app.Elements = new DiagramElementList();

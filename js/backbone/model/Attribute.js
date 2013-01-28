@@ -14,7 +14,14 @@ var app = app || {};
 	
 	
 	app.AttributeList = Backbone.Collection.extend({
-		model: app.Attribute
+		model: app.Attribute,
+		
+		byKey: function(key) {
+		    var filtered = this.filter(function(attr) {
+		      return attr.get("key") == key;
+		    });
+		    return filtered[0];
+		}
 	});
 }
 ());

@@ -6,25 +6,28 @@
         <meta http-equiv='expires' content='0'>
         <meta http-equiv='pragma' content='no-cache'>
 		
-        <script src="js/lib/json2.js" type="text/javascript"></script>
-        <script src="js/lib/raphael.js" type="text/javascript"></script>
-		<script src="js/lib/joint.js" type="text/javascript"></script>
-        <script src="js/lib/joint.arrows.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.serializer.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.fsa.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.uml.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.pn.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.devs.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.cdm.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.erd.js" type="text/javascript"></script>
-        <script src="js/lib/joint.dia.org.js" type="text/javascript"></script>
+        <script src="js/lib/joint/json2.js" type="text/javascript"></script>
+        <script src="js/lib/joint/raphael.js" type="text/javascript"></script>
+		<script src="js/lib/joint/joint.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.arrows.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.serializer.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.fsa.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.uml.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.pn.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.devs.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.cdm.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.erd.js" type="text/javascript"></script>
+        <script src="js/lib/joint/joint.dia.org.js" type="text/javascript"></script>
         <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
         <script src="http://underscorejs.org/underscore-min.js" type="text/javascript"></script>
         <script type="text/javascript" src="js/lib/prettify/prettify.js"></script>
         
-        <script src="js/lib/backbone.js" type="text/javascript"></script>
-        <script src="js/lib/vkbeautify.0.99.00.beta.js" type="text/javascript"></script>
+        <script src="js/lib/backbone/backbone.js" type="text/javascript"></script>
+        <script src="js/lib/vkbeautify/vkbeautify.0.99.00.beta.js" type="text/javascript"></script>
+        
+        <script src="js/lib/jquery-ui/jquery-ui-1.10.0.custom.js" type="text/javascript"></script>
+        
         
         <script src="js/backbone/view/appView.js" type="text/javascript"></script>
         <script src="js/backbone/view/AttributeView.js" type="text/javascript"></script>
@@ -36,6 +39,7 @@
         <script src="js/backbone/view/CodeView.js" type="text/javascript"></script>
         <script src="js/backbone/view/XMLMoversView.js" type="text/javascript"></script>
         <script src="js/backbone/view/XMLProtocolView.js" type="text/javascript"></script>
+        <script src="js/backbone/view/MenuView.js" type="text/javascript"></script>
         
         
         <script src="js/backbone/model/Attribute.js" type="text/javascript"></script>
@@ -52,7 +56,17 @@
 &lt;<%=name%><% attributes.each(function(attr) { %> <%= attr.get('key') %>='<%= attr.get('value') %>'<% }); %>/&gt;
 		</script>
 		<script type="text/template" id="protocols_template">
-&lt;Add <%=name%>/&gt;
+&lt;Add <%=typeObj.add_protocol%>='<%= attributes.byKey("name").get('value') %>'/&gt;
+		</script>
+		<script type="text/template" id="information_message_template">
+				<div class="ui-state-highlight ui-corner-all"
+					style="margin-top: 20px; padding: 0 .7em;">
+					<p>
+						<span class="ui-icon ui-icon-info"
+							style="float: left; margin-right: .3em;"></span> <strong><%=title%></strong>
+						<%=message%>
+					</p>
+				</div>
 		</script>
         <title>Rosetta Diagrams</title>
         <style type="text/css">
@@ -61,12 +75,11 @@
           }
           #world {
             background-color: white;
-            margin: 0 auto 0 auto;
-            width: 1000;
-            height: 800px;
+            width: 1000px;
+            height: 600px;
             border: 3px solid gray;
             border-radius: 30px;
-            position:relative;
+            float:right;
           }
           
           .rounded_border { 
@@ -96,19 +109,14 @@
             font-size: 12px;
           }
           #menu {
-			margin: 0 auto 0 auto;
           	background-color: white;
           	border: 3px solid gray;
-          	width: 760px;
+          	height: 560px;
           	padding: 20px;
-          	margin-bottom:20px;
+          	margin-right:20px;
           	border-radius: 30px;
+          	float:left;
           }
-          #connectionButton {
-          	position: absolute;
-          	display:none;
-          }
-          
           .menuItem { 
           	position: absolute;
           	width:26px;
@@ -123,7 +131,6 @@
           #mover_div { 
           	text-align: center
           }
-          .DiagramElement { } 
           #container { 
           	width: 100%;
           	height: 100%;
@@ -134,145 +141,44 @@
           }
           
           #display_code { 
-          	margin-top: 5%;
-          	float:left;
-          	margin-left: 1%;
-          	position:relative;
-          	height:800px;
-          	width: 800px;
+          	margin-top: 80px;
+          	float:right;
+          	height:587px;
+          	width: 710px;
           }
           
           #code { 
           	display:none;
           }
+          #toolbar { 
+          	display:none;
+          	position: absolute;
+          	padding: 2px;
+          	font-size: 12px;
+          }
+          #information_panel {
+          	width:100%;
+          	display:none;
+          }
         </style>
    		<link href="js/lib/prettify/prettify.css" type="text/css" rel="stylesheet" />
-        <script type="text/javascript">
- /*      
- 
- 		
-		var joints = [];
-		var all = [];
-		var isGoingToConnect = false;
-		var timer; //timer that clears the toolbox
-		var sourceNode;
-		var canvas = undefined;
-		
-		function gup(name){
-			name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-			var regexS = "[\\?&]" + name + "=([^&#]*)";
-			var regex = new RegExp(regexS);
-			var results = regex.exec(window.location.href);
-			if (results == null)
-				return "";
-			else
-				return results[1];
-		}
-		
-		function init(){
-			var srcs = gup("unit").split(',');
-			for (var i = 0, l = srcs.length; i < l; i++){
-				var sel = document.createElement("script");
-				sel.type = "text/javascript";
-				sel.src = srcs[i] + ".js?" + new Date;
-				document.getElementById("source").href = srcs[i] + ".js";
-				document.getElementsByTagName("head").item(0).appendChild(sel);
-			}
-		}
-
-		function title(s) {
-		document.getElementById('title').innerHTML = s;
-		}
-
-		function description(s) {
-		document.getElementById('description').innerHTML = s;
-		}
-
-		function dimension(w, h) {
-			var world = document.getElementById('world');
-			world.style.width = w + 'px';
-			world.style.height = h + 'px';
-		}
-		function connectNodes(node1, node2, connectionType) {
-            		var j = node1.joint(node2, connectionType).register(all);
-            		joints.push(j);
-            	}
-		
-		jQuery(document).ready(function(){
-			$("#add_mover").click(function(e) {
-				createMover("NewMover");				
-			 });	
-			 
-			 canvas = new Canvas(800,800);
-			 
-			 //init button: 
-			 btn = $("#connectionButton");
-			 btn.mouseenter(function(e) { clearTimeout(timer); } );
-			 btn.mouseleave( function(e) { timer =  setHideToolboxTimer(); } );
-			 btn.click( function() { 
-			 	isGoingToConnect = true;
-			 } );
-			 
-			 
-		});
-            
-            function setHideToolboxTimer() {
-	            return setTimeout(function() {$("#connectionButton").css("display","none")},1000);
-            }
-            
-            function showConnectionButton(e) { 
-            	btn = $("#connectionButton");
-            	var world = $("#world");
-            	offset = world.offset();
-		element = e.srcElement;
-            	x_elem = element.x.baseVal.value;
-            	y_elem = element.y.baseVal.value;
-            	
-            	w_elem = element.width.baseVal.value;
-            	h_elem = element.height.baseVal.value;
-            	
-            	btn.css("top",y_elem);
-            	btn.css("left", offset.left + w_elem + x_elem);
-           	btn.css("display","block");
-            }
-            
-            function createMover(name) {
-            	var world = $("#world");
-		var offset = world.offset();
-		var rel_x = world.width()/2;
-		var rel_y = world.height()/2;
-		var mover = new DiagramElementView(rel_x,rel_y,"NewMover",canvas);
-		
-		jQuery(s3.wrapper.node).mouseup( function() { 
-			if ( !isGoingToConnect ) 
-				return;
-			connectNodes(sourceNode,s3,uml.arrow);
-			isGoingToConnect = false;
-		} );
-		
-		jQuery(s3.wrapper.node).mouseenter( function(e) { 
-			showConnectionButton(e);
-			clearTimeout(timer);
-			if (!isGoingToConnect)
-				sourceNode = s3;
-		} ); 
-		
-		jQuery(s3.wrapper.node).mouseleave( function(e) { 
-			timer =  setHideToolboxTimer();
-		} );
-            } */
-        </script>
+   		<link href="js/lib/jquery-ui/css/smoothness/jquery-ui-1.10.0.custom.css" type="text/css" rel="stylesheet" />
     </head>
     <body onload="prettyPrint()">
     	<div id="container">
+    	
     	<div id="workspace_container">
-    	<div id="menu">
-    		<button id="add_mover">Add Mover</button>
-    		<button id="add_filter">Add Filter</button>
-    		<button id="add_connection">Add Connection</button>
-    		<button id="delete_element">Delete Element</button>
+			<div id="information_panel" class="ui-widget">
+
+			</div>
+			
+		<div id="menu">
+    		<button id="add_mover">Add Mover</button><br/>
+    		<button id="add_filter">Add Filter</button><br/>
     	</div>
-        <div id="world">
+			
+			<div id="world">
+
 		<script type="text/javascript">
 /*
 			
@@ -400,7 +306,11 @@
 &lt;/ROSETTASCRIPTS&gt;
 </pre>
         </div>
-        
+
+		<div id="toolbar" class="ui-widget-header ui-corner-all">
+			<button id='btn_delete' class="ui-icon-trash">Delete element</button>
+			<button id='btn_connect' class="ui-icon-arrowthick-1-e">Form a connection</button>
+		</div>
 	</div> <!--container -->
 
     </body>

@@ -6,8 +6,9 @@ $(function() {
 		initialize: function() {
 			var model = this.model;
 			var source = model.get('source');
-			var target =  model.get('target').get('jointObj');
-			var jointObj = source.get('jointObj').joint(target,Joint.dia.uml);
+			var target =  model.get('target')
+			var target_joint = target.get('jointObj');
+			var jointObj = source.get('jointObj').joint(target_joint,Joint.dia.uml);
 			
 			model.set('jointObj',jointObj);
 			
@@ -16,6 +17,8 @@ $(function() {
 				var rawElement = this.wholeShape;
 				obj.changeConnectedElement(side,rawElement);
 			});
+			this.listenTo(source,'destroy',this.delete_connection);
+			this.listenTo(target,'destroy',this.delete_connection);
 		},
 	
 		changeConnectedElement: function(side,rawElement) { 
@@ -34,6 +37,22 @@ $(function() {
 			}else { 
 				this.model.set("source",foundElement);
 			}
+			
+			var source = this.model.get('source');
+			var target = this.model.get('target');
+			//reset the listeners:
+			this.stopListening(source);
+			this.stopListening(target);
+			
+			this.listenTo(source,'destroy',this.delete_connection);
+			this.listenTo(target,'destroy',this.delete_connection);
+		},
+		
+		delete_connection:function() {
+			
+			this.model.destroy();
+			this.stopListening();
+			this.remove();
 		}
 		
 	});

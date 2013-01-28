@@ -5,12 +5,14 @@ app.elementCounter = 0;
 
 var mover_type = {
 		jointObjColor: "90-#000-green:1-#fff",
-		codeTemplate: '#xml_movers'
+		codeTemplate: '#xml_movers',
+		add_protocol: 'mover_name',
 };
 
 var filter_type = {
 		jointObjColor: "90-#000-orange:1-#fff",
-		codeTemplate: '#xml_filters'
+		codeTemplate: '#xml_filters',
+		add_protocol: 'filter_name'
 };
 
 $(function( $ ) {
@@ -23,14 +25,11 @@ $(function( $ ) {
 		connectionReady: false,
 		events: {
 			"click #add_mover" : "addMover",
-			"click #add_connection": "toggleConnectionMode",
-			"click #delete_element": "toggleDeleteMode",
 			"click #add_filter" : "addFilter"
 		},
 		
 		toggleDeleteMode: function() { 
 			vent.trigger('toggleDeleteMode');
-			
 		},
 		
 		
@@ -45,14 +44,7 @@ $(function( $ ) {
 		},
 		
 		toggleConnectionMode: function(e) { 
-			this.connectionReady = !this.connectionReady;
-			console.log("Connection mode is " + this.connectionReady);
-			var conReady = this.connectionReady;
-			app.Elements.each(
-					function(element) {
-						element.set("connectionReady",conReady);
-					}
-			);
+
 		},
 		
 		initialize: function() {
@@ -60,6 +52,7 @@ $(function( $ ) {
 			this.listenTo(app.Connections,'add', this.addConnectionView);
 			this.addPropertiesView();
 			this.addCodeView();
+			this.addMenuView();
 		},
 		
 		addPropertiesView: function() {
@@ -70,6 +63,9 @@ $(function( $ ) {
 			app.codeView = new app.CodeView({eventagg: vent});
 		},
 		
+		addMenuView: function() {
+			app.menuView = new app.MenuView({eventagg: vent});
+		},
 		addElementView: function(element) {
 			var view = new app.DiagramElementView({model: element, eventagg: vent});
 			view.render();
@@ -98,13 +94,15 @@ $(function( $ ) {
 					function(element) {
 						var jointObj = element.get('jointObj');
 						arr.push(jointObj);
+						//Set the connection mode off:
+						element.set('connectionReady',false);
 					}
 			);
 			connectionObj.register(arr);
 		},
 		
 		render: function() {
-			Joint.paper("world",800,800);
+			Joint.paper("world",1000,600);
 		}
 		
 	});

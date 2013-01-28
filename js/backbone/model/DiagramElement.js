@@ -30,7 +30,6 @@
 			console.log("Triggering change event");
 			this.trigger("change");
 		}
-		
 	});
 	
 }());

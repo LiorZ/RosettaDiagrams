@@ -22,9 +22,40 @@ $(function() {
 			this.eventagg = options.eventagg;
 			this.model.set('jointObj',jointObj);
 			this.listenTo(this.model,"change",this.model_changed);
-			_.bindAll(this, "toggleDeleteMode");
+			this.listenTo(this.model, 'destroy',this.destroyElement);
+
+			
+			_.bindAll(this, "toggleHighlight");
 			this.eventagg.bind("toggleDeleteMode",this.toggleDeleteMode);
+			
+			this.eventagg.bind('editDiagramElement',this.toggleHighlight);
 			this.model_changed();
+		},
+		destroyElement:function() {
+			var jointObj = this.model.get('jointObj');
+			for (var i=0; i<jointObj.inner.length; ++i) {
+				jointObj.inner[i].remove();
+			}
+			jointObj.shadow.remove();
+			jointObj.liquidate();
+			console.log(jointObj);
+			this.stopListening();
+			this.eventagg.off('toggleDeleteMode', this.toggleDeleteMode);
+			this.eventagg.off('editDiagramElement', this.toggleHighlight);
+//		    this.undelegateEvents();
+			this.remove();
+		},
+		
+		//Toggles the highlighting of an element upon clicking on it.
+		toggleHighlight: function(element){ 
+			console.log(this.model.get('name'));
+			var jointObj = this.model.get('jointObj');
+			if (element == this.model) {
+				jointObj.highlight();
+			}else {
+				jointObj.unhighlight();
+			}
+			
 		},
 		
 		toggleDeleteMode: function() {
@@ -53,8 +84,11 @@ $(function() {
 		events: {
 			"mouseup": "mouseUp",
 			"click": "elementClicked",
-			"mousedown": "mouseDown"
+			"mousedown": "mouseDown",
+			"mouseenter":"mouseenter",
+			"mouseleave":"mouseleave"
 		},
+		
 		
 		render:function() {
 
@@ -72,6 +106,8 @@ $(function() {
 //				this.remove();
 //			}
 //			
+			var pos = this.$el.offset();
+			this.eventagg.trigger('show_menu_delay',this.model,pos);
 			
 			var connectionMode = this.model.get("connectionReady");
 			if ( ! connectionMode ) {
@@ -82,9 +118,18 @@ $(function() {
 		elementClicked: function(e) {
 			console.log("mouse clicked");
 		},
+		
+		mouseenter: function(e) { 
+			var pos = this.$el.offset();
+			this.eventagg.trigger('show_menu_delay',this.model,pos);
+		},
+		mouseleave: function(e){
+			this.eventagg.trigger('hide_menu_delay');
+		},
 		mouseDown: function(e) {
 			
 			var connectionMode = this.model.get("connectionReady");
+			this.eventagg.trigger('hide_menu_now');
 			if ( connectionMode == true ) { 
 				console.log("Connection mode is true");
 				if ( app.pendingConnection == undefined ) {
