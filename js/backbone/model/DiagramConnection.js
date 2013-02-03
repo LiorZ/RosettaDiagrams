@@ -10,18 +10,42 @@
 			type: undefined,
 			jointObj: undefined
 		},
+		changeConnectedElement: function(side,rawElement) { 
+			
+			console.log("Just connected ... ");
+			var foundElement = undefined;
+			app.Elements.each(
+					function(element) {
+						var jointObj = element.get('jointObj');  
+						if ( jointObj == rawElement ) {
+							console.log("Element connection is changed to "+element);
+							foundElement = element; 
+						}
+					}
+			);
+			
+			if ( foundElement == undefined ) {
+				alert("Error / Bug: can't find the element in the model");
+				return;
+			}
+			if ( side == "end" ) {
+				this.set("target",foundElement);
+			}else { 
+				this.set("source",foundElement);
+			}
+			
+			var source = this.get('source');
+			var target = this.get('target');
+			//reset the listeners:
+			this.stopListening(source);
+			this.stopListening(target);
+			
+			this.listenTo(source,'destroy',this.delete_connection);
+			this.listenTo(target,'destroy',this.delete_connection);
+		},
 		
 	});
 	
 	app.pendingConnection = undefined;
-	
-	/*Flow of creating a connection:
-	1)Click on a 'create connection' button turns on a flag on all DiagramElement models to wait for a connection.
-	2)Click on a DiagramElement creates a connection object (temp/adds to a collection?) and assign the source element to it.
-	3)Click on another DiagramElement sets the target element:
-		3.1)Checks if the source element is already set. If it is , set the target element.
-	4)Once the target element is set , the collection listens to this event and adds it to the collection.
-	5)The ConnectionView also listens to the target-set event and shows the connection.
-	*/
 	
 }());

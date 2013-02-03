@@ -16,10 +16,16 @@ $(function() {
 				this.eventagg = options.eventagg;
 				_.bindAll(this, "editDiagramElement");
 				this.eventagg.bind('editDiagramElement',this.editDiagramElement);
+				this.listenTo(app.Elements,'change',this.render);
+				this.listenTo(app.Connections,'change',this.render);
 				this.model = options.model;
 		},
 		
 		render: function() { 
+			this.$('#attribute_list').empty();
+			this.$("#mover_name").empty();
+			if ( this.model == undefined )
+				return;
 			
 			var name = this.model.get('name');
 			this.$('#mover_name').val(name);

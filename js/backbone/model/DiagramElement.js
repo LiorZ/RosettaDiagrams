@@ -24,10 +24,15 @@
 			this.listenTo(new_attr_list,"change",this.attributes_changed);
 			this.listenTo(new_attr_list,"add",this.attributes_changed);
 			this.listenTo(new_attr_list,"remove",this.attributes_changed);
+			this.listenTo(app.Connections,"change",this.new_connection_formed);
+		},
+		
+		new_connection_formed: function(new_con){ 
+			console.log('new connection formed');
+			console.log(new_con);
 		},
 		
 		attributes_changed: function() {
-			console.log("Triggering change event");
 			this.trigger("change");
 		}
 	});

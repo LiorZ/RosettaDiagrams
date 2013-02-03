@@ -100,8 +100,12 @@ $(function() {
 						element.set("connectionReady",conReady);
 					}
 			);
-			
-			app.pendingConnection = new app.DiagramConnection({source: this.model});
+			var typeObj = this.model.get('typeObj');
+			if ( typeObj == task_operation_type ) {
+				app.pendingConnection = new app.DiagramContainment({source: this.model, type: Joint.dia.uml.generalizationArrow});
+			}else {
+				app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
+			}
 
 		}
 	});

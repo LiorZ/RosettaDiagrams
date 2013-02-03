@@ -38,9 +38,7 @@ $(function() {
 			}
 			jointObj.shadow.remove();
 			jointObj.liquidate();
-			console.log(jointObj);
 			this.stopListening();
-			this.eventagg.off('toggleDeleteMode', this.toggleDeleteMode);
 			this.eventagg.off('editDiagramElement', this.toggleHighlight);
 //		    this.undelegateEvents();
 			this.remove();
@@ -123,9 +121,11 @@ $(function() {
 			var pos = this.$el.offset();
 			this.eventagg.trigger('show_menu_delay',this.model,pos);
 		},
+		
 		mouseleave: function(e){
 			this.eventagg.trigger('hide_menu_delay');
 		},
+		
 		mouseDown: function(e) {
 			
 			var connectionMode = this.model.get("connectionReady");
@@ -134,7 +134,8 @@ $(function() {
 				console.log("Connection mode is true");
 				if ( app.pendingConnection == undefined ) {
 					console.log("Setting source to be ... " + this.model);
-					app.pendingConnection = new app.DiagramConnection({source: this.model});
+					app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
+					console.log(app.pendingConnection);
 				}else { 
 					console.log("Adding new connection to the list");
 					app.pendingConnection.set("target",this.model);

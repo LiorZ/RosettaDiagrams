@@ -14,6 +14,7 @@ $(function() {
 			console.log("rendering code ... ");
 			this.$('#xml_movers').empty();
 			this.$('#xml_filters').empty();
+			this.$('#xml_task_operations').empty();
 			app.Elements.each( function(element) {
 				var codeView = new app.XMLMoversView({model: element});
 				var htmlCode = codeView.render().el;
@@ -30,7 +31,10 @@ $(function() {
 		renderConnections: function() {
 			var order=[];
 			this.$('#xml_protocols').empty();
-			app.Connections.each(function(con){
+			app.Connections.chain().filter(function (elem) {
+				return elem.get('type') == Joint.dia.uml.dependencyArrow;
+				
+			} ).each(function(con){
 				for(var i=0; i<order.length; ++i ){
 					console.log(order);
 					if (order[i]==con.get('source')){

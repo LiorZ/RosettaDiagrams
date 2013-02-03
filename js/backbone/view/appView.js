@@ -15,6 +15,12 @@ var filter_type = {
 		add_protocol: 'filter_name'
 };
 
+var task_operation_type = {
+		jointObjColor: "90-#000-blue:1-#fff",
+		codeTemplate: '#xml_task_operations',
+		add_protocol: 'filter_name'
+};
+
 $(function( $ ) {
 	
 	var vent = _.extend({}, Backbone.Events);
@@ -25,13 +31,17 @@ $(function( $ ) {
 		connectionReady: false,
 		events: {
 			"click #add_mover" : "addMover",
-			"click #add_filter" : "addFilter"
+			"click #add_filter" : "addFilter",
+			"click #add_task_operation" : "addTaskOperation"
 		},
 		
 		toggleDeleteMode: function() { 
 			vent.trigger('toggleDeleteMode');
 		},
 		
+		addTaskOperation:function(e) {
+			app.Elements.add(new app.DiagramElement({typeObj:task_operation_type , name:"NewTask"}));
+		},
 		
 		addFilter: function(e) {
 			app.Elements.add(new app.DiagramElement({typeObj: filter_type, name:"NewFilter"}));
