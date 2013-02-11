@@ -18,7 +18,6 @@
 					function(element) {
 						var jointObj = element.get('jointObj');  
 						if ( jointObj == rawElement ) {
-							console.log("Element connection is changed to "+element);
 							foundElement = element; 
 						}
 					}
@@ -29,19 +28,11 @@
 				return;
 			}
 			if ( side == "end" ) {
+				console.log("Setting target element to be " + foundElement.get('attributes').byKey('name').get('value'));
 				this.set("target",foundElement);
 			}else { 
 				this.set("source",foundElement);
 			}
-			
-			var source = this.get('source');
-			var target = this.get('target');
-			//reset the listeners:
-			this.stopListening(source);
-			this.stopListening(target);
-			
-			this.listenTo(source,'destroy',this.delete_connection);
-			this.listenTo(target,'destroy',this.delete_connection);
 		},
 		
 	});

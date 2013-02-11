@@ -100,8 +100,8 @@ $(function() {
 						element.set("connectionReady",conReady);
 					}
 			);
-			var typeObj = this.model.get('typeObj');
-			if ( typeObj == task_operation_type ) {
+			var type = this.model.get('type');
+			if ( type == 'task_operation' ) {
 				app.pendingConnection = new app.DiagramContainment({source: this.model, type: Joint.dia.uml.generalizationArrow});
 			}else {
 				app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});

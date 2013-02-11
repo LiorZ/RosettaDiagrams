@@ -1,60 +1,43 @@
 var app = app || {};
+var consts = consts || {};
 var ENTER_KEY = 13;
 
-app.elementCounter = 0;
-
-var mover_type = {
-		jointObjColor: "90-#000-green:1-#fff",
-		codeTemplate: '#xml_movers',
-		add_protocol: 'mover_name',
-};
-
-var filter_type = {
-		jointObjColor: "90-#000-orange:1-#fff",
-		codeTemplate: '#xml_filters',
-		add_protocol: 'filter_name'
-};
-
-var task_operation_type = {
-		jointObjColor: "90-#000-blue:1-#fff",
-		codeTemplate: '#xml_task_operations',
-		add_protocol: 'filter_name'
-};
 
 $(function( $ ) {
-	
+	app.elementCounter = 0;
+	app.Attributes = {
+			'mover':{
+				jointObjColor: "90-#000-green:1-#fff",
+				codeTemplate: '#xml_movers',
+				add_protocol: 'mover_name',
+				palette_div:'#movers_menu'
+			},
+			'filter':{
+				jointObjColor: "90-#000-orange:1-#fff",
+				codeTemplate: '#xml_filters',
+				add_protocol: 'filter_name',
+				palette_div:'#filters_menu'
+			},
+			'task_operation': {
+				jointObjColor: "90-#000-blue:1-#fff",
+				codeTemplate: '#xml_task_operations',
+				palette_div: '#task_operations_menu'
+			
+			}
+	};
+	consts.ATTR_IN_DIAGRAM_VIEW = 5;
+	consts.LENGTH_DIAGRAM_TITLE = 20;
 	var vent = _.extend({}, Backbone.Events);
+	app.connection_views =[];
 	
+	app.print_connections = function() { for (var i=0; i<app.connection_views.length; ++i) { console.log("From" + app.connection_views[i].model.get("source").get("attributes").byKey("name").get("value") + " To " + app.connection_views[i].model.get("target").get("attributes").byKey("name").get("value")) } }
 	app.AppView = Backbone.View.extend({
 		
 		el: '#container',
 		connectionReady: false,
-		events: {
-			"click #add_mover" : "addMover",
-			"click #add_filter" : "addFilter",
-			"click #add_task_operation" : "addTaskOperation"
-		},
 		
 		toggleDeleteMode: function() { 
 			vent.trigger('toggleDeleteMode');
-		},
-		
-		addTaskOperation:function(e) {
-			app.Elements.add(new app.DiagramElement({typeObj:task_operation_type , name:"NewTask"}));
-		},
-		
-		addFilter: function(e) {
-			app.Elements.add(new app.DiagramElement({typeObj: filter_type, name:"NewFilter"}));
-			
-		},
-		
-		addMover: function(e) {
-			app.Elements.add(new app.DiagramElement({typeObj: mover_type, name:"NewMover"}));
-			console.log("New Mover created!");
-		},
-		
-		toggleConnectionMode: function(e) { 
-
 		},
 		
 		initialize: function() {
@@ -63,8 +46,16 @@ $(function( $ ) {
 			this.addPropertiesView();
 			this.addCodeView();
 			this.addMenuView();
+			this.addPaletteView();
+			this.$("button").button();
+			this.$("#menu").accordion({heightStyle: "fill"});
+			this.$("#menu").css({"height":"800px"});
+			this.$("#menu").resize();
 		},
-		
+		addPaletteView:function() {
+			app.paletteView = new app.PaletteView({model: app.PaletteElements});
+			app.paletteView.render();
+		},
 		addPropertiesView: function() {
 			app.propertiesView = new app.DiagramElementPropertiesView({eventagg: vent});
 		},
@@ -95,8 +86,8 @@ $(function( $ ) {
 		},
 		
 		addConnectionView: function(connection) {
-			this.toggleConnectionMode(null);
 			var view = new app.DiagramConnectionView({model:connection});
+			app.connection_views.push(view);
 			var connectionObj = connection.get('jointObj');
 			view.render();
 			var arr = [];
@@ -113,10 +104,11 @@ $(function( $ ) {
 		
 		render: function() {
 			Joint.paper("world",1000,600);
+			this.$("#attribute_list").tablesorter();
+
 		}
 		
 	});
 	
 	
-	//Create the event aggregator:
 });

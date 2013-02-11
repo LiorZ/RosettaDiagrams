@@ -5,11 +5,10 @@
 	app.DiagramContainment = app.DiagramConnection.extend({
 		initialize: function(options) {
 		      this.constructor.__super__.initialize.apply(this, [options])
-		      this.listenTo(this,'change:source',this.change_source);
-		      this.listenTo(this,'change:target',this.change_target);
-		      this.listenTo(this,'destroy',this.remove_tasks); //Remove all the task operations from the target.
+		      this.on('change:source',this.change_source);
+		      this.on('change:target',this.change_target);
+		      this.on('destroy',this.remove_tasks); //Remove all the task operations from the target.
 		},
-		
 		remove_tasks:function() {
 			var attributes = this.get('target').get('attributes');
 			var name = this.get('source').get('attributes').byKey('name');
@@ -39,6 +38,7 @@
 			}
 			return task_arr;
 		},
+		
 		remove_old:function() {
 			var prev_target = this.previous('target');
 			var source_name = this.get('source').get('attributes').byKey('name').get('value');
@@ -52,8 +52,14 @@
 			//Remove the taskoperation directive in no longer needed:
 			if ( task_arr.length == 0) {
 				attributes.byKey('task_operations').destroy();
-			}else {
-				tasks.set('value',task_arr.join());
+			}else { 
+				var prev_tasks = attributes.byKey('task_operations');
+				if ( prev_tasks == undefined ) {
+					alert("Unexpected error: previous tasks are not defined")
+					return;
+				}
+				
+				prev_tasks.set('value',task_arr.join(','));
 			}
 		},
 		
@@ -71,27 +77,28 @@
 		},
 		
 		change_target: function(this_model,new_target) {
-			var attributes = new_target.get('attributes');
-			var source = this.get('source');
-			var task_name = source.get('attributes').byKey('name');
-			if ( task_name == undefined ){
-				alert("Task operation has no name!");
-				return;
-			}
-			if ( attributes == undefined ){
+			var source = this.get('source')
+			var new_attributes = new_target.get('attributes'); // TODO: check what happens if the taskop is already there ...
+			if ( new_attributes == undefined ){
 				alert("Attributes in target doesn't exist!");
 				return;
+			}	
+			var tasks = new_attributes.byKey('task_operations');
+			if ( tasks == undefined ) {
+				new_attributes.add(new app.TaskOAttribute({key: 'task_operations'}));
+				tasks = new_attributes.byKey('task_operations');
 			}
 			
-			this.remove_old();
-			var tasks = attributes.byKey('task_operations');
-			if (tasks == undefined){
-				attributes.add(new app.Attribute({key:'task_operations',value:task_name.get('value')}));
-			}else {
-				var task_value = tasks.get('value');
-				task_value = task_value +','+task_name.get('value');
-				tasks.set('value',task_value);
-			}
+			tasks.add_task(source);	
+			
+			var prev_target = this.previous('target');
+			if ( prev_target == undefined )
+				return;
+			var old_tasks = prev_target.get('attributes').byKey('task_operations');
+			if ( old_tasks == undefined )
+				return;
+			old_tasks.remove_task(source);
+
 		}
 		
 		

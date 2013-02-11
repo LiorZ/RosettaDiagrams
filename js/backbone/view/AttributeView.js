@@ -3,7 +3,7 @@ $(function() {
 	
 	app.AttributeView = Backbone.View.extend({
 		
-		tagName: 'li',
+		tagName: 'tr',
 		template: undefined,
 		
 		events: {

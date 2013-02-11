@@ -36,7 +36,6 @@ $(function() {
 				
 			} ).each(function(con){
 				for(var i=0; i<order.length; ++i ){
-					console.log(order);
 					if (order[i]==con.get('source')){
 						order.splice(i+1,0,con.get('target'));
 						return;

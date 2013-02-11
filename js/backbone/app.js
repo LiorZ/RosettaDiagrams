@@ -2,7 +2,9 @@ app = app || {};
 
 $(function() {
 
-	// Kick things off by creating the **App**.
-	new app.AppView().render();
+
+	app.PaletteElements.fetch({update: true, success:function() {
+		new app.AppView().render();
+	}}); //update:true to get 'add' event to run
 
 });

@@ -8,7 +8,7 @@ $(function() {
 			var type = this.model.get('typeObj');
 			var jointObj = Joint.dia.uml.State.create({
 				  rect: {x: this.model.get('x'), y: this.model.get('y'), width: 150, height: 100},
-				  label: this.model.get('name'),
+				  label: this.model.get('name').slice(0,consts.LENGTH_DIAGRAM_TITLE),
 				  attrs: {
 				    fill: type.jointObjColor
 				  },
@@ -46,7 +46,6 @@ $(function() {
 		
 		//Toggles the highlighting of an element upon clicking on it.
 		toggleHighlight: function(element){ 
-			console.log(this.model.get('name'));
 			var jointObj = this.model.get('jointObj');
 			if (element == this.model) {
 				jointObj.highlight();
@@ -63,9 +62,8 @@ $(function() {
 		},
 		
 		model_changed: function(){
-			console.log("Model changed!!");
 			var jointObj = this.model.get('jointObj');
-			jointObj.properties.label = this.model.get('name');
+			jointObj.properties.label = this.model.get('name').slice(0,consts.LENGTH_DIAGRAM_TITLE);
 			this.refresh_attributes();
 			jointObj.zoom();
 		},
@@ -74,10 +72,12 @@ $(function() {
 			var attributes = this.model.get('attributes');
 			var jointObj = this.model.get('jointObj');
 			jointObj.properties.actions.inner = [];
-			attributes.each(function (attribute)  { 
-				jointObj.properties.actions.inner.push(attribute.get("key"));
-				jointObj.properties.actions.inner.push(attribute.get("value"));
-			});
+			
+			for (var i=0; i<Math.min(consts.ATTR_IN_DIAGRAM_VIEW,attributes.length); ++i) {
+				jointObj.properties.actions.inner.push(attributes.at(i).get("key"));
+				jointObj.properties.actions.inner.push(attributes.at(i).get("value"));
+			}
+			
 		},
 		events: {
 			"mouseup": "mouseUp",
@@ -133,11 +133,10 @@ $(function() {
 			if ( connectionMode == true ) { 
 				console.log("Connection mode is true");
 				if ( app.pendingConnection == undefined ) {
-					console.log("Setting source to be ... " + this.model);
-					app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
-					console.log(app.pendingConnection);
+//					console.log("Setting source to be ... " + this.model);
+//					app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
+//					console.log(app.pendingConnection);
 				}else { 
-					console.log("Adding new connection to the list");
 					app.pendingConnection.set("target",this.model);
 					app.Connections.add(app.pendingConnection);
 					app.pendingConnection = undefined;
