@@ -13,5 +13,5 @@ var app = app || {};
 	app.PaletteElements.on('add',function(element){
 
 	});
-	app.PaletteElements.url='../../js/json/elements.json';
+	app.PaletteElements.url='js/json/elements.json';
 }());
