@@ -5,13 +5,17 @@
 		  var start_method = options.start_method;
 		  var end_loc = options.end_loc;
 		  var end_method = options.end_method;
-		  
+		  var timer = undefined;
 			$(this).mouseenter(function(e) {
 				$(this).animate(start_loc, start_method );
+				if ( timer )
+					clearTimeout(timer);
 			});
-			
+			var context = this;
 			$(this).mouseleave(function(e) {
-				$(this).animate(end_loc, end_method);
+				timer = setTimeout(function() {
+					$(context).animate(end_loc, end_method); timer = undefined; 
+				}, 800);
 			});
 	  };
 	})( jQuery );
@@ -23,13 +27,13 @@
 		var mover_properties_start_bottom = $("#mover_properties").css('bottom');
 		var display_code_container_start_right = $("#display_code_container").css('right');
 		
-//		$("#menu_container").make_menu({
-//			start_loc: {left  : 0}, 
-//			start_method: {duration: 1000, method: 'easeInSine'},
-//			end_loc: {left:menu_container_start_left},
-//			end_method:{duration: 1000, method: 'easeOutSine'}
-//		});
-//		
+		$("#menu_container").make_menu({
+			start_loc: {left  : 0}, 
+			start_method: {duration: 1000, method: 'easeInSine'},
+			end_loc: {left:menu_container_start_left},
+			end_method:{duration: 1000, method: 'easeOutSine'}
+		});
+		
 		$("#mover_properties").make_menu({
 			start_loc: { bottom  : 5}, 
 			start_method: {duration: 1000, method: 'easeInSine'},

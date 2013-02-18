@@ -126,13 +126,11 @@
           #menu_container {
           	background-color: white;
           	height: 99%;
-          	/*width:200px;*/
           	padding: 3px;
           	margin-right:5px;
           	font-size:12px;
-          	/*display:table;*/ 
           	position:absolute;
-          	/*left:-275px;*/
+          	left:-295px;
           }
           .menuItem { 
           	position: absolute;
@@ -249,8 +247,12 @@
     	<div id="workspace_container">
 
 <div id='menu_container' class='label_border'  >
-<!--  -->
-<div id="menu" style='border:1px solid black; height:99%;'>
+<div id='menu_label' style='float:right; height:100%;'>
+	<img src='icons/large/rscripts_palette_label.png'/>
+
+</div>
+<div id='menu_resizer' style='height:99%; width:340px;'>
+<div id="menu" style='border:1px solid black; float:left; '>
 
   <h3>Movers</h3>
   <div id='movers_menu'>
@@ -266,8 +268,6 @@
   </div>
 
 </div>
-<div id='menu_label' style='border:1px solid black;'>
-	<img src='icons/large/rscripts_palette_label.png' />
 </div>
 </div>
 <div id='display_code_container'  class='label_border'  >

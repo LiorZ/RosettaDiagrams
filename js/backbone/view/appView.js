@@ -102,8 +102,11 @@ $(function( $ ) {
 			Joint.paper("world");
 			this.$("#attribute_list").tablesorter();
 			this.$("button").button();
-			this.$("#menu").accordion({heightStyle: "fill"});
+			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
 			this.$("#menu").accordion('refresh');
+			
+			//Fixing the palette label:
+			this.$("#menu_label").css("margin-top",window.innerHeight/4);
 		}
 		
 	});

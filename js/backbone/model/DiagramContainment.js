@@ -88,7 +88,11 @@
 				new_attributes.add(new app.TaskOAttribute({key: 'task_operations'}));
 				tasks = new_attributes.byKey('task_operations');
 			}
-			
+			if ( !(tasks instanceof app.TaskOAttribute )) {
+				new_attributes.remove(tasks,{silent:true});
+				tasks = new app.TaskOAttribute();
+				new_attributes.add(tasks,{silent:true});
+			}
 			tasks.add_task(source);	
 			
 			var prev_target = this.previous('target');
