@@ -6,8 +6,8 @@
 	app.DiagramElement = Backbone.Model.extend({
 		
 		defaults: {
-			x:0,
-			y:0,
+			x:500,
+			y:500,
 			name:"New_Element",
 			connectionReady: false,
 			deleteMode: false,

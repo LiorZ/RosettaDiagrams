@@ -14,6 +14,7 @@ $(function() {
 				var type_obj = app.Attributes[elem.get('type')];
 				context.$(type_obj.palette_div).append(p_entry.render());
 			});
+			
 		},
 		
 	});

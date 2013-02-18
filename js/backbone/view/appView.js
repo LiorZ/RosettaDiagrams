@@ -47,10 +47,6 @@ $(function( $ ) {
 			this.addCodeView();
 			this.addMenuView();
 			this.addPaletteView();
-			this.$("button").button();
-			this.$("#menu").accordion({heightStyle: "fill"});
-			this.$("#menu").css({"height":"800px"});
-			this.$("#menu").resize();
 		},
 		addPaletteView:function() {
 			app.paletteView = new app.PaletteView({model: app.PaletteElements});
@@ -103,9 +99,11 @@ $(function( $ ) {
 		},
 		
 		render: function() {
-			Joint.paper("world",1000,600);
+			Joint.paper("world");
 			this.$("#attribute_list").tablesorter();
-
+			this.$("button").button();
+			this.$("#menu").accordion({heightStyle: "fill"});
+			this.$("#menu").accordion('refresh');
 		}
 		
 	});

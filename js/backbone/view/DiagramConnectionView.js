@@ -16,9 +16,6 @@ $(function() {
 			var obj = this.model;
 			var view = this;
 			jointObj.registerCallback("justConnected",function(side) {
-				var source_name = model.get("source").get("attributes").byKey("name").get("value");
-				var target_name = model.get("target").get("attributes").byKey("name").get("value");
-				console.log("Calling the callback on the connection between " + source_name + " and " + target_name);
 				var rawElement = this.wholeShape;
 				view.stopListening(obj.get('source'));
 				view.stopListening(obj.get('target'));
@@ -27,6 +24,13 @@ $(function() {
 				view.listenTo(obj.get('source'),'destroy',view.delete_connection);
 				view.listenTo(obj.get('target'),'destroy',view.delete_connection);
 			});
+			
+			jointObj.registerCallback( "floating",function(side)  {
+			    jointObj.replaceDummy(jointObj["_"+side], this);
+			    jointObj.addJoint(this);
+			    jointObj.update();
+			});
+			
 			this.listenTo(source,'destroy',this.delete_connection);
 			this.listenTo(target,'destroy',this.delete_connection);
 		},

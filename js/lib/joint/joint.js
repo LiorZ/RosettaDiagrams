@@ -276,7 +276,21 @@ function Joint(from, to, opt){
     this._nearbyVertexSqrDist = 500;	// sqrt(this._nearbyVertexSqrDist) is tolerable distance of vertex moving
 
     this.dom = {};	// holds all dom elements
-
+    /*
+     * Callbacks.
+     * @name Callbacks
+     */
+    this._callbacks = {
+	// called when a joint has just connected to an object
+	// the object is accessed using this,
+	// the only argument is what side has been connected ("start" | "end")
+	justConnected: function(side){},
+	disconnected: function(side){},
+	justBroken: function(mousePos){},
+	wiring: function(mousePos){},
+	objectMoving: function(obj){},
+	floating: function(side){}
+    },
     // connection from start to end
     this._start = { // start object
 	shape: null,		// Raphael object
@@ -286,20 +300,7 @@ function Joint(from, to, opt){
 	shape: null,		// Raphael object
 	dummy: false		// is it a dummy object?
     };
-    /*
-     * Callbacks.
-     * @name Callbacks
-     */
-    this._callbacks = {
-		// called when a joint has just connected to an object
-		// the object is accessed using this,
-		// the only argument is what side has been connected ("start" | "end")
-		justConnected: function(side){},
-		disconnected: function(side){},
-		justBroken: function(mousePos){},
-		wiring: function(mousePos){},
-		objectMoving: function(obj){}
-    },
+
     // connection options
     this._opt = {
 	vertices: [],	// joint path vertices
@@ -349,12 +350,14 @@ function Joint(from, to, opt){
 	    timeout: 2000,
 	    start: {
 		enabled: false,
+		dragging:true,
 		radius: 4,
 		attrs: { opacity: 1.0, fill: "red", stroke: "black" }
 	    },
 	    end: {
 		enabled: false,
 		radius: 4,
+		dragging: true,
 		attrs: { opacity: 1.0, fill: "red", stroke: "black" }
 	    }
 	}
@@ -505,14 +508,19 @@ Joint.prototype = {
      * @param {RaphaelObject} cap
      */
     capMouseDown: function(e, cap){
-	Joint.currentJoint = this;	// keep global reference to me
-	this._dx = e.clientX;
-	this._dy = e.clientY;
 
-	if (cap === this.dom.startCap){
+    	if ( (cap === this.dom.startCap && this._opt.handle.start.dragging ) ||
+    		(cap === this.dom.endCap && this._opt.handle.end.dragging) ){
+    		Joint.currentJoint = this;	// keep global reference to me
+
+    	    this._dx = e.clientX;
+    		this._dy = e.clientY;
+    	}	
+	if (cap === this.dom.startCap && this._opt.handle.start.dragging ){
             this.disconnect("start");
 	    this.state = this.STARTCAPDRAGGING;
-	} else if (cap === this.dom.endCap){
+		
+	} else if (cap === this.dom.endCap && this._opt.handle.end.dragging ){
             this.disconnect("end");
 	    this.state = this.ENDCAPDRAGGING;
 	}
@@ -585,10 +593,19 @@ Joint.prototype = {
 	}
         
 	var o = this.objectContainingPoint(point(dummyBB.x, dummyBB.y));
+	
+	if ( o == this.startObject() ) { //LiorZ: I dont want to allow connecting objects to themselves... 
+	    this.replaceDummy(this["_" + capType], this.prev_node);
+	    this.addJoint(this.prev_node);
+	    this.update();
+	    return;
+	}
 	if (o){
 	    this.callback("justConnected", o, [capType]);
 	    this.replaceDummy(this["_" + capType], o);
 	    this.addJoint(o);
+	}else  {
+		this.callback("floating",this.prev_node,[capType]);
 	}
 
 	this.update();
@@ -920,11 +937,15 @@ Joint.prototype = {
 	    if (opt.handle.timeout) myopt.handle.timeout = opt.handle.timeout;
 	    if (opt.handle.start){
 		if (opt.handle.start.enabled) myopt.handle.start.enabled = opt.handle.start.enabled;
+		if (!opt.handle.start.dragging) myopt.handle.start.dragging = opt.handle.start.dragging;
+
 		if (opt.handle.start.radius) myopt.handle.start.radius = opt.handle.start.radius;
                 Mixin(myopt.handle.start.attrs, opt.handle.start.attrs);
 	    }
 	    if (opt.handle.end){
 		if (opt.handle.end.enabled) myopt.handle.end.enabled = opt.handle.end.enabled;
+		if (!opt.handle.end.dragging) myopt.handle.end.dragging = opt.handle.end.dragging;
+
 		if (opt.handle.end.radius) myopt.handle.end.radius = opt.handle.end.radius;
                 Mixin(myopt.handle.end.attrs, opt.handle.end.attrs);
 	    }
@@ -968,7 +989,8 @@ Joint.prototype = {
             this.draw(["dummy" + camelCap]);
 	    this.callback("disconnected", disconnectedFrom, [cap]);
         }
-
+        if ( disconnectedFrom != undefined )
+        	this.prev_node = disconnectedFrom;
         return this;
     },
 
@@ -1159,7 +1181,8 @@ Joint.prototype = {
      */
     showHandle: function(cap){
 	var handle = this._opt.handle;
-	if (!cap){
+
+	if (!cap ){
 	    handle.start.enabled = true;
 	    handle.end.enabled = true;
 	} else {
