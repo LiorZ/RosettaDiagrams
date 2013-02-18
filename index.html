@@ -126,13 +126,13 @@
           #menu_container {
           	background-color: white;
           	height: 99%;
-          	width:200px;
+          	/*width:200px;*/
           	padding: 3px;
           	margin-right:5px;
           	font-size:12px;
-          	display:table; 
-          	position:absolute; 
-          	left:-275px;
+          	/*display:table;*/ 
+          	position:absolute;
+          	/*left:-275px;*/
           }
           .menuItem { 
           	position: absolute;
@@ -222,7 +222,7 @@
 		}
 		
 		#menu_label {
-			display:table-cell; 
+			/*display:table-cell;*/ 
 			vertical-align:middle;
 		}
 		
@@ -248,8 +248,10 @@
     	<div id="container">
     	<div id="workspace_container">
 
-<div id='menu_container' class='label_border'>
-<div id="menu" style='display:table-cell;'>
+<div id='menu_container' class='label_border'  >
+<!--  -->
+<div id="menu" style='border:1px solid black; height:99%;'>
+
   <h3>Movers</h3>
   <div id='movers_menu'>
   
@@ -264,10 +266,9 @@
   </div>
 
 </div>
-<div id='menu_label'>
+<div id='menu_label' style='border:1px solid black;'>
 	<img src='icons/large/rscripts_palette_label.png' />
 </div>
-
 </div>
 <div id='display_code_container'  class='label_border'  >
 <div id='display_code_label' style='display: table-cell; vertical-align:middle; width:50px;' >
@@ -283,7 +284,7 @@
 <div id='mover_properties_label'>
 <img src='icons/large/rscripts_properties_label.png'/>
 </div>
-<div id="mover_div">Mover name: <input type="text" id="mover_name"/></div>
+<!-- <div id="mover_div">Mover name: <input type="text" id="mover_name"/></div>  -->
 <div id='mover_properties_content' style='overflow:auto; height:200px;'>
     <button id="add_attribute">Add Attribute</button>
 	<table id='attribute_list' class='tablesorter'>
