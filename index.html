@@ -40,6 +40,8 @@
         <script src="js/backbone/view/XMLProtocolView.js" type="text/javascript"></script>
         <script src="js/backbone/view/PaletteView.js" type="text/javascript"></script>
         <script src="js/backbone/view/PaletteEntryView.js" type="text/javascript"></script>
+        <script src="js/backbone/view/InformationMessageView.js" type="text/javascript"></script>
+        
         
         <script src="js/backbone/view/MenuView.js" type="text/javascript"></script>
         
@@ -47,6 +49,7 @@
         <script src="js/backbone/model/Attribute.js" type="text/javascript"></script>
         <script src="js/backbone/model/TaskOAttribute.js" type="text/javascript"></script>
         
+        <script src="js/backbone/model/InformationMessage.js" type="text/javascript"></script>
         <script src="js/backbone/model/DiagramElement.js" type="text/javascript"></script>
         <script src="js/backbone/model/DiagramConnection.js" type="text/javascript"></script>
         <script src="js/backbone/model/DiagramContainment.js" type="text/javascript"></script>
@@ -63,7 +66,6 @@
 			<td><button id="deleteBtn">X</button></td>
 
 		</script>
-		
 		<script type="text/template" id="movers_template">
 &lt;<%=name%><% attributes.each(function(attr) { %> <%= attr.get('key') %>='<%= attr.get('value') %>'<% }); %>/&gt;
 		</script>
@@ -71,8 +73,8 @@
 &lt;Add <%=typeObj.add_protocol%>='<%= attributes.byKey("name").get('value') %>'/&gt;
 		</script>
 		<script type="text/template" id="information_message_template">
-				<div class="ui-state-highlight ui-corner-all"
-					style="margin-top: 20px; padding: 0 .7em;">
+				<div id='information_message_body' class="ui-state-highlight ui-corner-all"
+					style="margin-top: 20px; padding: 0 .7em; margin:0px auto; width:50%;">
 					<p>
 						<span class="ui-icon ui-icon-info"
 							style="float: left; margin-right: .3em;"></span> <strong><%=title%></strong>
@@ -181,6 +183,8 @@
           #information_panel {
           	width:100%;
           	display:none;
+          	position:absolute;
+          	top:2%;
           }
           
           td input {
@@ -301,6 +305,9 @@
 	</table>
 </div>
 
+
+</div>
+<div id='information_panel_wrapper'>
 
 </div>
 			<div id="world">
