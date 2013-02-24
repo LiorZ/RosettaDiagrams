@@ -5,17 +5,24 @@
 		  var start_method = options.start_method;
 		  var end_loc = options.end_loc;
 		  var end_method = options.end_method;
-		  var timer = undefined;
+		  var timer_in = undefined;
+		  var time_out = undefined;
 			$(this).mouseenter(function(e) {
 				console.log(this);
-				$(this).animate(start_loc, start_method );
-				if ( timer )
-					clearTimeout(timer);
+				var elem = this;
+				time_out = setTimeout(function() {$(elem).animate(start_loc, start_method ); }, 200);
+				if ( timer_in )
+					clearTimeout(timer_in);
 			});
 			var context = this;
 			$(this).mouseleave(function(e) {
-				timer = setTimeout(function() {
-					$(context).animate(end_loc, end_method); timer = undefined; 
+				if (time_out){
+					clearTimeout(time_out);
+					time_out = undefined;
+				}
+				
+				timer_in = setTimeout(function() {
+					$(context).animate(end_loc, end_method); timer_in = undefined; 
 				}, 800);
 			});
 	  };
