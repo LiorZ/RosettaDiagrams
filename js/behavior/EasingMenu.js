@@ -7,6 +7,7 @@
 		  var end_method = options.end_method;
 		  var timer = undefined;
 			$(this).mouseenter(function(e) {
+				console.log(this);
 				$(this).animate(start_loc, start_method );
 				if ( timer )
 					clearTimeout(timer);
@@ -24,7 +25,7 @@
 (function() {
 	$(document).ready(function() {
 		var menu_container_start_left = $("#menu_container").css('left');
-		var mover_properties_start_bottom = $("#mover_properties").css('bottom');
+		var mover_properties_start_bottom = $("#mover_properties_container").css('bottom');
 		var display_code_container_start_right = $("#display_code_container").css('right');
 		
 		$("#menu_container").make_menu({
@@ -34,7 +35,7 @@
 			end_method:{duration: 1000, method: 'easeOutSine'}
 		});
 		
-		$("#mover_properties").make_menu({
+		$("#mover_properties_container").make_menu({
 			start_loc: { bottom  : 5}, 
 			start_method: {duration: 1000, method: 'easeInSine'},
 			end_loc: {bottom: mover_properties_start_bottom},

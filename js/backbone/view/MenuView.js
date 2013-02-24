@@ -106,9 +106,9 @@ $(function() {
 			}else {
 				app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
 			}
-			var info_msg_model = new app.InformationMessage({message: "Click on the element you want to connect ... "});
-			var info_msg = new app.InformationMessageView({model: info_msg_model });
-			info_msg.render();
+//			var info_msg_model = new app.InformationMessage({message: "Click on the element you want to connect ... "});
+//			var info_msg = new app.InformationMessageView({model: info_msg_model });
+//			info_msg.render();
 
 		}
 	});

@@ -203,15 +203,18 @@
           	text-align:center;
           }
           #mover_properties {
+          	width:40%;
+          	background-color:white;
+          	margin: 0 auto;
+          }
+          #mover_properties_container {
           	margin-top: 1%;
           	position:absolute;
-          	left:25%;
 			bottom:-200px;
-			width:960px;
 			height:250px;
-			background-color:white;
 			padding-top:0px;
-			
+			width:100%;
+			margin:0 auto;
 		}
 		.palette_button {
 			display:block;
@@ -250,6 +253,29 @@
     	<div id="container">
     	<div id="workspace_container">
 
+<div id='mover_properties_container'>
+<div id='mover_properties' class='label_border' >
+<div id='mover_properties_label' style='margin: 0 auto;'>
+<img src='icons/large/rscripts_properties_label.png'/>
+</div>
+<div id='mover_properties_content' style='overflow:auto; height:200px;'>
+    <button id="add_attribute">Add Attribute</button>
+	<table id='attribute_list' class='tablesorter'>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Value</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody id='attribute_list_body'>
+	
+	</tbody>
+	</table>
+</div>
+</div>
+</div>
+
 <div id='menu_container' class='label_border'  >
 <div id='menu_label' style='float:right; height:100%;'>
 	<img src='icons/large/rscripts_palette_label.png'/>
@@ -283,30 +309,6 @@
 </pre>       	
 </div>
 
-
-<div id='mover_properties' class='label_border'  >
-<div id='mover_properties_label'>
-<img src='icons/large/rscripts_properties_label.png'/>
-</div>
-<!-- <div id="mover_div">Mover name: <input type="text" id="mover_name"/></div>  -->
-<div id='mover_properties_content' style='overflow:auto; height:200px;'>
-    <button id="add_attribute">Add Attribute</button>
-	<table id='attribute_list' class='tablesorter'>
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Value</th>
-			<th>Delete</th>
-		</tr>
-	</thead>
-	<tbody id='attribute_list_body'>
-	
-	</tbody>
-	</table>
-</div>
-
-
-</div>
 <div id='information_panel_wrapper'>
 
 </div>

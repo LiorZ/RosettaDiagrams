@@ -20,6 +20,8 @@ $(function() {
 				this.listenTo(app.Elements,'change',this.render);
 				this.listenTo(app.Connections,'change',this.render);
 				this.model = options.model;
+//				this.position_in_center();
+
 		},
 		
 		set_mover_name_keypress:function(e) {
@@ -28,8 +30,14 @@ $(function() {
 				this.$("#mover_name").blur();
 			}
 		},
-		
+		position_in_center: function() {
+			var win_width = window.innerWidth;
+			var my_width = this.$el.width();
+			var new_pos = win_width/2 - my_width/2;
+			this.$el.css('left',new_pos+'px');
+		},
 		render: function() { 
+			
 			this.$('#attribute_list_body').empty();
 			this.$("#mover_name").empty();
 			if ( this.model == undefined )
