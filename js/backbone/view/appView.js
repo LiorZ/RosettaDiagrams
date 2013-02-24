@@ -107,7 +107,6 @@ $(function( $ ) {
 			
 			//Fixing the palette label:
 			var width = this.$("#menu_label").width();
-			this.$("#menu_label").css("margin-top",window.innerHeight/2  );
 		}
 		
 	});
