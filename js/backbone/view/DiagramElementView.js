@@ -69,13 +69,23 @@ $(function() {
 		},
 		
 		refresh_attributes: function() {
-			var attributes = this.model.get('attributes');
+			var raw_attributes = this.model.get('attributes');
+			if (raw_attributes == undefined) {
+				alert("ERROR: attributes are undefined");
+				return;
+			}
+			var attributes = raw_attributes.nonEmpty();
+			if (attributes == undefined || attributes.length == 0 ){
+				alert("No defined attributes!");
+				return;
+			}
+			console.log(attributes);
 			var jointObj = this.model.get('jointObj');
 			jointObj.properties.actions.inner = [];
 			
 			for (var i=0; i<Math.min(consts.ATTR_IN_DIAGRAM_VIEW,attributes.length); ++i) {
-				jointObj.properties.actions.inner.push(attributes.at(i).get("key"));
-				jointObj.properties.actions.inner.push(attributes.at(i).get("value"));
+				jointObj.properties.actions.inner.push(attributes[i].get("key"));
+				jointObj.properties.actions.inner.push(attributes[i].get("value"));
 			}
 			
 		},

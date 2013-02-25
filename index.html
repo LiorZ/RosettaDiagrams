@@ -67,7 +67,12 @@
 
 		</script>
 		<script type="text/template" id="movers_template">
-&lt;<%=name%><% attributes.each(function(attr) { %> <%= attr.get('key') %>='<%= attr.get('value') %>'<% }); %>/&gt;
+&lt;<%=name%><% attributes.chain().filter(
+
+function(attr) {
+	return attr.get('value') != '';
+})
+.each(function(attr) { %> <%= attr.get('key') %>='<%= attr.get('value') %>'<% }); %>/&gt;
 		</script>
 		<script type="text/template" id="protocols_template">
 &lt;Add <%=typeObj.add_protocol%>='<%= attributes.byKey("name").get('value') %>'/&gt;

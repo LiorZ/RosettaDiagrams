@@ -20,6 +20,11 @@ var app = app || {};
 		      return attr.get("key") == key;
 		    });
 		    return filtered[0];
+		},
+		nonEmpty: function() {
+			return this.filter(function(attr) {
+				return attr.get('value') !='';
+			});
 		}
 	});
 }
