@@ -136,6 +136,10 @@ $(function() {
 			this.eventagg.trigger('hide_menu_delay');
 		},
 		
+		isConnectionValid:function() {
+			
+		},
+		
 		mouseDown: function(e) {
 			
 			var connectionMode = this.model.get("connectionReady");
@@ -147,6 +151,11 @@ $(function() {
 //					app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
 //					console.log(app.pendingConnection);
 				}else { 
+					if ( this.model.get('type') != 'task_operation' && app.Connections.byTarget(this.model) != undefined ){
+						//Not allowing more than one incoming connection! (PUT HERE INFORMATION MESSAGE)
+						app.pendingConnection = undefined;
+						return;
+					}
 					app.pendingConnection.set("target",this.model);
 					app.Connections.add(app.pendingConnection);
 					app.pendingConnection = undefined;

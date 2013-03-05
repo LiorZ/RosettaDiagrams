@@ -8,7 +8,7 @@ $(function() {
 		connectionReady: undefined,
 		events:{
 			'mouseenter':'mouseenter',
-			'mouseleave':'mouseleave',
+			'mouseleave':'hide_menu_delay',
 			'click #btn_delete' : 'delete_element',
 			'click #btn_connect' : 'connect_element'
 		},
@@ -47,6 +47,19 @@ $(function() {
 		show_menu_delay:function(element,pos,width,height){
 			this.model = element;
 			clearTimeout(this.timeoutId);
+			
+			if ( this.model == undefined ){
+				alert("ERROR: Undefined element!");
+				return;
+			}
+			
+			//Not allowing more than one outgoing connection:
+			if ( this.model.get('type') != 'task_operation' && app.Connections.bySource(this.model) != undefined) {
+				this.$('#btn_connect').button({disabled: true});
+			}else { 
+				this.$('#btn_connect').button({disabled: false});
+			}
+			
 			this.$el.css(
 				{
 					display:'inline',
@@ -60,26 +73,11 @@ $(function() {
 		},
 		
 		hide_menu_now: function(e) { 
-			clearTimeout(this.timeoutId);
-			this.$el.css({
-				display: 'none'
-			});
-			this.model = undefined;
+			this.hide_menu_delay(0);
 		},
-		
-		mouseleave: function(e){ 
-			clearTimeout(this.timeoutId);
-			var t = this;
-			var obj = this.$el;
-			this.timeoutId = setTimeout(function() {
-				obj.css({
-					display: 'none'
-				});
-				t.model = undefined;
-			},2000);
-		},
-		
-		hide_menu_delay: function(){
+		hide_menu_delay: function(time_out){
+			if ( time_out == undefined )
+				time_out = consts.MENU_TIMEOUT;	
 			clearTimeout(this.timeoutId);
 			var obj = this.$el;
 			var t = this;
@@ -88,7 +86,7 @@ $(function() {
 					display: 'none'
 				});
 				t.model = undefined;
-			},2000);
+			},time_out);
 		},
 		
 		connect_element:function() {
@@ -106,9 +104,9 @@ $(function() {
 			}else {
 				app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
 			}
-//			var info_msg_model = new app.InformationMessage({message: "Click on the element you want to connect ... "});
-//			var info_msg = new app.InformationMessageView({model: info_msg_model });
-//			info_msg.render();
+			
+			var info_msg_model = new app.InformationMessage({message: "Click on the element you want to connect ... (<b>ESC</b> to cancel) "});
+			app.EventAgg.trigger('connection_mode_activated',{info_msg: info_msg_model});
 
 		}
 	});

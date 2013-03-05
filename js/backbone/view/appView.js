@@ -2,7 +2,6 @@ var app = app || {};
 var consts = consts || {};
 var ENTER_KEY = 13;
 
-
 $(function( $ ) {
 	app.elementCounter = 0;
 	app.Attributes = {
@@ -27,63 +26,56 @@ $(function( $ ) {
 	};
 	consts.ATTR_IN_DIAGRAM_VIEW = 5;
 	consts.LENGTH_DIAGRAM_TITLE = 20;
-	var vent = _.extend({}, Backbone.Events);
-	app.connection_views =[];
+	consts.MENU_TIMEOUT = 2000;
+	app.EventAgg = _.extend({}, Backbone.Events);
 	
-	app.print_connections = function() { for (var i=0; i<app.connection_views.length; ++i) { console.log("From" + app.connection_views[i].model.get("source").get("attributes").byKey("name").get("value") + " To " + app.connection_views[i].model.get("target").get("attributes").byKey("name").get("value")) } }
 	app.AppView = Backbone.View.extend({
 		
 		el: '#container',
 		connectionReady: false,
 		
 		toggleDeleteMode: function() { 
-			vent.trigger('toggleDeleteMode');
+			app.EventAgg.trigger('toggleDeleteMode');
 		},
 		
+		handle_key_press: function(e) {
+			if ( e.keyCode == 27 && app.pendingConnection != undefined) { //ESC char
+				app.pendingConnection = undefined;
+				app.EventAgg.trigger('connection_mode_ended');
+			}
+		},
 		initialize: function() {
 			this.listenTo(app.Elements,'add',this.addElementView);
 			this.listenTo(app.Connections,'add', this.addConnectionView);
+			$(document).bind('keyup',this.handle_key_press);
 			this.addPropertiesView();
 			this.addCodeView();
 			this.addMenuView();
 			this.addPaletteView();
+			this.addInformationMessageContainer();
 		},
 		addPaletteView:function() {
 			app.paletteView = new app.PaletteView({model: app.PaletteElements});
 			app.paletteView.render();
 		},
 		addPropertiesView: function() {
-			app.propertiesView = new app.DiagramElementPropertiesView({eventagg: vent});
+			app.propertiesView = new app.DiagramElementPropertiesView({eventagg: app.EventAgg});
 		},
 		
 		addCodeView: function() {
-			app.codeView = new app.CodeView({eventagg: vent});
+			app.codeView = new app.CodeView({eventagg: app.EventAgg});
 		},
 		
 		addMenuView: function() {
-			app.menuView = new app.MenuView({eventagg: vent});
+			app.menuView = new app.MenuView({eventagg: app.EventAgg});
 		},
 		addElementView: function(element) {
-			var view = new app.DiagramElementView({model: element, eventagg: vent});
+			var view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
 			view.render();
-			var ElementsArr = [];
-			app.Elements.each(
-					function(element) {
-						ElementsArr.push(element.get('jointObj'));
-					}
-			);
-			
-			app.Connections.each(
-					function(connection) { 
-						var conObj = connection.get('jointObj');
-						conObj.register(ElementsArr);
-					}
-			);
 		},
 		
 		addConnectionView: function(connection) {
 			var view = new app.DiagramConnectionView({model:connection});
-			app.connection_views.push(view);
 			var connectionObj = connection.get('jointObj');
 			view.render();
 			var arr = [];
@@ -97,6 +89,9 @@ $(function( $ ) {
 			);
 			connectionObj.register(arr);
 		},
+		addInformationMessageContainer:function() {
+			app.InformationMessageContainer = new app.InformationMessageView();
+		},
 		
 		render: function() {
 			Joint.paper("world");
@@ -104,9 +99,6 @@ $(function( $ ) {
 			this.$("button").button();
 			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
 			this.$("#menu").accordion('refresh');
-			
-			//Fixing the palette label:
-			var width = this.$("#menu_label").width();
 		}
 		
 	});

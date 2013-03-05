@@ -67,12 +67,12 @@
 
 		</script>
 		<script type="text/template" id="movers_template">
-&lt;<%=name%><% attributes.chain().filter(
+&lt;<%=name%><%
+var attributes = attributes.nonEmpty();
+for (var i=0; i<attributes.length; ++i) {
+	var attr = attributes[i];
 
-function(attr) {
-	return attr.get('value') != '';
-})
-.each(function(attr) { %> <%= attr.get('key') %>='<%= attr.get('value') %>'<% }); %>/&gt;
+ %> <%= attr.get('key') %>='<%= attr.get('value') %>'<% } %>/&gt;
 		</script>
 		<script type="text/template" id="protocols_template">
 &lt;Add <%=typeObj.add_protocol%>='<%= attributes.byKey("name").get('value') %>'/&gt;
@@ -92,9 +92,12 @@ function(attr) {
         <style type="text/css">
           html { overflow: hidden; }
         
-          body {
+          .body_class {
             background-color: #ffffff;
             background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2NkYGDwAeIthGhGoAKiAEghzES8GkZNxBs8ALOvCQtmZ8UqAAAAAElFTkSuQmCC   ) repeat;
+          }
+          .blur {
+          	background-color:rgba(192,192,192,0.5)
           }
           #world {
             width: 100%;
@@ -186,12 +189,6 @@ function(attr) {
           	padding: 2px;
           	font-size: 12px;
           }
-          #information_panel {
-          	width:100%;
-          	display:none;
-          	position:absolute;
-          	top:2%;
-          }
           
           td input {
           	width: 100%;
@@ -250,11 +247,16 @@ function(attr) {
 			vertical-align:middle; 
 			width:50px;
 		}
+		#information_panel_wrapper{
+			display:none;
+			position:absolute;
+			width:100%;
+		}
         </style>
    		<link href="js/lib/prettify/prettify.css" type="text/css" rel="stylesheet" />
    		<link href="js/lib/jquery-ui/css/smoothness/jquery-ui-1.10.0.custom.css" type="text/css" rel="stylesheet" />
     </head>
-    <body onload="prettyPrint()">
+    <body class='body_class' onload="prettyPrint()">
     	<div id="container">
     	<div id="workspace_container">
 
