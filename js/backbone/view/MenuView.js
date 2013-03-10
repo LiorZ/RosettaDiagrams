@@ -10,13 +10,23 @@ $(function() {
 			'mouseenter':'mouseenter',
 			'mouseleave':'hide_menu_delay',
 			'click #btn_delete' : 'delete_element',
-			'click #btn_connect' : 'connect_element'
+			'click #btn_connect' : 'connect_element',
+			'click #btn_info': 'show_info'
 		},
 		
 		delete_element: function() { 
 			this.model.destroy();
 			this.model = undefined;
 			this.hide_menu_now();
+		},
+		get_current_model_name:function() {
+			return this.model.get('name');
+		},
+		show_info:function(e){
+			var wiki_obj =$('#wiki_info'); 
+			var frame_src = 'https://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Movers_(RosettaScripts)#'+this.model.get('name');
+			wiki_obj.find('iframe').attr('src', frame_src);
+			wiki_obj.dialog('option','title',this.model.get('name')).dialog('open');
 		},
 		
 		initialize: function(options) {
@@ -33,7 +43,23 @@ $(function() {
 					primary: 'ui-icon-arrowthick-1-e'
 				}
 			});
-			
+			this.$("#btn_info").button({
+				text: false,
+				icons:{
+					primary: 'ui-icon-info'
+				}
+			});
+		    $( "#wiki_info" ).dialog({
+		        autoOpen: false,
+		        modal: true,
+		        width: window.innerWidth*0.35,
+		        height: window.innerHeight*0.35,
+		        open: function (event, ui) {
+		            $('#wiki_info').css('overflow', 'hidden'); //this line does the actual hiding
+		        }
+		      });
+		    $('#wiki_info').find('iframe').load($('#wiki_info').find('iframe').css('display','inline')); 
+		    
 			_.bindAll(this, "show_menu_delay");
 			this.eventagg.bind("show_menu_delay",this.show_menu_delay);
 			_.bindAll(this, "hide_menu_delay");
@@ -64,7 +90,7 @@ $(function() {
 				{
 					display:'inline',
 					left: pos.left+'px',
-					top: pos.top-this.$el.height()-12+'px'
+					top: pos.top-this.$el.height()-23 +'px'
 				}
 			);
 		},

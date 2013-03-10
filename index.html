@@ -160,6 +160,7 @@ for (var i=0; i<attributes.length; ++i) {
           #container { 
           	width: 100%;
           	height: 100%;
+          	position:fixed;
           }
           #workspace_container { 
           	height:100%;
@@ -368,9 +369,17 @@ for (var i=0; i<attributes.length; ++i) {
 		<div id="toolbar" class="ui-widget-header ui-corner-all">
 			<button id='btn_delete' class="ui-icon-trash">Delete element</button>
 			<button id='btn_connect' class="ui-icon-arrowthick-1-e">Form a connection</button>
+			<button id='btn_info' class='ui-icon-info'>About</button>
 		</div>
 	</div> <!--container -->
+	<div id='wiki_info' display:none;'>
 
+		<iframe style='width:100%; height:100%; display:none;'>
+		
+		</iframe>
+
+
+	</div>
     </body>
 </html>
 
