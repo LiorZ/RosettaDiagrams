@@ -459,8 +459,8 @@ Joint.prototype = {
      * @param {array} args Array of arguments
      */
     callback: function(fnc, scope, args){
-	this._callbacks[fnc].apply(scope, args);
-        return this;
+    	var response = this._callbacks[fnc].apply(scope, args);
+        return response;
     },
     /**
      * Search the registered objects and get the one (if any)
@@ -601,9 +601,11 @@ Joint.prototype = {
 	    return;
 	}
 	if (o){
-	    this.callback("justConnected", o, [capType]);
-	    this.replaceDummy(this["_" + capType], o);
-	    this.addJoint(o);
+	    var result = this.callback("justConnected", o, [capType]);
+	    if ( result ){
+	    	this.replaceDummy(this["_" + capType], o);
+	    	this.addJoint(o);
+	    }
 	}else  {
 		this.callback("floating",this.prev_node,[capType]);
 	}

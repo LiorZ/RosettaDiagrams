@@ -145,15 +145,13 @@ $(function() {
 			var connectionMode = this.model.get("connectionReady");
 			this.eventagg.trigger('hide_menu_now');
 			if ( connectionMode == true ) { 
-				console.log("Connection mode is true");
-				if ( app.pendingConnection == undefined ) {
-//					console.log("Setting source to be ... " + this.model);
-//					app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
-//					console.log(app.pendingConnection);
-				}else { 
+				if ( app.pendingConnection != undefined ) { 
 					if ( this.model.get('type') != 'task_operation' && app.Connections.byTarget(this.model) != undefined ){
 						//Not allowing more than one incoming connection! (PUT HERE INFORMATION MESSAGE)
 						app.pendingConnection = undefined;
+						var info_msg_model = new app.InformationMessage({message:"Can't connect more than one node", type:'error',title:'Error: '});
+						
+						app.EventAgg.trigger('wrong_connection_created',{info_msg: info_msg_model});
 						return;
 					}
 					app.pendingConnection.set("target",this.model);

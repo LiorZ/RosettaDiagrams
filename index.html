@@ -78,7 +78,7 @@ for (var i=0; i<attributes.length; ++i) {
 &lt;Add <%=typeObj.add_protocol%>='<%= attributes.byKey("name").get('value') %>'/&gt;
 		</script>
 		<script type="text/template" id="information_message_template">
-				<div id='information_message_body' class="ui-state-highlight ui-corner-all"
+				<div id='information_message_body' class="<% if (type == 'error') {%> ui-state-error <%} else {%> ui-state-highlight <%}%> ui-corner-all"
 					style="margin-top: 20px; padding: 0 .7em; margin:0px auto; width:50%;">
 					<p>
 						<span class="ui-icon ui-icon-info"

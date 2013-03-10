@@ -6,7 +6,8 @@
 		
 		defaults: {
 			title:'',
-			message:''
+			message:'',
+			type:'information'
 		},
 		
 	});

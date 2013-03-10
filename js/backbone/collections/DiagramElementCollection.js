@@ -37,8 +37,6 @@ var app = app || {};
 		},
 		byJointObject:function(joint_obj){
 			var res= this.filter(function(object){
-				console.log(object);
-				console.log(joint_obj);
 				return object.get('jointObj') == joint_obj.wholeShape;
 			});
 			if ( res == undefined )
