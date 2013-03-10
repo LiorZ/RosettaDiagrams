@@ -9,18 +9,21 @@ $(function( $ ) {
 				jointObjColor: "90-#000-green:1-#fff",
 				codeTemplate: '#xml_movers',
 				add_protocol: 'mover_name',
-				palette_div:'#movers_menu'
+				palette_div:'#movers_menu',
+				wiki_address:'https://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Movers_(RosettaScripts)#'
 			},
 			'filter':{
 				jointObjColor: "90-#000-orange:1-#fff",
 				codeTemplate: '#xml_filters',
 				add_protocol: 'filter_name',
-				palette_div:'#filters_menu'
+				palette_div:'#filters_menu',
+				wiki_address:'https://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_(RosettaScripts)#'
 			},
 			'task_operation': {
 				jointObjColor: "90-#000-blue:1-#fff",
 				codeTemplate: '#xml_task_operations',
-				palette_div: '#task_operations_menu'
+				palette_div: '#task_operations_menu',
+				wiki_address:'https://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_(RosettaScripts)#'
 			
 			}
 	};

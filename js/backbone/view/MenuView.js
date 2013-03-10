@@ -24,7 +24,7 @@ $(function() {
 		},
 		show_info:function(e){
 			var wiki_obj =$('#wiki_info'); 
-			var frame_src = 'https://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Movers_(RosettaScripts)#'+this.model.get('name');
+			var frame_src = app.Attributes[this.model.get('type')].wiki_address+this.model.get('name');
 			wiki_obj.find('iframe').attr('src', frame_src);
 			wiki_obj.dialog('option','title',this.model.get('name')).dialog('open');
 		},
