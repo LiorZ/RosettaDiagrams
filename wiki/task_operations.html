@@ -1,0 +1,518 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0077)https://wiki.rosettacommons.org/index.php/TaskOperations_%28RosettaScripts%29 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>TaskOperations (RosettaScripts) - RosettaWiki</title>
+<meta name="KEYWORDS" content="TaskOperations (RosettaScripts)">
+
+<meta name="robots" content="index,follow">
+<link rel="shortcut icon" href="https://wiki.rosettacommons.org/favicon.ico">
+<link rel="stylesheet" type="text/css" media="print" href="./TaskOperations_files/wikiprintable.css">
+<script type="text/javascript" src="./TaskOperations_files/wikibits.js"></script>
+<style type="text/css">
+/*/*/
+@import "/stylesheets/wikistandard.css";
+a.new, #quickbar a.new { color: #CC2200; }
+#quickbar { position: absolute; top: 4px; left: 4px; border-right: 1px solid gray; }
+#article { margin-left: 152px; margin-right: 4px; }
+
+/* */
+</style>
+</head>
+
+<body bgcolor="#FFFFFF" onload="">
+
+<div id="content">
+
+<div id="article">
+<h1 class="pagetitle">TaskOperations (RosettaScripts)</h1>
+<p>This section defines instances of the TaskOperation class hierarchy when used in the context of the Parser/RosettaScripts. They become available in the DataMap.
+</p><p>TaskOperation classes are used by TaskFactory to configure the behavior of PackerTask when it is generated on-demand for routines that use the "packer" to reorganize/mutate sidechains. When used by certain Movers (at present, the PackRotamersMover and its subclasses), the TaskOperations control what happens during packing, usually by restriction "masks." 
+</p>
+<table border="0" id="toc"><tbody><tr id="toctitle"><td align="center">
+<b>Table of contents</b> 
+</td></tr><tr id="tocinside"><td>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Example">1 Example</a><br></div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#General_TaskOperations">2 General TaskOperations</a><br></div>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Position.2FIdentity_Specification">2.1 Position/Identity Specification</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ReadResfile">2.1.1 ReadResfile</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ReadResfileFromDB">2.1.2 ReadResfileFromDB</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictChainToRepacking">2.1.3 RestrictChainToRepacking</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictToRepacking">2.1.4 RestrictToRepacking</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictResidueToRepacking">2.1.5 RestrictResidueToRepacking</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictResiduesToRepacking">2.1.6 RestrictResiduesToRepacking</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#PreventRepacking">2.1.7 PreventRepacking</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#PreventResiduesFromRepacking">2.1.8 PreventResiduesFromRepacking</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#NoRepackDisulfides">2.1.9 NoRepackDisulfides</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#DesignAround">2.1.10 DesignAround</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictToTermini">2.1.11 RestrictToTermini</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#LayerDesign">2.1.12 LayerDesign</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictToInterface">2.1.13 RestrictToInterface</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictToInterfaceVector">2.1.14 RestrictToInterfaceVector</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ProteinInterfaceDesign">2.1.15 ProteinInterfaceDesign</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#DetectProteinLigandInterface">2.1.16 DetectProteinLigandInterface</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#SetCatalyticResPackBehavior">2.1.17 SetCatalyticResPackBehavior</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictAbsentCanonicalAAS">2.1.18 RestrictAbsentCanonicalAAS</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#DisallowIfNonnative">2.1.19 DisallowIfNonnative</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ThreadSequence">2.1.20 ThreadSequence</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#JointSequence">2.1.21 JointSequence</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictDesignToProteinDNAInterface">2.1.22 RestrictDesignToProteinDNAInterface</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Rotamer_Specification">2.2 Rotamer Specification</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#InitializeFromCommandline">2.2.1 InitializeFromCommandline</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#IncludeCurrent">2.2.2 IncludeCurrent</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ExtraRotamersGeneric">2.2.3 ExtraRotamersGeneric</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RotamerExplosion">2.2.4 RotamerExplosion</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#LimitAromaChi2">2.2.5 LimitAromaChi2</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#AddLigandMotifRotamers">2.2.6 AddLigandMotifRotamers</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Packer_Behavior_Modification">2.3 Packer Behavior Modification</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ProteinLigandInterfaceUpweighter">2.3.1 ProteinLigandInterfaceUpweighter</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Development.2FTesting">2.4 Development/Testing</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#InitializeExtraRotsFromCommandline">2.4.1 InitializeExtraRotsFromCommandline</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#SetRotamerCouplings">2.4.2 SetRotamerCouplings</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#AppendRotamer">2.4.3 AppendRotamer</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#AppendRotamerSet">2.4.4 AppendRotamerSet</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#PreserveCBeta">2.4.5 PreserveCBeta</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictYSDesign">2.4.6 RestrictYSDesign</a><br>
+</p>
+</div>
+</div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Per_Residue_Specification">3 Per Residue Specification</a><br></div>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#OperateOnCertainResidues_Operation">3.1 OperateOnCertainResidues Operation</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Residue_Level_TaskOperations">3.2 Residue Level TaskOperations</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictToRepackingRLT">3.2.1 RestrictToRepackingRLT</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#PreventRepackingRLT">3.2.2 PreventRepackingRLT</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#AddBehaviorRLT">3.2.3 AddBehaviorRLT</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#RestrictAbsentCanonicalAASRLT.2A">3.2.4 RestrictAbsentCanonicalAASRLT*</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResFilters">3.3 ResFilters</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResidueHasProperty">3.3.1 ResidueHasProperty</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResidueLacksProperty">3.3.2 ResidueLacksProperty</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ChainIs">3.3.3 ChainIs</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ChainIsnt">3.3.4 ChainIsnt</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResidueName3Is">3.3.5 ResidueName3Is</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResidueName3Isnt">3.3.6 ResidueName3Isnt</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResidueIndexIs">3.3.7 ResidueIndexIs</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResidueIndexIsnt">3.3.8 ResidueIndexIsnt</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResiduePDBIndexIs">3.3.9 ResiduePDBIndexIs</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResiduePDBIndexIsnt">3.3.10 ResiduePDBIndexIsnt</a><br>
+</p>
+</div>
+</div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Currently_Undocumented">4 Currently Undocumented</a><br></div>
+</td></tr></tbody></table>
+<a name="Example"></a><h1>Example</h1>
+<pre>...
+&lt;TASKOPERATIONS&gt;
+  &lt;ReadResfile name=rrf/&gt;
+  &lt;ReadResfile name=rrf2 filename=resfile2/&gt;
+  &lt;PreventRepacking name=NotBeingUsedHereButPresenceOkay/&gt;
+  &lt;RestrictResidueToRepacking name=restrict_Y100 resnum=100/&gt;
+  &lt;RestrictToRepacking name=rtrp/&gt;
+  &lt;OperateOnCertainResidues name=NoPackNonProt&gt;
+    &lt;PreventRepackingRLT/&gt;
+    &lt;ResidueLacksProperty property=PROTEIN/&gt;
+  &lt;/OperateOnCertainResidues&gt;
+&lt;/TASKOPERATIONS&gt;
+...
+&lt;MOVERS&gt;
+  &lt;PackRotamersMover name=packrot scorefxn=sf task_operations=rrf,NoPackNonProt,rtrp,restrict_Y100/&gt;
+&lt;/MOVERS&gt;
+...
+</pre>
+<p>In the rosetta code, the TaskOperation instances are registered with and then later created by a TaskOperationFactory. The factory calls parse_tag() on the base class virtual function, with no result by default. However, some TaskOperation classes (e.g. OperateOnCertainResidues and ReadResfile above) do implement parse_tag, and therefore their behavior can be configured using additional options in the "XML"/Tag definition.
+</p>
+<a name="General_TaskOperations"></a><h1>General TaskOperations</h1>
+<p>List of current TaskOperation classes in the core library (* indicates use-at-own-risk/not sufficiently tested/still under development):
+</p>
+<a name="Position.2FIdentity_Specification"></a><h2>Position/Identity Specification</h2>
+<a name="ReadResfile"></a><h3>ReadResfile</h3>
+<p>Read a resfile. If a filename is given, read from that file. Otherwise, read the file specified on the commandline with -packing:resfile. 
+</p>
+<pre> &lt;ReadResfile name=(&amp;string) filename=(&amp;string) /&gt;
+</pre>
+<a name="ReadResfileFromDB"></a><h3>ReadResfileFromDB</h3>
+<p>Lookup the resfile in the supplied relational database. This is useful for processing different structures with different resfiles in the same protocol. The database <em>db</em> should have a table <em>table_name</em> with the following schema:
+</p>
+<pre>    CREATE TABLE &lt;table_name&gt; (
+        tag TEXT,
+        resfile TEXT,
+        PRIMARY KEY(tag));
+</pre>
+<p>When this task operation is applied, it tries to look up the <em>resfile</em> string associated with the <em>tag</em> defined by
+</p>
+<pre>    JobDistributor::get_instance()-&gt;current_job()-&gt;input_tag()
+</pre>
+<p>This task operation takes the following parameters:
+</p>
+<ul><li>db=("resfiles.db3" &amp;string) 
+</li><li>table=("resfiles" &amp;string)
+</li></ul>
+<p>When <em>db_mode</em> is "sqlite3", <em>db</em> is the name of the sqlite3 database file.  When <em>db_mode</em> is "mysql", then compile with extras=mysql and supply <em>-mysql:host</em>, <em>-mysql:password</em>, and <em>-mysql:port</em> to the command line, then <em>db</em> is the name of the database on the MySQL server.
+</p>
+<a name="RestrictChainToRepacking"></a><h3>RestrictChainToRepacking</h3>
+<p>Do not allow design in a particular chain
+</p>
+<pre>  &lt;RestrictChainToRepacking name=(&amp;string) chain=(1 &amp;int)/&gt;
+</pre>
+<a name="RestrictToRepacking"></a><h3>RestrictToRepacking</h3>
+<p>Only allow residues to repack. No design.
+</p>
+<pre> &lt;RestrictToRepacking name=(&amp;string) /&gt;
+</pre>
+<a name="RestrictResidueToRepacking"></a><h3>RestrictResidueToRepacking</h3>
+<p>Restrict a single residue to repacking. No design. 
+</p>
+<pre> &lt;RestrictResidueToRepacking name=(&amp;string) resnum=(0 &amp;integer)/&gt;
+</pre>
+<a name="RestrictResiduesToRepacking"></a><h3>RestrictResiduesToRepacking</h3>
+<p>Restrict a string of comma-delimited residues to repacking. No design. 
+</p>
+<pre> &lt;RestrictResiduesToRepacking name=(&amp;string) residues=(0 &amp;integer "," separated)/&gt;
+</pre>
+<a name="PreventRepacking"></a><h3>PreventRepacking</h3>
+<p>Do not allow repacking at all for the specified residue. Freezes residues. 
+</p>
+<pre>&lt;PreventRepacking name=(&amp;string) resnum=(0 &amp;int) /&gt;
+</pre>
+<a name="PreventResiduesFromRepacking"></a><h3>PreventResiduesFromRepacking</h3>
+<p>Restrict a string of residues to repacking. No design.
+Use comma-delimited list of residues  
+</p>
+<pre> &lt;PreventResiduesFromRepacking name=(&amp;string) residues=(0 &amp;integer,"," separated)/&gt;
+</pre>
+<a name="NoRepackDisulfides"></a><h3>NoRepackDisulfides</h3>
+<p>Do not allow disulfides to repack.
+</p>
+<pre> &lt;NoRepackDisulfides name=(&amp;string) /&gt;
+</pre>
+<a name="DesignAround"></a><h3>DesignAround</h3>
+<p>Designs in shells around a user-defined list of residues. Restricts all other residues to repacking.
+&lt;DesignAround name=(&amp;string) design_shell=(8.0 &amp;real) resnums=(comma-delimited list) repack_shell=(8.0&amp;Real) allow_design=(1 &amp;bool)/&gt; 
+</p>
+<ul>
+<li>resnums can be a list of pdb numbers, such as 291B,101A.
+</li><li>repack_shell: what sphere to pack around the target residues. Must be at least as large as design_shell.
+</li><li>allow_design: allow design in the sphere, else restrict to repacking.
+</li></ul>
+<a name="RestrictToTermini"></a><h3>RestrictToTermini</h3>
+<p>Restrict to repack only one or both termini on the specified chain.
+</p><p>&lt;RestrictToTermini chain=(1 &amp;size) repack_n_terminus=(1 &amp;bool) repack_c_terminus=(1 &amp;bool) /&gt;
+</p>
+<a name="LayerDesign"></a><h3>LayerDesign</h3>
+<p>Design residues with selected amino acids depending on the enviroment: layer.
+The layer of each residue is assigned as core, boundary, or surface, which are defined by
+accessible surface area of mainchain + CB. If resfile is read before calling this operation, this operation is not applied for the residues defined by PIKAA.
+Note that this task is not ligand compatible (remove ligand prior to use). 
+</p><p>Selected amino acid types for each layer:
+</p>
+<ul> 
+<li> Core </li>
+<ul>
+<li> Loop: AFILPVWY </li>
+<li> Strand:  FIL VWY </li>
+<li> Helix: AFIL VWY ( P only at the beginning of helix ) </li>
+<li> HelixCapping: DNST </li>
+</ul>
+<li> Boundary</li>
+<ul>
+<li>   Loop: ADEFGIKLNPQRSTVWY </li>
+<li>Strand:  DEF IKLN QRSTVWY </li>
+<li> Helix: ADE  IKLN QRSTVWY ( P only at the beginning of helix ) </li>
+<li> HelixCapping: DNST </li>
+</ul>
+<li> Surface</li>
+<ul>
+<li> Loop: DEGHKNPQRST </li>
+<li> Strand: DE HKN QRST </li>
+<li> Helix: DE HKN QRST  ( P only at the beginning of helix ) </li>
+<li> HelixCapping: DNST </li>
+</ul>
+</ul>
+<p>Option list
+</p>
+<ul> 
+<li> layer ( default "core_boundary_surface" )&nbsp;: layer to be designed, other ex. core_surface means only design core and surface layer</li>
+<li> use_original_non_designed_layer ( default, 0 )&nbsp;: use original sequence for non designed layers, otherwise the residues on the layers turned into Ala </li>
+<li> pore_radius ( default 2.0)&nbsp;: pore radius for calculating accessible surface area </li>
+<li> core ( default 20.0)&nbsp;: residues of which asa is &lt; core are defined as core </li>
+<li> surface ( default 40.0)&nbsp;: residues of which asa is &gt; surface are defined as surface</li>
+</ul>
+<a name="RestrictToInterface"></a><h3>RestrictToInterface</h3>
+<p>Restricts to interface between two protein chains along a specified jump and with a given radius.
+</p>
+<pre> &lt;RestrictToInterface name=(&amp;string) rb_jump=(&amp;integer, 1) distance=(&amp;Real, 8.0) /&gt;
+</pre>
+<a name="RestrictToInterfaceVector"></a><h3>RestrictToInterfaceVector</h3>
+<p>Restricts the task to residues defined as interface by 
+core/pack/task/operation/util/interface_vector_calculate.cc
+Calculates the residues at an interface between two protein chains or jump. The calculation is done in the following manner.  First the point graph is used to find all residues within some big cutoff(CB_dist_cutoff) of residues on the other chain. For these residues near the interface, two metrics are used to decide if they are actually possible interface residues.  The first metric is to itterate through all the side chain atoms in the residue of interest and check to see if their distance is less than the nearby atom cutoff (nearby_atom_cutoff), if so then they are an interface residue.  If a residue does not pass that check, then two vectors are drawn, a CA-CB vector and a vector from CB to a CB atom on the neighboring chain.  The dot product between these two vectors is then found and if the angle between them (vector_angle_cutoff) is less than some cutoff then they are classified as interface. The vector cannot be longer than some other distance (vector_dist_cutoff).
+</p><p>There are two ways of using this task, first way is to use jumps:
+</p>
+<pre>  &lt;RestrictToInterfaceVector name=(&amp; string) jump=(1 &amp; int,int,int... ) CB_dist_cutoff=(10.0 &amp; Real) nearby_atom_cutoff=(5.5 &amp; Real) vector_angle_cutoff=(75.0 &amp; Real) vector_dist_cutoff=(9.0 &amp; Real)/&gt;
+</pre>
+<ul><li>jump - takes a comma separated list of jumps to find the interface between, will find the interface across all jumps defined
+</li></ul>
+<p>OR you can use chains instead
+</p>
+<pre>  &lt;RestrictToInterfaceVector name=(&amp; string) chain1_num=(1 &amp; int) chain2_num=(2 &amp; int) CB_dist_cutoff=(10.0 &amp; Real) nearby_atom_cutoff=(5.5 &amp; Real) vector_angle_cutoff=(75.0 &amp; Real) vector_dist_cutoff=(9.0 &amp; Real)/&gt;
+</pre>
+<ul><li>chain1_num - chain number of the chain on one side of the interface
+</li><li>chain2_num - chain on the other side of the interface from chain1
+</li></ul>
+<p>Common tags, see descriptions above:
+</p>
+<ul><li>CB_dist_cutoff - distance, should keep between 8.0 and 15.0
+</li><li>nearby_atom_cutoff - distance, should be between 4.0 and 8.0
+</li><li>vector_angle_cutoff - angle in degrees, should be between 60 and 90
+</li><li>vector_dist_cutoff - distance, should be between 7.0 and 12.0
+</li></ul>
+<a name="ProteinInterfaceDesign"></a><h3>ProteinInterfaceDesign</h3>
+<p>Restricts to the task that is the basis for protein-interface design.
+</p>
+<ul>
+<li> repack_chain1=(1, &amp;bool)
+</li><li> repack_chain2=(1, &amp;bool)
+</li><li> design_chain1=(0, &amp;bool)
+</li><li> design_chain2=(1, &amp;bool)
+</li><li> allow_all_aas=(0 &amp;bool)
+</li><li> design_all_aas=(0 &amp;bool)
+</li><li> interface_distance_cutoff=(8.0, &amp;Real)
+</li><li> jump=(1&amp;integer) chains below, and above the jump are called chain1 and chain2 above.
+</li></ul>
+<a name="DetectProteinLigandInterface"></a><h3>DetectProteinLigandInterface</h3>
+<p>Setup packer task based on the detect design interface settings from enzyme design. 
+</p>
+<pre>&lt;DetectProteinLigandInterface name=(&amp;string) cut1=(6.0 &amp;Real) cut2=(8.0 &amp;Real) cut3=(10.0 &amp;Real) cut4=(12.0 &amp;Real) design=(1 &amp;bool) resfile=("" &amp;string)/&gt;
+</pre>
+<p>The task will set to design all residues with a Calpha within cut1 of the ligand (specifically the last ligand), or within cut2 of the ligand, where the Calpha-Cbeta vector points toward the ligand. Those residues within cut3 or within cut4 pointing toward the ligand will be set to repack. All others will be set to be fixed. Setting design to false will turn off design at all positions. 
+</p><p>If resfile is specified, the listed resfile will be read in the settings therein applied to the task. Any positions set to "AUTO" (and only those set to AUTO) will be subjected the detect design interface procedure as described above. Note that design=0 will turn off design even for positions where it is permitted in the resfile (use "cut1=0.0 cut2=0.0 design=1" to allow design at resfile-permitted positions while disabling design at all AUTO positions).
+</p>
+<a name="SetCatalyticResPackBehavior"></a><h3>SetCatalyticResPackBehavior</h3>
+<p>Ensures that catalytic residues as specified in a match/constraint file do not get designed. If no option is specified the constrained residues will be set to repack only (not design).
+</p><p>If the option fix_catalytic_aa=1 is set in the tag (or on the
+commandline), catalytic residues will be set to non-repacking.
+</p><p>If the option -enzdes::ex_catalytic_rot &lt;number&gt; is active, the
+extra_sd sampling for every chi angle of the catalytic residues will be
+according to &lt;number&gt;, i.e. one can selectively oversample the catalytic
+residues
+</p>
+<a name="RestrictAbsentCanonicalAAS"></a><h3>RestrictAbsentCanonicalAAS</h3>
+<p>Restrict design to user-specified residues. If resnum is left as 0, the restriction will apply throughout the pose. 
+</p>
+<pre> &lt;RestrictAbsentCanonicalAAS name=(&amp;string) resnum=(0 &amp;integer) keep_aas=(&amp;string) /&gt;
+</pre>
+<a name="DisallowIfNonnative"></a><h3>DisallowIfNonnative</h3>
+<p>Restrict design to not include a residue as an possibility in the task at a position unless it is the starting residue. If resnum is left as 0, the restriction will apply throughout the pose. 
+</p>
+<pre> &lt;DisallowIfNonnative name=(&amp;string) resnum=(0 &amp;integer) disallow_aas=(&amp;string) /&gt;
+</pre>
+<ul><li>disallow_aas takes a string of one letter amino acid codes, no separation needed. For example disallow_aas=GCP would prevent Gly, Cys, and Pro from being designed unless they were the native amino acid at a position.
+</li></ul>
+<p>This task is useful when you are designing in a region that has Gly and Pro and you do not want to include them at other positions that aren't already Gly or Pro.
+</p><p><br>
+</p>
+<a name="ThreadSequence"></a><h3>ThreadSequence</h3>
+<p>Threads a fasta-formatted sequence onto the source pdb. target_sequence=(&amp;string), start_res=(1&amp;int)
+</p><p>and call PackRotamersMover. Notice that this only packs the threaded sequence, holding everything else constant. The target sequence can contain 'wildcard' positions that are then designed. For instance:
+</p><p>target_sequence="TFYxxxHFS" will thread the two specified tripeptides and allow design in the intervening tripeptide. The string "TFY   HFS" has the same effect as the one above.
+</p>
+<a name="JointSequence"></a><h3>JointSequence</h3>
+<pre>&lt;JointSequence use_current=(true &amp;bool)  use_native=(false &amp;bool) filename=(&amp;string) native=(&amp;string) use_natro=(false &amp;bool) /&gt;
+</pre>
+<p>Prohibit designing to residue identities that aren't found at that position in any of the listed structures:
+</p>
+<ul><li> use_current - Use residue identities from the current structure (input pose to apply() of the taskoperation)
+</li><li> use_native - Use residue identities from the structure listed with -in:file:native
+</li><li> filename - Use residue identities from the listed file
+</li><li> native - Use residue identities from the listed file
+</li></ul>
+<p>If use_natro is true, the task operation also adds the rotamers from the native structures (use_native/native) in the rotamer library.
+</p>
+<a name="RestrictDesignToProteinDNAInterface"></a><h3>RestrictDesignToProteinDNAInterface</h3>
+<p>Restrict Design and repacking to protein residues around the defined DNA bases 
+</p>
+<pre>&lt;RestrictDesignToProteinDNAInterface name=(&amp;string) dna_defs=(chain.pdb_num.base) base_only=(1, &amp;bool) z_cutoff=(0.0, &amp;real) /&gt;
+</pre>
+<ul><li> dna_defs: dna positions to design around, separated by comma (e.g. C.405.THY,C.406.GUA). The definitions should refer only to one DNA chain, the complementary bases are automatically retrieved. Bases are ADE, CYT, GUA, THY. The base (and its complementary) in the starting structure will be mutated according to the definition, if not prevented from another task operation.
+</li><li> base_only: only residues within reach of the DNA bases are considered
+</li><li> z_cutoff: limit the protein interface positions to the ones that have a projection of their distance vector on DNA axis lower than this threshold. It prevents designs that are too far away along the helical axis
+</li></ul>
+<a name="Rotamer_Specification"></a><h2>Rotamer Specification</h2>
+<a name="InitializeFromCommandline"></a><h3>InitializeFromCommandline</h3>
+<p>Reads commandline options. For example, -ex1 -ex2 (does not read resfile from command line options)
+This taskoperation will complain about an unimplemented method, but you can safely ignore the message.
+</p>
+<pre> &lt;InitializeFromCommandline name=(&amp;string) /&gt;
+</pre>
+<a name="IncludeCurrent"></a><h3>IncludeCurrent</h3>
+<p>Includes current rotamers (eg - from input pdb) in the rotamer set. These rotamers will be lost after a packing run, so they are only effective upon initial loading of a pdb!
+</p>
+<pre> &lt;IncludeCurrent name=(&amp;string) /&gt;
+</pre>
+<a name="ExtraRotamersGeneric"></a><h3>ExtraRotamersGeneric</h3>
+<p>During packing, extra rotamers can be used to increase sampling.  Use this TaskOperation to specify for all residues at once what extra rotamers should be used. Note: The <em>extrachi_cutoff</em> is used to determine how many neighbors a residue must have before the extra rotamers are applied.  For example of you want to apply extra rotamers to all residues, set <em>extrachi_cutoff=0</em>.
+See the Extra Rotamer Commands section on the  <a href="http://graylab.jhu.edu/Rosetta.Developer.Documentation/all_else/d1/d97/resfiles.html" class="external" title="http://graylab.jhu.edu/Rosetta.Developer.Documentation/all else/d1/d97/resfiles.html">resfile syntax and convention</a><span class="urlexpansion"> (<i>http://graylab.jhu.edu/Rosetta.Developer.Documentation/all_else/d1/d97/resfiles.html</i>)</span> page for additional details.
+</p>
+<pre> &lt;ExtraRotamersGeneric name=(&amp;string)
+ex1=(0 &amp;boolean) ex2=(0 &amp;boolean) ex3=(0 &amp;boolean) ex4=(0 &amp;boolean)
+ex1aro=(0 &amp;boolean) ex2aro=(0 &amp;boolean) ex1aro_exposed=(0 &amp;boolean) ex2aro_exposed=(0 &amp;boolean)
+ex1_sample_level=(7 &amp;Size) ex2_sample_level=(7 &amp;Size) ex3_sample_level=(7 &amp;Size) ex4_sample_level=(7 &amp;Size)
+ex1aro_sample_level=(7 &amp;Size) ex2aro_sample_level=(7 &amp;Size) ex1aro_exposed_sample_level=(7 &amp;Size) ex2aro_exposed_sample_level=(7 &amp;Size) 
+exdna_sample_level=(7 &amp;Size)
+extrachi_cutoff=(18 &amp;Size)/&gt; 
+</pre>
+<a name="RotamerExplosion"></a><h3>RotamerExplosion</h3>
+<p>Sample residue chi angles much more finely during packing. Currently hardcoded to use three 1/3 step standard deviation. 
+</p><p><em>Note: This might actually need to be called as RotamerExplosionCreator in the xml</em>
+</p>
+<pre> &lt;RotamerExplosionCreator name=(&amp;string) resnum=(&amp;Integer) chi=(&amp;Integer) /&gt;
+</pre>
+<a name="LimitAromaChi2"></a><h3>LimitAromaChi2</h3>
+<p>Prevent to use the rotamers of  PHE, TYR and HIS that have chi2 far from 90.
+</p>
+<ul> 
+<li> chi2max ( default 110.0 )&nbsp;: max value of chi2 to be used </li>
+<li> chi2min ( default 70.0 ): min value of chi2 to be used  </li>
+</ul>
+<a name="AddLigandMotifRotamers"></a><h3>AddLigandMotifRotamers</h3>
+<p>Using a library of protein-ligand interactions, identify possible native-like interactions to the ligand and add those rotamers to the packer, possibly with a bonus.
+</p><p>Required command line flags:
+</p>
+<ul><li>A
+</li><li>B
+</li><li>C
+</li><li>D
+</li><li>E
+</li><li>F
+</li><li>G
+</li></ul>
+<p>Example: 
+</p>
+<pre>&lt;AddLigandMotifRotamers name=(&amp;string)/&gt;
+</pre>
+<p>Since it only makes sense to run AddLigandMotifRotamers once (it takes a very long time), I have not made the options parseable.  I can do that if there's interest--the code would take a minute--but I can't see an advantage. You can however read in multiple weight files in order to do motif weight ramping. -Matt
+</p><p><br>
+</p>
+<a name="Packer_Behavior_Modification"></a><h2>Packer Behavior Modification</h2>
+<a name="ProteinLigandInterfaceUpweighter"></a><h3>ProteinLigandInterfaceUpweighter</h3>
+<p>Specifically upweight the strength of the protein-ligand interaction energies by a given factor.
+</p>
+<pre>&lt;ProteinLigandInterfaceUpweighter name=(&amp;string) interface_weight=(1.0 &amp;Real)/&gt;
+</pre>
+<p><br>
+</p>
+<a name="Development.2FTesting"></a><h2>Development/Testing</h2>
+<a name="InitializeExtraRotsFromCommandline"></a><h3>InitializeExtraRotsFromCommandline</h3>
+<p>Under development and untested. Use at your own risk.
+</p>
+<a name="SetRotamerCouplings"></a><h3>SetRotamerCouplings</h3>
+<p>Under development and untested. Use at your own risk.
+</p>
+<a name="AppendRotamer"></a><h3>AppendRotamer</h3>
+<p>Under development and untested. Use at your own risk.
+</p>
+<a name="AppendRotamerSet"></a><h3>AppendRotamerSet</h3>
+<p>Under development and untested. Use at your own risk.
+</p>
+<a name="PreserveCBeta"></a><h3>PreserveCBeta</h3>
+<p>Under development and untested. Use at your own risk.
+</p>
+<a name="RestrictYSDesign"></a><h3>RestrictYSDesign</h3>
+<p>Restrict amino acid choices during design to Tyr and Ser. This is similar to the restricted YS alphabet used by Sidhu's group during in vitro evolution experiments.
+Under development and untested. Use at your own risk.
+</p>
+<a name="Per_Residue_Specification"></a><h1>Per Residue Specification</h1>
+<a name="OperateOnCertainResidues_Operation"></a><h2>OperateOnCertainResidues Operation</h2>
+<p>Allows specification of <a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#Residue_Level_TaskOperations" title="">Residue Level Task Operations</a> based on residue properties specified with <a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/TaskOperations_%28RosettaScripts%29#ResFilters" title="">ResFilters</a>.
+</p><p>Example:
+</p>
+<pre>&lt;OperateOnCertainResidues name=PROTEINnopack&gt;
+  &lt;PreventRepackingRLT/&gt; //Only one Residue level task per OperateOnCertainResidues block
+  &lt;ResidueHasProperty property=PROTEIN/&gt; //Only one ResFilter per OperateOnCertainResidues block
+&lt;/OperateOnCertainResidues&gt;
+</pre>
+<a name="Residue_Level_TaskOperations"></a><h2>Residue Level TaskOperations</h2>
+<p>Use these as a subtag for special OperateOnCertainResidues TaskOperation. Only one may be used per OperateOnCertainResidues
+</p>
+<a name="RestrictToRepackingRLT"></a><h3>RestrictToRepackingRLT</h3>
+<a name="PreventRepackingRLT"></a><h3>PreventRepackingRLT</h3>
+<a name="AddBehaviorRLT"></a><h3>AddBehaviorRLT</h3>
+<a name="RestrictAbsentCanonicalAASRLT.2A"></a><h3>RestrictAbsentCanonicalAASRLT*</h3>
+<a name="ResFilters"></a><h2>ResFilters</h2>
+<p>Use these as a subtag for special OperateOnCertainResidues TaskOperation. Only one may be used per OperateOnCertainResidues
+</p>
+<a name="ResidueHasProperty"></a><h3>ResidueHasProperty</h3>
+<p>settings:
+</p>
+<ul><li>property. e.g. DNA, PROTEIN, POLAR, CHARGED (one only)
+</li></ul>
+<a name="ResidueLacksProperty"></a><h3>ResidueLacksProperty</h3>
+<a name="ChainIs"></a><h3>ChainIs</h3>
+<p>Selects a set of residues based on their chain letter in the original PDB.
+</p>
+<ul><li>chain: defaults to "A"
+</li></ul>
+<a name="ChainIsnt"></a><h3>ChainIsnt</h3>
+<p>Excludes a set of residues based on their chain letter in the original PDB.
+</p>
+<ul><li>chain: defaults to "A"
+</li></ul>
+<a name="ResidueName3Is"></a><h3>ResidueName3Is</h3>
+<ul><li>name3: eg arg,lys,gua  (one only)
+</li></ul>
+<a name="ResidueName3Isnt"></a><h3>ResidueName3Isnt</h3>
+<a name="ResidueIndexIs"></a><h3>ResidueIndexIs</h3>
+<ul><li>indices
+</li></ul>
+<p>comma-separated list of rosetta residue indices (1 to nres) e.g. indices=1,2,3,4,33
+</p>
+<a name="ResidueIndexIsnt"></a><h3>ResidueIndexIsnt</h3>
+<a name="ResiduePDBIndexIs"></a><h3>ResiduePDBIndexIs</h3>
+<ul><li>indices: comma-separated list of chain.pos identifiers e.g. indices=A.2,C.100,D.-10
+</li></ul>
+<a name="ResiduePDBIndexIsnt"></a><h3>ResiduePDBIndexIsnt</h3>
+<a name="Currently_Undocumented"></a><h1>Currently Undocumented</h1>
+<p>The following TaskOperations are available through RosettaScripts, but are not currently documented. See the code (particularly the respective parse_tag() and apply() functions) for details. (Some may be undocumented as they are experimental/not fully functional.)
+</p>
+<ul><li> AddRigidBodyLigandConfs
+</li><li> OptCysHG
+</li><li> OptH
+</li><li> PreventChainFromRepacking
+</li><li> ReadResfileAndObeyLengthEvents
+</li><li> ReplicateTask
+</li><li> RestrictByCalculators
+</li><li> RestrictConservedLowDdg
+</li><li> RestrictNonSurfaceToRepacking
+</li><li> RestrictToNeighborhood
+</li><li> SeqprofConsensus
+</li><li> WatsonCrickRotamerCouplings
+</li></ul>
+<p>Residue Level TaskOperations:
+</p>
+<ul><li> DisallowIfNonnativeRLT
+</li></ul>
+
+
+<br></div>
+<!-- Served by plug in 0.17 secs. -->
+</body></html>
