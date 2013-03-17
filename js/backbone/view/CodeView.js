@@ -11,7 +11,6 @@ $(function() {
 		},
 		
 		render: function() { 
-			console.log("rendering code ... ");
 			this.$('#xml_movers').empty();
 			this.$('#xml_filters').empty();
 			this.$('#xml_task_operations').empty();
