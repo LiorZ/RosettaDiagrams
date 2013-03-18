@@ -25,11 +25,22 @@ $(function( $ ) {
 				palette_div: '#task_operations_menu',
 				wiki_address:'wiki/task_operations.html#'
 			
+			},
+			'container':{
+				jointObjColor: "90-#000-yellow:1-#fff",
+				codeTemplate: '#xml_movers',
+				palette_div: '#containers_menu',
 			}
 	};
 	consts.ATTR_IN_DIAGRAM_VIEW = 5;
 	consts.LENGTH_DIAGRAM_TITLE = 20;
 	consts.MENU_TIMEOUT = 2000;
+	consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH = 150;
+	consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT = 100;
+	consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH = 90
+	consts.DIAGRAM_ELEMENT_SMALL_SCALE_HEIGHT = 60;
+	consts.DIAGRAM_CONTAINER_DEFAULT_WIDTH = 300;
+	consts.DIAGRAM_CONTAINER_DEFAULT_HEIGHT = 400;
 	app.EventAgg = _.extend({}, Backbone.Events);
 	
 	app.AppView = Backbone.View.extend({
@@ -73,7 +84,12 @@ $(function( $ ) {
 			app.menuView = new app.MenuView({eventagg: app.EventAgg});
 		},
 		addElementView: function(element) {
-			var view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
+			var view = 0;
+			if ( element.get('type') == 'container' )
+				view = new app.DiagramContainerView({model: element, eventagg: app.EventAgg});
+			else{
+				view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
+			}
 			view.render();
 		},
 		

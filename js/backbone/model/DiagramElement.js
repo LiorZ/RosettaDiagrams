@@ -14,7 +14,10 @@
 			jointObj: undefined,
 			attributes: undefined,
 			typeObj: undefined,
-			type:undefined
+			type:undefined,
+			width: 0, // defined in the initialize section, getting an undefined value here .. 
+			height: 0,
+			container:undefined //an element that contains that particular element
 		},
 		
 		initialize: function() { 
@@ -32,13 +35,17 @@
 			
 			this.set('attributes', new_attr_list);
 			this.set('typeObj',app.Attributes[this.get('type')]);
+			this.set('width',consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH);
+			this.set('height',consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT);
+			
+			
 			this.listenTo(new_attr_list,"change",this.attributes_changed);
 			this.listenTo(new_attr_list,"add",this.attributes_changed);
 			this.listenTo(new_attr_list,"remove",this.attributes_changed);
 		},
 		
 		attributes_changed: function() {
-			this.trigger("change");
+			this.trigger("change:attributes");
 		},
 		add_attributes:function(json_attrs) {
 			var attributes = this.get('attributes');

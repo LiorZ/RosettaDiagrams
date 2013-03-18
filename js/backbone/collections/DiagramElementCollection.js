@@ -51,5 +51,21 @@ var app = app || {};
 	});
 	app.Elements = new app.DiagramElementsOnCanvas();
 	app.PaletteElements = new app.DiagramElementList();
+	
+	//handle the case where we want to add DiagramContainers where applicable.
+	app.PaletteElements.add = function(model) {
+		if ( model instanceof Array){
+			var iterator = function(obj){ return obj.type=='container'};
+			var containers = _.filter(model,iterator);
+			if (containers.length > 0) { 
+				for(var i=0; i<containers.length; ++i) {
+					var elem = new app.DiagramContainer(containers[i]);
+					Backbone.Collection.prototype.add.call(this, elem);
+				}
+			}
+			model =_.reject(model,iterator);
+		}
+		Backbone.Collection.prototype.add.call(this, model);
+	};
 	app.PaletteElements.url='js/json/elements.json';
 }());

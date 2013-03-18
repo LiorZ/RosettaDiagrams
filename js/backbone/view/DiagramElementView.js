@@ -6,8 +6,9 @@ $(function() {
 		eventagg: undefined,
 		initialize: function(options) {
 			var type = this.model.get('typeObj');
+			
 			var jointObj = Joint.dia.uml.State.create({
-				  rect: {x: this.model.get('x'), y: this.model.get('y'), width: 150, height: 100},
+				  rect: {x: this.model.get('x'), y: this.model.get('y'), width: this.model.get('width'), height:this.model.get('height')},
 				  label: this.model.get('name').slice(0,consts.LENGTH_DIAGRAM_TITLE),
 				  attrs: {
 				    fill: type.jointObjColor
@@ -21,16 +22,46 @@ $(function() {
 			this.$el = jQuery(jointObj.wrapper.node);
 			this.eventagg = options.eventagg;
 			this.model.set('jointObj',jointObj);
-			this.listenTo(this.model,"change",this.model_changed);
+			this.listenTo(this.model,"change:name",this.model_changed);
+			this.listenTo(this.model,"change:attributes",this.refresh_attributes);
 			this.listenTo(this.model, 'destroy',this.destroyElement);
-
-			
+			this.listenTo(this.model,'embeddedInElement', this.embed_in_element);
+			this.listenTo(this.model, 'embeddedUnElement',this.unembed_in_element);
 			_.bindAll(this, "toggleHighlight");
 			this.eventagg.bind("toggleDeleteMode",this.toggleDeleteMode);
 			
 			this.eventagg.bind('editDiagramElement',this.toggleHighlight);
+			var context = this;
+			jointObj.registerCallback('elementMoved',function(new_loc){
+				context.model.set('x',new_loc.x);
+				context.model.set('y',new_loc.y);
+				this.embed();
+			});
 			this.model_changed();
+			this.refresh_attributes();
 		},
+		
+		unembed_in_element:function() {
+			this.model.set({height: consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT, width:consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH});
+			var jointObj = this.model.get('jointObj');
+			this.listenTo(this.model,"change:attributes",this.refresh_attributes);
+			this.refresh_attributes();
+			jointObj.scale(1,1);
+		},
+		
+		embed_in_element:function() {
+			
+			var ratioH = consts.DIAGRAM_ELEMENT_SMALL_SCALE_HEIGHT/consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT;
+			var ratioW = consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH/consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH;
+			
+			this.model.set({height: consts.DIAGRAM_ELEMENT_SMALL_SCALE_HEIGHT, width:consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH});
+			var jointObj = this.model.get('jointObj');
+			this.stopListening(this.model,"change:attributes");
+			jointObj.properties.actions.inner = [];
+			jointObj.scale(ratioW,ratioH);
+			jointObj.centerLabel();
+		},
+		
 		destroyElement:function() {
 			var jointObj = this.model.get('jointObj');
 			for (var i=0; i<jointObj.inner.length; ++i) {
@@ -64,7 +95,6 @@ $(function() {
 		model_changed: function(){
 			var jointObj = this.model.get('jointObj');
 			jointObj.properties.label = this.model.get('name').slice(0,consts.LENGTH_DIAGRAM_TITLE);
-			this.refresh_attributes();
 			jointObj.zoom();
 		},
 		
@@ -79,7 +109,6 @@ $(function() {
 				alert("No defined attributes!");
 				return;
 			}
-			console.log(attributes);
 			var jointObj = this.model.get('jointObj');
 			jointObj.properties.actions.inner = [];
 			
@@ -87,6 +116,8 @@ $(function() {
 				jointObj.properties.actions.inner.push(attributes[i].get("key"));
 				jointObj.properties.actions.inner.push(attributes[i].get("value"));
 			}
+			jointObj.zoom();
+
 			
 		},
 		events: {

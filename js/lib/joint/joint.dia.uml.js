@@ -135,7 +135,16 @@ uml.State = Element.extend({
 	tbb = t.getBBox();
 	t.translate(bb.x - tbb.x + p.labelOffsetX,
 		    bb.y - tbb.y + p.labelOffsetY);
+	this.centerLabel(t);
 	return t;
+    },
+    
+    centerLabel:function(label) {
+    	bb = this.getBBox();
+    	var bb_width = bb.width;
+    	var centerX = bb.x + bb_width/2;
+    	if ( label )
+    		label.translate(centerX - label.attrs.x,0);
     },
     getSwimlaneElement: function(){
 	var bb = this.wrapper.getBBox(), p = this.properties;

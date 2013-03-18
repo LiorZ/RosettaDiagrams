@@ -221,6 +221,11 @@ Element.prototype = {
 	    ghosting: false,		// enable ghosting?
 	    toolbox: false		// enable toolbox?
 	};
+	this._callbacks = {
+			elementMoved: function(new_location){},
+			elementEmbedded: function(element){},
+			elementUnEmbedded:function(element){},
+	}
 
 	this.paper = Joint.paper();
 	dia.register(this); // register me in the global table
@@ -277,7 +282,24 @@ Element.prototype = {
 	this._opt.ghosting = !this._opt.ghosting;
 	return this;
     },
-
+    
+    
+    
+    /**
+     * Registers a callback for an element. Can be either of the following:
+     * 'elementMoved' - function(new_location) {...} is called when an element has a new location. this points to moved element.
+     * @param callback
+     * @param func
+     */
+    registerCallback: function(callback, func) {
+    	this._callbacks[callback] = func;
+    },
+    
+    
+    callback: function(fnc, scope, args){
+    	this._callbacks[fnc].apply(scope, args);
+            return this;
+    },
     /**
      * Create a ghost shape which is used when dragging.
      * (in the case _opt.ghosting is enabled)
@@ -380,7 +402,7 @@ Element.prototype = {
      * @private
      */
     dragger: function(e){
-	if (!this.wholeShape._opt.draggable) return;
+	if (!this.wholeShape._opt.draggable || e.button != 0) return;
 	dia._currentDrag = this.wholeShape;
 	if (dia._currentDrag._opt.ghosting){
 	    dia._currentDrag.createGhost();
@@ -731,11 +753,19 @@ Element.prototype = {
 		// only one shape, so if I have been deleted from my parent,
 		// I am free, and further, if I know where to embed -> do not search deeper
 		if (embedTo) break;
+		//If I got here, didn't find any element to be contained in .. 
+	    shape.callback('elementUnEmbedded',shape,[this]);
+
 	    }
 	}
 
 	// embed if possible
-	embedTo && embedTo.addInner(this);
+	if ( embedTo ) {
+		console.log("Embedded");
+		embedTo.addInner(this);
+		embedTo.callback('elementEmbedded',embedTo,[this]);
+	}
+	
 	return this;
     },
 
@@ -749,10 +779,22 @@ Element.prototype = {
 	    this.parentElement.delInner(this);
 	    this.parentElement = null;
 	    this.properties.parent = undefined;
+	    this.parentElement.callback('elementUnEmbedded',this.parentElement,[this]);
 	}
 	return this;
     },
 
+    /**Resizes element
+     * 
+     */
+    
+    resize:function(new_width,new_height) {
+    	var old_width = this.wrapper.attrs.width,
+    	old_height = this.wrapper.attrs.height;
+    	var width_ratio = new_width/old_width;
+    	var height_ratio = new_height/old_height;
+    	this.scale(width_ratio,height_ratio);
+    },
     /**
      * Scale element.
      * @methodOf Joint.dia.Element#
@@ -764,7 +806,7 @@ Element.prototype = {
 	// save translation
 	this.properties.sx = sx;
 	this.properties.sy = sy;
-
+	
 	this.shadow && this.shadow.scale.apply(this.shadow, arguments);
 	this.wrapper.scale.apply(this.wrapper, arguments);
 	this.zoom.apply(this, arguments);
@@ -897,8 +939,10 @@ Element.mouseUp = function(e){
 	dia._currentZoom.removeToolbox();
 	dia._currentZoom.addToolbox();
 	dia._currentZoom.toFront();
+	
     }
-
+    if ( dia._currentDrag )
+    	dia._currentDrag.callback('elementMoved',dia._currentDrag,[{x:dia._currentDrag.wrapperPos().x, y: dia._currentDrag.wrapperPos().y}]);
     dia._currentDrag = false;
     dia._currentZoom = false;
 };

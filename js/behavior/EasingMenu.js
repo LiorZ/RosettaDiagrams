@@ -8,7 +8,6 @@
 		  var timer_in = undefined;
 		  var time_out = undefined;
 			$(this).mouseenter(function(e) {
-				console.log(this);
 				var elem = this;
 				time_out = setTimeout(function() {$(elem).animate(start_loc, start_method ); }, 200);
 				if ( timer_in )
