@@ -5,18 +5,22 @@ $(function() {
 		el:'#code',
 		
 		initialize: function() {
-			this.listenTo(app.Elements,'change',this.render);
-			this.listenTo(app.Connections,'change',this.render);
-			this.listenTo(app.Elements,'remove',this.render);
+			this.listenTo(app.MainDiagram,'change:element',this.render);
+			this.listenTo(app.MainDiagram,'change:connection',this.render);
+			this.listenTo(app.MainDiagram,'remove:element',this.render);
+			this.listenTo(app.MainDiagram,'remove:connection',this.render);
+			this.listenTo(app.MainDiagram,'add:element',this.render);
+			this.listenTo(app.MainDiagram,'add:connection',this.render);
 		},
 		
 		render: function() { 
 			this.$('#xml_movers').empty();
 			this.$('#xml_filters').empty();
 			this.$('#xml_task_operations').empty();
-			app.Elements.each( function(element) {
-				var codeView = new app.XMLMoversView({model: element});
-				var htmlCode = codeView.render().el;
+			var mainElements = app.MainDiagram.get('elements');
+			mainElements.each( function(element) {
+				var htmlCode = element.get_declaration_string();
+				console.log(htmlCode);
 				var typeObj = element.get('typeObj');
 				this.$(typeObj.codeTemplate).append(htmlCode);
 			});
@@ -28,28 +32,11 @@ $(function() {
 		},
 		
 		renderConnections: function() {
-			var order=[];
 			this.$('#xml_protocols').empty();
-			app.Connections.chain().filter(function (elem) {
-				return elem.get('type') == Joint.dia.uml.dependencyArrow;
-				
-			} ).each(function(con){
-				for(var i=0; i<order.length; ++i ){
-					if (order[i]==con.get('source')){
-						order.splice(i+1,0,con.get('target'));
-						return;
-					}else if (order[i] == con.get('target') ) {
-						order.splice(i,0,con.get('source'));
-						return;
-					}
-				}
-				
-				order.push(con.get('source'))
-				order.push(con.get('target'));
-			});
+			var order = app.MainDiagram.get_ordered_elements();
 			for(var i=0; i<order.length; ++i){ 
-				var protocolView = new app.XMLProtocolView({model: order[i]});
-				var htmlCode = protocolView.render().el;
+				//var protocolView = new app.XMLProtocolView({model: order[i]});
+				var htmlCode = order[i].get_protocols_string();
 				this.$('#xml_protocols').append(htmlCode);
 			}
 		}

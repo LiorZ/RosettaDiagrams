@@ -2,7 +2,7 @@ var app = app || {};
 
 (function() {
 	
-	var DiagramConnectionList = Backbone.Collection.extend({
+	app.DiagramConnectionList = Backbone.Collection.extend({
 		model: app.DiagramConnection,
 		bySource:function(elem) {
 			var returned_arr = this.filter(function(dia) {return (dia.get('source') == elem);});
@@ -20,5 +20,4 @@ var app = app || {};
 		},
 	});
 	
-	app.Connections = new DiagramConnectionList();
 }());

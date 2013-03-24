@@ -42,9 +42,10 @@ $(function( $ ) {
 	consts.DIAGRAM_CONTAINER_DEFAULT_WIDTH = 300;
 	consts.DIAGRAM_CONTAINER_DEFAULT_HEIGHT = 400;
 	app.EventAgg = _.extend({}, Backbone.Events);
-	
+	app.MainDiagram = new app.Diagram();
+	app.ActiveDiagram = app.MainDiagram;
 	app.AppView = Backbone.View.extend({
-		
+		main_joint: undefined,
 		el: '#container',
 		connectionReady: false,
 		
@@ -59,14 +60,28 @@ $(function( $ ) {
 			}
 		},
 		initialize: function() {
-			this.listenTo(app.Elements,'add',this.addElementView);
-			this.listenTo(app.Connections,'add', this.addConnectionView);
+			this.add_element_listeners();
 			$(document).bind('keyup',this.handle_key_press);
 			this.addPropertiesView();
 			this.addCodeView();
 			this.addMenuView();
 			this.addPaletteView();
 			this.addInformationMessageContainer();
+			_.bindAll(this.show_main_canvas);
+			this.listenTo(app.EventAgg,'show_main_canvas',this.show_main_canvas);
+			this.listenTo(app.EventAgg,'switch_diagram',this.switch_diagram);
+		},
+		
+		add_element_listeners: function() {
+			this.listenTo(app.ActiveDiagram,'add:element',this.addElementView);
+			this.listenTo(app.ActiveDiagram,'add:connection', this.addConnectionView);
+		},
+		
+		switch_diagram: function(diagram) {
+			this.stopListening(app.ActiveDiagram);
+			app.ActiveDiagram = diagram;
+			Joint.paper(diagram.get('jointObj'));
+			this.add_element_listeners();
 		},
 		addPaletteView:function() {
 			app.paletteView = new app.PaletteView({model: app.PaletteElements});
@@ -83,6 +98,7 @@ $(function( $ ) {
 		addMenuView: function() {
 			app.menuView = new app.MenuView({eventagg: app.EventAgg});
 		},
+		
 		addElementView: function(element) {
 			var view = 0;
 			if ( element.get('type') == 'container' )
@@ -95,30 +111,29 @@ $(function( $ ) {
 		
 		addConnectionView: function(connection) {
 			var view = new app.DiagramConnectionView({model:connection});
-			var connectionObj = connection.get('jointObj');
 			view.render();
-			var arr = [];
-			app.Elements.each(
-					function(element) {
-						var jointObj = element.get('jointObj');
-						arr.push(jointObj);
-						//Set the connection mode off:
-						element.set('connectionReady',false);
-					}
-			);
-			connectionObj.register(arr);
+//			app.Elements.each(
+//					function(element) {
+//						var jointObj = element.get('jointObj');
+//						arr.push(jointObj);
+//						//Set the connection mode off:
+//						element.set('connectionReady',false);
+//					}
+//			);
+//			connectionObj.register(arr);
 		},
 		addInformationMessageContainer:function() {
 			app.InformationMessageContainer = new app.InformationMessageView();
 		},
 		
 		render: function() {
-			Joint.paper("world");
+			this.main_joint = Joint.paper("world");
+			app.MainDiagram.set('jointObj',this.main_joint);
 			this.$("#attribute_list").tablesorter();
 			this.$("button").button();
 			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
 			this.$("#menu").accordion('refresh');
-		}
+		},
 		
 	});
 	

@@ -17,8 +17,8 @@ $(function() {
 				this.eventagg = options.eventagg;
 				_.bindAll(this, "editDiagramElement");
 				this.eventagg.bind('editDiagramElement',this.editDiagramElement);
-				this.listenTo(app.Elements,'change',this.render);
-				this.listenTo(app.Connections,'change',this.render);
+				this.listenTo(app.MainDiagram,'change:element',this.render);
+				this.listenTo(app.MainDiagram,'change:connection',this.render);
 				this.model = options.model;
 //				this.position_in_center();
 
@@ -36,7 +36,7 @@ $(function() {
 			var new_pos = win_width/2 - my_width/2;
 			this.$el.css('left',new_pos+'px');
 		},
-		render: function() { 
+		render: function() {
 			
 			this.$('#attribute_list_body').empty();
 			this.$("#mover_name").empty();

@@ -17,7 +17,7 @@
 			type:undefined,
 			width: 0, // defined in the initialize section, getting an undefined value here .. 
 			height: 0,
-			container:undefined //an element that contains that particular element
+			subdiagram:undefined //an element that contains that particular element
 		},
 		
 		initialize: function() { 
@@ -37,13 +37,29 @@
 			this.set('typeObj',app.Attributes[this.get('type')]);
 			this.set('width',consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH);
 			this.set('height',consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT);
+			this.set('subdiagram',new app.Diagram());
+			var subdiagram = this.get('subdiagram');
 			
-			
+			this.listenTo(subdiagram,'add:element',this.element_added_subdiagram);
+			this.listenTo(subdiagram,'add:connection',this.connection_added);
 			this.listenTo(new_attr_list,"change",this.attributes_changed);
 			this.listenTo(new_attr_list,"add",this.attributes_changed);
 			this.listenTo(new_attr_list,"remove",this.attributes_changed);
+			this.listenTo(app.EventAgg,'connection_mode_activated',this.connection_mode_activated);
+			this.listenTo(app.EventAgg,'connection_mode_deactivated',this.connection_mode_deactivated);
 		},
-		
+		element_added_subdiagram:function(element) {
+			this.trigger('add:element',element);
+		},
+		connection_added: function(con) {
+			this.trigger('add:connection',con);
+		},
+		connection_mode_deactivated:function(options) {
+			this.set('connectionReady',false);
+		},
+		connection_mode_activated:function(options) {
+			this.set('connectionReady',true);
+		},
 		attributes_changed: function() {
 			this.trigger("change:attributes");
 		},
@@ -77,6 +93,43 @@
 			}
 			
 			
+		},
+		get_nested_elements_string:function() {
+			var subdiagram = this.get('subdiagram');
+			var string ='';
+			if (subdiagram == undefined || subdiagram.is_empty() )
+				return undefined;
+			var ordered_elements = subdiagram.get_ordered_elements();
+			_.each(ordered_elements,function(element){
+				string += element.get_declaration_string();
+			});
+			return string;
+		},
+		get_declaration_string:function() {
+			var string = '&lt;' + this.get('name') + ' ';
+			var attr_non_empty = this.get('attributes').nonEmpty();
+			_.each(attr_non_empty,function(attr){
+				string += attr.get('key') + '=' + "'" + attr.get('value')+ "' ";
+			});
+			
+			var nested_elements_string = this.get_nested_elements_string();
+			if (nested_elements_string == undefined)
+				string += '/&gt;';
+			else { 
+				string += '&gt;'+ nested_elements_string + '&lt;/'+this.get('name')+'&gt;';
+			}
+			return string;
+		}, 
+		
+		get_protocols_string: function() {
+			var attributes = this.get('attributes');
+			var name_attr = attributes.byKey('name');
+			if ( name_attr == undefined ) {
+				alert("Can't find name attribute");
+				return;
+			}
+			var string = '&lt;Add ' + this.get('typeObj').add_protocol + '=' + name_attr.get('value')  + '/&gt;';
+			return string;
 		}
 	});
 	

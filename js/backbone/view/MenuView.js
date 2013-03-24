@@ -11,7 +11,13 @@ $(function() {
 			'mouseleave':'hide_menu_delay',
 			'click #btn_delete' : 'delete_element',
 			'click #btn_connect' : 'connect_element',
-			'click #btn_info': 'show_info'
+			'click #btn_info': 'show_info',
+			'click #btn_subdiagram':'open_subdiagram'
+		},
+		open_subdiagram:function() {
+			app.EventAgg.trigger('editDiagramElement',undefined); //Cancels all the highlights in the previous diagram.
+			var view = new app.SubdiagramView({model:this.model});
+			view.render();
 		},
 		
 		delete_element: function() { 
@@ -19,9 +25,11 @@ $(function() {
 			this.model = undefined;
 			this.hide_menu_now();
 		},
+		
 		get_current_model_name:function() {
 			return this.model.get('name');
 		},
+		
 		show_info:function(e){
 			var wiki_obj =$('#wiki_info'); 
 			var frame_src = app.Attributes[this.model.get('type')].wiki_address+this.model.get('name');
@@ -37,6 +45,13 @@ $(function() {
 				}
 			});
 			this.eventagg = options.eventagg;
+			
+			this.$("#btn_subdiagram").button({
+				text:false,
+				icons:{
+					primary:"ui-icon-newwin"
+				}
+			});
 			this.$("#btn_connect").button({
 				text: false,
 				icons:{
@@ -78,9 +93,9 @@ $(function() {
 				alert("ERROR: Undefined element!");
 				return;
 			}
-			
 			//Not allowing more than one outgoing connection:
-			if ( this.model.get('type') != 'task_operation' && app.Connections.bySource(this.model) != undefined) {
+			var source_connection = app.ActiveDiagram.connection_by_source(this.model);
+			if ( this.model.get('type') != 'task_operation' && source_connection != undefined) {
 				this.$('#btn_connect').button({disabled: true});
 			}else { 
 				this.$('#btn_connect').button({disabled: false});
@@ -90,9 +105,11 @@ $(function() {
 				{
 					display:'inline',
 					left: pos.left+'px',
-					top: pos.top-this.$el.height()-23 +'px'
+					top: pos.top-this.$el.height()-23 + 'px',
+					'z-index': $.ui.dialog.maxZ+100
 				}
 			);
+			
 		},
 		mouseenter: function(e) {
 			clearTimeout(this.timeoutId);
@@ -118,12 +135,6 @@ $(function() {
 		connect_element:function() {
 			this.connectionReady = true;
 			console.log("Connection mode is " + this.connectionReady);
-			var conReady = this.connectionReady;
-			app.Elements.each(
-					function(element) {
-						element.set("connectionReady",conReady);
-					}
-			);
 			var type = this.model.get('type');
 			if ( type == 'task_operation' ) {
 				app.pendingConnection = new app.DiagramContainment({source: this.model, type: Joint.dia.uml.generalizationArrow});

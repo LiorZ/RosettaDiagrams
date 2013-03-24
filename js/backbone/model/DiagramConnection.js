@@ -14,7 +14,7 @@
 			
 			console.log("Just connected ... ");
 			var foundElement = undefined;
-			app.Elements.each(
+			app.ActiveDiagram.each(
 					function(element) {
 						var jointObj = element.get('jointObj');  
 						if ( jointObj == rawElement ) {

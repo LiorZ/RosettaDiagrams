@@ -8,7 +8,7 @@ $(function() {
 		initialize:function() {
 			this.template = _.template( $('#information_message_template').html() );
 			this.listenTo(app.EventAgg,'connection_mode_activated',this.show_message);
-			this.listenTo(app.Connections,'add',this.hide_message);
+			this.listenTo(app.MainDiagram,'add:connection',this.hide_message);
 			this.listenTo(app.EventAgg,'connection_mode_ended',this.hide_message);
 			this.listenTo(app.EventAgg,'wrong_connection_created',this.show_message)
 		},

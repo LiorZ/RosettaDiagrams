@@ -21,7 +21,7 @@ $(function() {
 			var attr = this.model.get('attributes');
 			new_model.set_name_attribute('element_'+app.elementCounter++);
 			new_model.add_attributes(attr.toJSON());
-			app.Elements.add(new_model);
+			app.ActiveDiagram.add_element(new_model);
 		}
 	});
 });

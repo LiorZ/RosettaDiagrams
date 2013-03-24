@@ -9,8 +9,6 @@ $(function() {
 			var target =  model.get('target');
 			var target_joint = target.get('jointObj');
 			var jointObj = source.get('jointObj').joint(target_joint,model.get('type'));
-			console.log("JointObj: ");
-			console.log(jointObj);
 			model.set('jointObj',jointObj);
 			
 			var obj = this.model;
@@ -18,9 +16,9 @@ $(function() {
 			jointObj.registerCallback("justConnected",function(side) {
 				var rawElement = this.wholeShape;
 				
-				var element = app.Elements.byJointObject(this);
-				var target_by_connection = app.Connections.byTarget(element);
-				var source_by_connection = app.Connections.bySource(element);
+				var element = app.ActiveDiagram.element_by_jointObj(this);
+				var target_by_connection = app.ActiveDiagram.connection_by_target(element);
+				var source_by_connection = app.ActiveDiagram.connection_by_source(element);
 				if ( (side == 'end' && target_by_connection != undefined && target_by_connection != view.model) || 
 						(side == 'start' && source_by_connection != undefined && source_by_connection != view.model)) {
 					view.undo_connection(side);

@@ -1298,11 +1298,11 @@ Joint.currentJoint = null;
 Joint.paper = function paper(){
     var p = arguments[0];
     if (p === undefined){
-	return this._paper;
+    	return this._paper;
     }
     this._paperArguments = arguments;	// save for later reset
     if (!(p instanceof global.Raphael)){
-	return (this._paper = global.Raphael.apply(global, arguments));
+    	return (this._paper = global.Raphael.apply(global, arguments));
     }
     return (this._paper = p);
 };

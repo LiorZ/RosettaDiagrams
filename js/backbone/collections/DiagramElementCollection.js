@@ -49,7 +49,6 @@ var app = app || {};
 		},
 		
 	});
-	app.Elements = new app.DiagramElementsOnCanvas();
 	app.PaletteElements = new app.DiagramElementList();
 	
 	//handle the case where we want to add DiagramContainers where applicable.
