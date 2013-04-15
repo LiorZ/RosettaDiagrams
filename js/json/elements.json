@@ -1907,7 +1907,7 @@
         "key": "true_mover_name"
       }
     ],
-    "type": "mover",
+    "type": "logic",
     "name": "If"
   },
   {

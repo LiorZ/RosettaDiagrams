@@ -95,7 +95,7 @@ $(function() {
 			}
 			//Not allowing more than one outgoing connection:
 			var source_connection = app.ActiveDiagram.connection_by_source(this.model);
-			if ( this.model.get('type') != 'task_operation' && source_connection != undefined) {
+			if ( this.model.get('type') != 'task_operation' && this.model.get('type') != 'logic' && source_connection != undefined) {
 				this.$('#btn_connect').button({disabled: true});
 			}else { 
 				this.$('#btn_connect').button({disabled: false});
@@ -135,15 +135,7 @@ $(function() {
 		connect_element:function() {
 			this.connectionReady = true;
 			console.log("Connection mode is " + this.connectionReady);
-			var type = this.model.get('type');
-			if ( type == 'task_operation' ) {
-				app.pendingConnection = new app.DiagramContainment({source: this.model, type: Joint.dia.uml.generalizationArrow});
-			}else {
-				app.pendingConnection = new app.DiagramConnection({source: this.model, type: Joint.dia.uml.dependencyArrow});
-			}
-			
-			var info_msg_model = new app.InformationMessage({message: "Click on the element you want to connect ... (<b>ESC</b> to cancel) "});
-			app.EventAgg.trigger('connection_mode_activated',{info_msg: info_msg_model});
+			this.model.connect_element();
 
 		}
 	});

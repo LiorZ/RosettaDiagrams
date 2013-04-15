@@ -115,16 +115,14 @@ $(function() {
 				app.EventAgg.trigger('editDiagramElement',this.model);
 			}
 		},
+		
 		mouseenter: function(e) { 
 			var pos = this.$el.offset();
 			app.EventAgg.trigger('show_menu_delay',this.model,pos);
 		},
+		
 		mouseleave: function(e){
 			app.EventAgg.trigger('hide_menu_delay');
-		},
-		
-		isConnectionValid:function() {
-			
 		},
 		
 		mouseDown: function(e) {
@@ -134,7 +132,7 @@ $(function() {
 			if ( connectionMode == true ) { 
 				if ( app.pendingConnection != undefined ) { 
 					var target_con = app.ActiveDiagram.connection_by_target(this.model);
-					if ( this.model.get('type') != 'task_operation' && target_con != undefined ){
+					if ( target_con != undefined && target_con.get('source').get('type') != 'task_operation' ){
 						//Not allowing more than one incoming connection! (PUT HERE INFORMATION MESSAGE)
 						app.pendingConnection = undefined;
 						var info_msg_model = new app.InformationMessage({message:"Can't connect more than one node", type:'error',title:'Error: '});

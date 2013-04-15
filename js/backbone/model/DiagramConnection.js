@@ -8,11 +8,11 @@
 			source: undefined,
 			target: undefined,
 			type: undefined,
-			jointObj: undefined
+			jointObj: undefined,
+			label:""
 		},
 		changeConnectedElement: function(side,rawElement) { 
 			
-			console.log("Just connected ... ");
 			var foundElement = undefined;
 			app.ActiveDiagram.each(
 					function(element) {

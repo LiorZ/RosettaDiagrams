@@ -54,17 +54,15 @@ var app = app || {};
 	//handle the case where we want to add DiagramContainers where applicable.
 	app.PaletteElements.add = function(model) {
 		if ( model instanceof Array){
-			var iterator = function(obj){ return obj.type=='container'};
-			var containers = _.filter(model,iterator);
-			if (containers.length > 0) { 
-				for(var i=0; i<containers.length; ++i) {
-					var elem = new app.DiagramContainer(containers[i]);
-					Backbone.Collection.prototype.add.call(this, elem);
-				}
+			var iterator = function(obj){ return obj.type=='logic'};
+			var logic = _.filter(model,iterator);
+			if (logic.length == 1 ){
+				var new_model = new app.IFMover(logic[0])
+				Backbone.Collection.prototype.add.call(this, new_model);				
 			}
 			model =_.reject(model,iterator);
+			Backbone.Collection.prototype.add.call(this, model);
 		}
-		Backbone.Collection.prototype.add.call(this, model);
 	};
 	app.PaletteElements.url='js/json/elements.json';
 }());

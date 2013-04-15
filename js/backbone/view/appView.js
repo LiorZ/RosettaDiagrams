@@ -12,6 +12,13 @@ $(function( $ ) {
 				palette_div:'#movers_menu',
 				wiki_address:'wiki/movers.html#'
 			},
+			'logic':{
+				jointObjColor: "90-#000-red:1-#fff",
+				codeTemplate: '#xml_movers',
+				add_protocol: 'mover_name',
+				palette_div:'#logic_menu',
+				wiki_address:'wiki/movers.html#'
+			},
 			'filter':{
 				jointObjColor: "90-#000-orange:1-#fff",
 				codeTemplate: '#xml_filters',
@@ -83,6 +90,7 @@ $(function( $ ) {
 			Joint.paper(diagram.get('jointObj'));
 			this.add_element_listeners();
 		},
+		
 		addPaletteView:function() {
 			app.paletteView = new app.PaletteView({model: app.PaletteElements});
 			app.paletteView.render();
@@ -100,28 +108,15 @@ $(function( $ ) {
 		},
 		
 		addElementView: function(element) {
-			var view = 0;
-			if ( element.get('type') == 'container' )
-				view = new app.DiagramContainerView({model: element, eventagg: app.EventAgg});
-			else{
-				view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
-			}
+			var view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
 			view.render();
 		},
 		
 		addConnectionView: function(connection) {
 			var view = new app.DiagramConnectionView({model:connection});
 			view.render();
-//			app.Elements.each(
-//					function(element) {
-//						var jointObj = element.get('jointObj');
-//						arr.push(jointObj);
-//						//Set the connection mode off:
-//						element.set('connectionReady',false);
-//					}
-//			);
-//			connectionObj.register(arr);
 		},
+
 		addInformationMessageContainer:function() {
 			app.InformationMessageContainer = new app.InformationMessageView();
 		},

@@ -17,7 +17,8 @@
 			type:undefined,
 			width: 0, // defined in the initialize section, getting an undefined value here .. 
 			height: 0,
-			subdiagram:undefined //an element that contains that particular element
+			subdiagram:undefined, //an element that contains that particular element
+			show_in_protocols:true
 		},
 		
 		initialize: function() { 
@@ -122,6 +123,9 @@
 		}, 
 		
 		get_protocols_string: function() {
+			if ( !this.get('show_in_protocols') ){
+				return '';
+			}
 			var attributes = this.get('attributes');
 			var name_attr = attributes.byKey('name');
 			if ( name_attr == undefined ) {
@@ -130,6 +134,19 @@
 			}
 			var string = '&lt;Add ' + this.get('typeObj').add_protocol + '=' + name_attr.get('value')  + '/&gt;';
 			return string;
+		},
+		
+		connect_element:function(){
+			var type = this.get('type');
+			if ( type == 'task_operation' ) {
+				app.pendingConnection = new app.DiagramContainment({source: this, type: Joint.dia.uml.generalizationArrow});
+			}
+			else {
+				app.pendingConnection = new app.DiagramConnection({source: this, type: Joint.dia.uml.dependencyArrow});
+			}
+			
+			var info_msg_model = new app.InformationMessage({message: "Click on the element you want to connect ... (<b>ESC</b> to cancel) "});
+			app.EventAgg.trigger('connection_mode_activated',{info_msg: info_msg_model});
 		}
 	});
 	

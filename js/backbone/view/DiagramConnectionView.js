@@ -8,11 +8,11 @@ $(function() {
 			var source = model.get('source');
 			var target =  model.get('target');
 			var target_joint = target.get('jointObj');
-			var jointObj = source.get('jointObj').joint(target_joint,model.get('type'));
+			var jointObj = source.get('jointObj').joint(target_joint,_.extend(model.get('type'),{label:this.model.get("title")}));
 			model.set('jointObj',jointObj);
 			
 			var obj = this.model;
-			var view = this;
+			var view = this;	
 			jointObj.registerCallback("justConnected",function(side) {
 				var rawElement = this.wholeShape;
 				
