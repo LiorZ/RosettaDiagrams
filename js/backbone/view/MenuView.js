@@ -12,7 +12,38 @@ $(function() {
 			'click #btn_delete' : 'delete_element',
 			'click #btn_connect' : 'connect_element',
 			'click #btn_info': 'show_info',
-			'click #btn_subdiagram':'open_subdiagram'
+			'click #btn_subdiagram':'open_subdiagram',
+			'click #btn_apply': 'apply_mover'
+		},
+		
+		apply_mover:function(){
+			
+		    $("#progressbar_dialog").dialog({
+		        height: 120,
+		        title:"Applying " + this.model.get('name'),
+		        width:500,
+		        autoOpen:true
+		    });
+		    
+		    $( "#progressbar" ).progressbar({
+		        value: 0
+		    });
+		    
+		    $("#progressbar .ui-progressbar-value").css({display:'inline'});
+		    var p = 1;
+	        var timer = setInterval(function(){
+	            $("#progressbar .ui-progressbar-value").animate({width: p+"%"}, 500);
+	            p = p +3;
+	            if(p>100){
+	                $("#progressbar .ui-progressbar-value").animate({width: "0%"}, 500);
+	                p=0;
+	            }
+	        },500);
+
+			$.post('/apply_min',function(data) {
+                clearInterval(timer);
+                $("#progressbar_dialog").dialog("close");
+			});
 		},
 		open_subdiagram:function() {
 			app.EventAgg.trigger('editDiagramElement',undefined); //Cancels all the highlights in the previous diagram.
@@ -56,6 +87,12 @@ $(function() {
 				text: false,
 				icons:{
 					primary: 'ui-icon-arrowthick-1-e'
+				}
+			});
+			this.$("#btn_apply").button({
+				text:false,
+				icons:{
+					primary: 'ui-icon-triangle-1-e'
 				}
 			});
 			this.$("#btn_info").button({
