@@ -15,7 +15,7 @@ $(function() {
 				context.$(type_obj.palette_div).append(p_entry.render());
 			});
 			
-		},
+		}
 		
 	});
 });

@@ -3,7 +3,7 @@ var app = app || {};
 (function() {
 	
 	app.DiagramElementList = Backbone.Collection.extend({
-		model: app.DiagramElement,
+		model: app.DiagramElement
 		
 	});
 	
@@ -46,7 +46,7 @@ var app = app || {};
 				return undefined;
 			}
 			return res[0];
-		},
+		}
 		
 	});
 	app.PaletteElements = new app.DiagramElementList();

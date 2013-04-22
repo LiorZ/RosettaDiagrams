@@ -33,7 +33,7 @@
 			}else { 
 				this.set("source",foundElement);
 			}
-		},
+		}
 		
 	});
 	

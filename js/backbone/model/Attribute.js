@@ -7,7 +7,7 @@ var app = app || {};
 		
 		defaults: { 
 			key: 'key',
-			value:'val',
+			value:'val'
 		}
 		
 	});

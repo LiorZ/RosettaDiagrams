@@ -11,7 +11,7 @@ $(function() {
 		events: {
 			'focusout #mover_name': 'set_mover_name',
 			'keypress #mover_name': 'set_mover_name_keypress',
-			"click #add_attribute": "addAttribute",
+			"click #add_attribute": "addAttribute"
 		},
 		initialize: function(options) {
 				this.eventagg = options.eventagg;

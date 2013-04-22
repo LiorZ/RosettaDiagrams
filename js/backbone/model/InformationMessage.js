@@ -8,7 +8,7 @@
 			title:'',
 			message:'',
 			type:'information'
-		},
+		}
 		
 	});
 	

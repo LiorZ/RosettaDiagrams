@@ -17,7 +17,7 @@ var app = app || {};
 				return undefined;
 			else
 				return returned_arr[0];
-		},
+		}
 	});
 	
 }());

@@ -224,7 +224,7 @@ Element.prototype = {
 	this._callbacks = {
 			elementMoved: function(new_location){},
 			elementEmbedded: function(element){},
-			elementUnEmbedded:function(element){},
+			elementUnEmbedded:function(element){}
 	}
 
 	this.paper = Joint.paper();

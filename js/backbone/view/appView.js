@@ -36,7 +36,7 @@ $(function( $ ) {
 			'container':{
 				jointObjColor: "90-#000-yellow:1-#fff",
 				codeTemplate: '#xml_movers',
-				palette_div: '#containers_menu',
+				palette_div: '#containers_menu'
 			}
 	};
 	consts.ATTR_IN_DIAGRAM_VIEW = 5;
@@ -128,7 +128,7 @@ $(function( $ ) {
 			this.$("button").button();
 			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
 			this.$("#menu").accordion('refresh');
-		},
+		}
 		
 	});
 	
