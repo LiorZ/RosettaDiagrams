@@ -31,9 +31,7 @@ var app = app || {};
 		},
 		as_joints_array:function() {
 			return this.arr;
-			/* we keep this array to allow the use of "RegisterForever" of joint which is much more elegant and efficient
-			and elegant than using events..
-			*/
+			// we keep this array to allow the use of "RegisterForever" of joint which is much more elegant and efficient than using events..
 		},
 		byJointObject:function(joint_obj){
 			var res= this.filter(function(object){
@@ -42,7 +40,7 @@ var app = app || {};
 			if ( res == undefined )
 				return undefined;
 			if ( res.length != 1 ){
-				alert("ERROR: Not one joint per page");
+				alert("ERROR: Not one joint per page (length is " + res.length +")");
 				return undefined;
 			}
 			return res[0];

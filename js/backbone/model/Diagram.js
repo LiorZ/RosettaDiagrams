@@ -44,7 +44,7 @@
 		
 		element_by_jointObj: function(jointObj) {
 			var elements = this.get('elements');
-			return elements.byJointObject(elements);
+			return elements.byJointObject(jointObj);
 		},
 		
 		element_changed:function(){
