@@ -14,7 +14,12 @@
 		changeConnectedElement: function(side,rawElement) { 
 			
 			var foundElement = undefined;
-			app.ActiveDiagram.each(
+			var elements = app.ActiveDiagram.get('elements');
+			if ( elements == undefined || elements.length == 0) {
+				alert("ERROR: No elements in canvas");
+				return undefined;
+			}
+			elements.each(
 					function(element) {
 						var jointObj = element.get('jointObj');  
 						if ( jointObj == rawElement ) {

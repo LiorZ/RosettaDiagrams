@@ -9,6 +9,11 @@ $(function() {
 			var target =  model.get('target');
 			var target_joint = target.get('jointObj');
 			var jointObj = source.get('jointObj').joint(target_joint,_.extend(model.get('type'),{label:this.model.get("title")}));
+			var elements = app.ActiveDiagram.get('elements');
+			if ( elements ) {
+				jointObj.registerForever(elements.as_joints_array());
+			}
+			
 			model.set('jointObj',jointObj);
 			
 			var obj = this.model;
