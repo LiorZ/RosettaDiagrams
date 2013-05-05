@@ -92,7 +92,7 @@ $(function() {
 			this.$("#btn_apply").button({
 				text:false,
 				icons:{
-					primary: 'ui-icon-triangle-1-e'
+					primary: 'ui-icon-play'
 				}
 			});
 			this.$("#btn_info").button({
