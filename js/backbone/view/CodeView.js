@@ -11,6 +11,12 @@ $(function() {
 			this.listenTo(app.MainDiagram,'remove:connection',this.render);
 			this.listenTo(app.MainDiagram,'add:element',this.render);
 			this.listenTo(app.MainDiagram,'add:connection',this.render);
+			$("#btn_run_code").button({
+				text:false,
+				icons:{
+					primary: 'ui-icon-play'
+				}
+			});
 		},
 		
 		render: function() { 

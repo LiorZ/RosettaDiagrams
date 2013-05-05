@@ -55,9 +55,16 @@ $(function( $ ) {
 		main_joint: undefined,
 		el: '#container',
 		connectionReady: false,
-		
+		server_job_view: undefined,
+		events: {
+			'click #btn_run_code' : 'apply_protocol'
+		},
 		toggleDeleteMode: function() { 
 			app.EventAgg.trigger('toggleDeleteMode');
+		},
+		
+		apply_protocol:function() {
+			this.server_job_view.render();
 		},
 		
 		handle_key_press: function(e) {
@@ -77,6 +84,7 @@ $(function( $ ) {
 			_.bindAll(this.show_main_canvas);
 			this.listenTo(app.EventAgg,'show_main_canvas',this.show_main_canvas);
 			this.listenTo(app.EventAgg,'switch_diagram',this.switch_diagram);
+			this.server_job_view = new app.ServerJobView({model:app.MainDiagram});
 		},
 		
 		add_element_listeners: function() {

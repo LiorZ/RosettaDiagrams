@@ -110,7 +110,7 @@
 			var string = '&lt;' + this.get('name') + ' ';
 			var attr_non_empty = this.get('attributes').nonEmpty();
 			_.each(attr_non_empty,function(attr){
-				string += attr.get('key') + '=' + "'" + attr.get('value')+ "' ";
+				string += attr.get('key') + '=' + "\"" + attr.get('value')+ "\" ";
 			});
 			
 			var nested_elements_string = this.get_nested_elements_string();
