@@ -63,7 +63,7 @@ $(function( $ ) {
 			app.EventAgg.trigger('toggleDeleteMode');
 		},
 		
-		apply_protocol:function() {
+		apply_protocol:function(model) {
 			this.server_job_view.render();
 		},
 		
@@ -80,11 +80,17 @@ $(function( $ ) {
 			this.addCodeView();
 			this.addMenuView();
 			this.addPaletteView();
+			this.addServerJobView();
 			this.addInformationMessageContainer();
 			_.bindAll(this.show_main_canvas);
 			this.listenTo(app.EventAgg,'show_main_canvas',this.show_main_canvas);
 			this.listenTo(app.EventAgg,'switch_diagram',this.switch_diagram);
-			this.server_job_view = new app.ServerJobView({model:app.MainDiagram});
+		},
+		
+		
+		
+		addServerJobView:function() {
+			this.server_job_view = new app.ServerJobView({model:false});
 		},
 		
 		add_element_listeners: function() {

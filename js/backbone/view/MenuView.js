@@ -13,11 +13,17 @@ $(function() {
 			'click #btn_connect' : 'connect_element',
 			'click #btn_info': 'show_info',
 			'click #btn_subdiagram':'open_subdiagram',
-			'click #btn_apply': 'apply_mover'
+			'click #btn_apply': 'apply_mover',
+		},
+		
+		addServerJobView:function() {
+			var parsed_protocol = new app.DiagramElement({typeObj:app.Attributes['mover'], subdiagram:app.MainDiagram});
+			this.server_job_view = new app.ServerJobView({model:parsed_protocol});
 		},
 		
 		apply_mover:function(){
-
+			this.server_job_view.model = this.model;
+			this.server_job_view.render();
 		},
 		open_subdiagram:function() {
 			app.EventAgg.trigger('editDiagramElement',undefined); //Cancels all the highlights in the previous diagram.
@@ -93,7 +99,7 @@ $(function() {
 			_.bindAll(this, "hide_menu_now");
 
 			this.eventagg.bind("hide_menu_now",this.hide_menu_now);
-
+			this.addServerJobView();
 		},
 		
 		show_menu_delay:function(element,pos,width,height){
@@ -112,6 +118,12 @@ $(function() {
 				this.$('#btn_connect').button({disabled: false});
 			}
 			
+			
+			if ( this.model.get('type') != 'mover' ){
+				this.$('#btn_apply').button({disabled: true});
+			}else {
+				this.$('#btn_apply').button({disabled: false});
+			}
 			this.$el.css(
 				{
 					display:'inline',

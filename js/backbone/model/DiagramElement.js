@@ -147,7 +147,7 @@
 			
 			var info_msg_model = new app.InformationMessage({message: "Click on the element you want to connect ... (<b>ESC</b> to cancel) "});
 			app.EventAgg.trigger('connection_mode_activated',{info_msg: info_msg_model});
-		}
+		},
 	});
 	
 }());

@@ -132,7 +132,8 @@ $(function() {
 			if ( connectionMode == true ) { 
 				if ( app.pendingConnection != undefined ) { 
 					var target_con = app.ActiveDiagram.connection_by_target(this.model);
-					if ( target_con != undefined && target_con.get('source').get('type') != 'task_operation' ){
+					if ( (target_con != undefined && target_con.get('source').get('type') != 'task_operation') &&
+							app.pendingConnection.get('source').get('type') != 'task_operation' ){
 						//Not allowing more than one incoming connection! (PUT HERE INFORMATION MESSAGE)
 						app.pendingConnection = undefined;
 						var info_msg_model = new app.InformationMessage({message:"Can't connect more than one node", type:'error',title:'Error: '});
