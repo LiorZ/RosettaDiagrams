@@ -50,6 +50,7 @@ $(function( $ ) {
 	consts.DIAGRAM_CONTAINER_DEFAULT_HEIGHT = 400;
 	app.EventAgg = _.extend({}, Backbone.Events);
 	app.MainDiagram = new app.Diagram();
+	app.server_job_view = new app.ServerJobView({model:false});
 	app.ActiveDiagram = app.MainDiagram;
 	app.AppView = Backbone.View.extend({
 		main_joint: undefined,
@@ -63,8 +64,8 @@ $(function( $ ) {
 			app.EventAgg.trigger('toggleDeleteMode');
 		},
 		
-		apply_protocol:function(model) {
-			this.server_job_view.render();
+		apply_protocol:function() {
+			app.server_job_view.render(false);
 		},
 		
 		handle_key_press: function(e) {
@@ -80,19 +81,11 @@ $(function( $ ) {
 			this.addCodeView();
 			this.addMenuView();
 			this.addPaletteView();
-			this.addServerJobView();
 			this.addInformationMessageContainer();
 			_.bindAll(this.show_main_canvas);
 			this.listenTo(app.EventAgg,'show_main_canvas',this.show_main_canvas);
 			this.listenTo(app.EventAgg,'switch_diagram',this.switch_diagram);
 		},
-		
-		
-		
-		addServerJobView:function() {
-			this.server_job_view = new app.ServerJobView({model:false});
-		},
-		
 		add_element_listeners: function() {
 			this.listenTo(app.ActiveDiagram,'add:element',this.addElementView);
 			this.listenTo(app.ActiveDiagram,'add:connection', this.addConnectionView);

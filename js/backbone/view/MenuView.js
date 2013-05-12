@@ -16,14 +16,10 @@ $(function() {
 			'click #btn_apply': 'apply_mover',
 		},
 		
-		addServerJobView:function() {
-			var parsed_protocol = new app.DiagramElement({typeObj:app.Attributes['mover'], subdiagram:app.MainDiagram});
-			this.server_job_view = new app.ServerJobView({model:parsed_protocol});
-		},
-		
 		apply_mover:function(){
-			this.server_job_view.model = this.model;
-			this.server_job_view.render();
+			var parsed_protocol = new app.DiagramElement({type:'mover', subdiagram:app.MainDiagram, name:'ParsedProtocol'});
+			parsed_protocol.get('attributes').add({key:'name',value:'parsed_protocol'});
+			app.server_job_view.render(parsed_protocol);
 		},
 		open_subdiagram:function() {
 			app.EventAgg.trigger('editDiagramElement',undefined); //Cancels all the highlights in the previous diagram.
@@ -99,7 +95,6 @@ $(function() {
 			_.bindAll(this, "hide_menu_now");
 
 			this.eventagg.bind("hide_menu_now",this.hide_menu_now);
-			this.addServerJobView();
 		},
 		
 		show_menu_delay:function(element,pos,width,height){

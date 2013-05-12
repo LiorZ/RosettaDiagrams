@@ -26,9 +26,9 @@
         <script src="js/lib/vkbeautify/vkbeautify.0.99.00.beta.js" type="text/javascript"></script>
         <!-- JQuery UI v1.9.2 reference for an older version of JQueryUI, because of a bug in the menu display -->
         <script src="js/lib/jquery-ui/jqueryui.js" type='text/javascript'></script>  
-
+	
 		<script src="js/lib/jquery-ui/plugins/tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
-        
+        <script src="js/lib/jquery-form-submit/jquery.form.js" type="text/javascript"></script>
         <script src="js/backbone/view/ServerJobView.js" type="text/javascript"></script>
         <script src="js/backbone/view/appView.js" type="text/javascript"></script>
         <script src="js/backbone/view/AttributeView.js" type="text/javascript"></script>
@@ -265,6 +265,9 @@ for (var i=0; i<attributes.length; ++i) {
 		#progressbar{
 		    background-color: #ccc;
 		}
+		#progressbar_dialog{
+			display:none;
+		}
         </style>
    		<link href="js/lib/prettify/prettify.css" type="text/css" rel="stylesheet" />
    		<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
@@ -336,6 +339,18 @@ for (var i=0; i<attributes.length; ++i) {
 </pre>       	
 </div>
 <div id='progressbar_dialog'>
+<div id='pre_job_dialog'>
+	<form id='pdb_form' action='/apply' method='post'>
+		<fieldset name='pre_job_fieldset' style='border:0px;'>
+			<label for="pdb_file">PDB file:</label>
+			<input type='hidden' name="txt_protocol"/>
+			<input type='file' name='pdb_file'/><br/>
+			<input type='checkbox' name='pymol_vis' value='true'/>Enable PyMOL visualization?<br/><br/>
+			<div style='text-align:center'><button id='btn_send_job'>Submit</button></div>
+			<div id='results_div'></div>
+		</fieldset>
+	</form>
+</div>
 <div class="ui-widget">
 	<div id='protocol_error_msg' class="ui-state-error ui-corner-all" style="padding: 0 .7em; display:none;">
 		<p><span class="ui-icon ui-icon-alert"></span>

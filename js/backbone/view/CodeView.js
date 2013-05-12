@@ -29,6 +29,7 @@ $(function() {
 				var typeObj = element.get('typeObj');
 				this.$(typeObj.codeTemplate).append(htmlCode);
 			});
+			
 			this.renderConnections();
 
 			var xml = vkbeautify.xml(this.$el.text());

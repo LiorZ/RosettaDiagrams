@@ -3,21 +3,39 @@ $(function() {
 	
 	app.ServerJobView = Backbone.View.extend({
 		el:'#progressbar_dialog',
-		render:function() {
-		    var timer=0;
-
+		timer:0,
+		model:false,
+		events: {
+			'click #btn_send_job':'send_job'
+		},
+		initialize:function() {
+			$('#pdb_form').ajaxForm({
+			    target: '#results_div'
+			});
+		},
+		send_job:function(e){
+			$('#pre_job_dialog').hide();
+			e.preventDefault();
+			this.render_progress_bar();
+		},
+		render:function(model) {
+			this.model = model;
 		    this.$el.dialog({
-		        height: 200,
+		        height: 250,
 		        title:"Applying ...",
 		        width:500,
 		        autoOpen:true,
 		        modal:true,
 		        close:function(){
-		        	clearInterval(timer);
-		        	$('#progressbar').show();
+		        	clearInterval(this.timer);
+		        	$('#progressbar').hide();
+		        	$('#pre_job_dialog').show();
 		        	$("#protocol_error_msg").hide();
 		        }
 		    });
+		},
+		render_progress_bar:function() {
+			$('#progressbar').show();
 		    $( "#progressbar" ).progressbar({
 		        value: false,
 		        width:"100%"
@@ -25,25 +43,29 @@ $(function() {
 		    
 		    $("#progressbar .ui-progressbar-value").css({display:'inline'});
 		    var p = 1;
-	        timer = setInterval(function(){
-	            $("#progressbar .ui-progressbar-value").animate({width: p+"%"}, 500);
-	            p = p +3;
-	            if(p>100){
-	                $("#progressbar .ui-progressbar-value").animate({width: "0%"}, 500);
-	                p=0;
-	            }
-	        },500);
+	        this.timer = setInterval(function(){
+	            $("#progressbar .ui-progressbar-value").animate({width: p+"%"}, 400);
+	            p = (p+3)%100;
+	        },405);
 
 	        var protocol_text = this.get_protocol_xml();
-	        console.log(protocol_text);
-			$.post('/apply?protocol='+protocol_text,function(data) {
+	        console.log("Protocol: \n" + protocol_text);
+	        $('input[name="txt_protocol"]').val(protocol_text);
+	        
+	        $('#pdb_form').ajaxSubmit({
+	            target: '#results_div'
+	        })
+	        
+	        
+	        
+			/*$.post('/apply?protocol='+protocol_text+"&"+"pdb_file="+'',function(data) {
 				
 			}).fail(function() {
 				$('#progressbar').hide();
 				$('#protocol_error_msg').fadeIn();
 			}).always(function() { 
 				clearInterval(timer); 
-			});
+			});*/
 		},
 		get_protocol_xml:function() {
 			var model = this.model;
