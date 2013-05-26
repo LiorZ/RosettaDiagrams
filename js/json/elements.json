@@ -4371,7 +4371,26 @@
   },
   {
     "attributes": [
-      
+      {
+        "value": "",
+        "key": "chi"
+      },
+      {
+        "value": "",
+        "key": "bb"
+      },
+      {
+        "value": "",
+        "key": "rb"
+      },
+      {
+        "value": "",
+        "key": "type"
+      },
+      {
+        "value": "",
+        "key": "tolerance"
+      }
     ],
     "type": "mover",
     "name": "TaskAwareMinMover"

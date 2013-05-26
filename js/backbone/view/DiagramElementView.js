@@ -100,7 +100,9 @@ $(function() {
 			
 			for (var i=0; i<Math.min(consts.ATTR_IN_DIAGRAM_VIEW,attributes.length); ++i) {
 				jointObj.properties.actions.inner.push(attributes[i].get("key"));
-				jointObj.properties.actions.inner.push(attributes[i].get("value"));
+				var actual_value = attributes[i].get('value')
+				var value_attr = actual_value.length>9?actual_value.substr(0,9)+'...':actual_value;
+				jointObj.properties.actions.inner.push(value_attr);
 			}
 			jointObj.zoom();
 

@@ -347,7 +347,11 @@ for (var i=0; i<attributes.length; ++i) {
 			<input type='file' name='pdb_file'/><br/>
 			<input type='checkbox' name='pymol_vis' value='true'/>Enable PyMOL visualization?<br/><br/>
 			<div style='text-align:center'><button id='btn_send_job'>Submit</button></div>
-			<div id='results_div'></div>
+			<div id='results_div'>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr><th>PDB</th></tr>
+				</table>
+			</div>
 		</fieldset>
 	</form>
 </div>
