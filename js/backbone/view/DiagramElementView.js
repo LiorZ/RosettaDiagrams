@@ -100,7 +100,9 @@ $(function() {
 			
 			for (var i=0; i<Math.min(consts.ATTR_IN_DIAGRAM_VIEW,attributes.length); ++i) {
 				jointObj.properties.actions.inner.push(attributes[i].get("key"));
-				jointObj.properties.actions.inner.push(attributes[i].get("value"));
+				var actual_value = attributes[i].get('value')
+				var value_attr = actual_value.length>9?actual_value.substr(0,9)+'...':actual_value;
+				jointObj.properties.actions.inner.push(value_attr);
 			}
 			jointObj.zoom();
 
@@ -132,7 +134,8 @@ $(function() {
 			if ( connectionMode == true ) { 
 				if ( app.pendingConnection != undefined ) { 
 					var target_con = app.ActiveDiagram.connection_by_target(this.model);
-					if ( target_con != undefined && target_con.get('source').get('type') != 'task_operation' ){
+					if ( (target_con != undefined && target_con.get('source').get('type') != 'task_operation') &&
+							app.pendingConnection.get('source').get('type') != 'task_operation' ){
 						//Not allowing more than one incoming connection! (PUT HERE INFORMATION MESSAGE)
 						app.pendingConnection = undefined;
 						var info_msg_model = new app.InformationMessage({message:"Can't connect more than one node", type:'error',title:'Error: '});

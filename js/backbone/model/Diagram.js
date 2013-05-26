@@ -80,6 +80,12 @@
 		get_ordered_elements:function() {
 			var connections = this.get('connections');
 			var order = [];
+			var elements = this.get('elements');
+			if ( this.get('elements').length == 1 ) {
+				order.push(elements.at(0));
+				return order;
+			}
+			
 			if ( connections == undefined || connections.length == 0 )
 				return [];
 			
@@ -97,7 +103,7 @@
 					}
 				}
 				
-				order.push(con.get('source'))
+				order.push(con.get('source'));
 				order.push(con.get('target'));
 			});
 			

@@ -20,10 +20,10 @@ $(function() {
 			var mainElements = app.MainDiagram.get('elements');
 			mainElements.each( function(element) {
 				var htmlCode = element.get_declaration_string();
-				console.log(htmlCode);
 				var typeObj = element.get('typeObj');
 				this.$(typeObj.codeTemplate).append(htmlCode);
 			});
+			
 			this.renderConnections();
 
 			var xml = vkbeautify.xml(this.$el.text());
@@ -35,7 +35,6 @@ $(function() {
 			this.$('#xml_protocols').empty();
 			var order = app.MainDiagram.get_ordered_elements();
 			for(var i=0; i<order.length; ++i){ 
-				//var protocolView = new app.XMLProtocolView({model: order[i]});
 				var htmlCode = order[i].get_protocols_string();
 				this.$('#xml_protocols').append(htmlCode);
 			}

@@ -64,7 +64,7 @@ $(function() {
 			var attributes = this.model.get('attributes');
 			var new_attribute = new app.Attribute();
 			attributes.add(new_attribute);
-			//this.createAttributeView(new_attribute);
+			this.createAttributeView(new_attribute);
 			this.$("button").button();
 		},
 		

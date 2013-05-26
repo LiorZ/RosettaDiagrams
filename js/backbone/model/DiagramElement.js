@@ -21,7 +21,7 @@
 			show_in_protocols:true
 		},
 		
-		initialize: function() { 
+		initialize: function(options) { 
 			var existing_arr = this.get('attributes');
 			var new_attr_list;
 			/*If the passing object is json, set the array from json. (when the application starts)
@@ -38,8 +38,8 @@
 			this.set('typeObj',app.Attributes[this.get('type')]);
 			this.set('width',consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH);
 			this.set('height',consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT);
-			this.set('subdiagram',new app.Diagram());
-			var subdiagram = this.get('subdiagram');
+			var subdiagram = options.subdiagram || new app.Diagram();
+			this.set('subdiagram',subdiagram);
 			
 			this.listenTo(subdiagram,'add:element',this.element_added_subdiagram);
 			this.listenTo(subdiagram,'add:connection',this.connection_added);
@@ -95,14 +95,18 @@
 			
 			
 		},
-		get_nested_elements_string:function() {
+		
+		get_nested_elements_string:function(protocol_form) {
 			var subdiagram = this.get('subdiagram');
 			var string ='';
 			if (subdiagram == undefined || subdiagram.is_empty() )
 				return undefined;
 			var ordered_elements = subdiagram.get_ordered_elements();
 			_.each(ordered_elements,function(element){
-				string += element.get_declaration_string();
+				if (protocol_form)
+					string += element.get_protocols_string();
+				else 
+					string += element.get_declaration_string();
 			});
 			return string;
 		},
@@ -110,14 +114,19 @@
 			var string = '&lt;' + this.get('name') + ' ';
 			var attr_non_empty = this.get('attributes').nonEmpty();
 			_.each(attr_non_empty,function(attr){
-				string += attr.get('key') + '=' + "'" + attr.get('value')+ "' ";
+				string += attr.get('key') + '=' + "\"" + attr.get('value')+ "\" ";
 			});
 			
-			var nested_elements_string = this.get_nested_elements_string();
+			var nested_elements_string = this.get_nested_elements_string(true);
 			if (nested_elements_string == undefined)
 				string += '/&gt;';
 			else { 
 				string += '&gt;'+ nested_elements_string + '&lt;/'+this.get('name')+'&gt;';
+			}
+			
+			var nested_elements_non_protocol = this.get_nested_elements_string(false);
+			if (!_.isUndefined(nested_elements_non_protocol )) {
+				string = nested_elements_non_protocol + string;
 			}
 			return string;
 		}, 
