@@ -9,9 +9,7 @@ $(function() {
 			'click #btn_send_job':'send_job'
 		},
 		initialize:function() {
-			$('#pdb_form').ajaxForm({
-			    target: '#results_div'
-			});
+			$('#pdb_form').ajaxForm({});
 		},
 		send_job:function(e){
 			$('#pre_job_dialog').hide();
@@ -40,6 +38,7 @@ $(function() {
 		        value: false,
 		        width:"100%"
 		    });
+		    
 		    clearInterval(this.timer);
 		    $("#progressbar .ui-progressbar-value").css({display:'inline'});
 		    var p = 1;
@@ -53,30 +52,22 @@ $(function() {
 	        $('input[name="txt_protocol"]').val(protocol_text);
 	        var context = this;
 	        $('#pdb_form').ajaxSubmit({
-	            target: '#results_div',
 	            success:function( jqXHR, status) {
 	            	if (status != "success"){
 	            		return;
 	            	}
-	            	console.log(jqXHR);
-	            	$('#results_div').find('table').find('tbody').append('<tr><td><a href="' + jqXHR.path +'">Result</a></td></tr>');
+	            	console.log(jqXHR.path);
+	            	$('#tbl_results').append('<tr><td><a href="' + jqXHR.path +'">Result</a></td></tr>');
 	            },
 	            error:function() {
 	            },
 	            complete:function() {
+	            	clearInterval(this.timer);
+	            	$( "#progressbar" ).hide();
+	            	$('#pre_job_dialog').show();
 	            }
 	        })
-	        
-	        
-	        
-			/*$.post('/apply?protocol='+protocol_text+"&"+"pdb_file="+'',function(data) {
-				
-			}).fail(function() {
-				$('#progressbar').hide();
-				$('#protocol_error_msg').fadeIn();
-			}).always(function() { 
-				clearInterval(timer); 
-			});*/
+
 		},
 		get_protocol_xml:function() {
 			var model = this.model;
