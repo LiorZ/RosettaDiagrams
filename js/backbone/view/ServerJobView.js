@@ -8,19 +8,22 @@ $(function() {
 		events: {
 			'click #btn_send_job':'send_job'
 		},
+		
 		initialize:function() {
 			$('#pdb_form').ajaxForm({});
 		},
+		
 		send_job:function(e){
 			$('#pre_job_dialog').hide();
 			e.preventDefault();
 			this.render_progress_bar();
 		},
+		
 		render:function(model) {
 			this.model = model;
 		    this.$el.dialog({
 		        height: 250,
-		        title:"Applying ...",
+		        title:"Apply",
 		        width:500,
 		        autoOpen:true,
 		        modal:true,
