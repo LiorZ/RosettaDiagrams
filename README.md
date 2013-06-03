@@ -30,21 +30,23 @@ In the following figure, the Docking mover will be applied to the pose , and the
 
 To form a connection between elements, hover the *source* element (the one that should be applied first) , click the arrow button in the menu that pops up. Then, click the *target* element.
 ![Diagram Connection](https://raw.github.com/LiorZ/RosettaDiagrams/master/readme_files/form_connection.png)
-Now, notice the change in the Rosetta Script code, in the Code section:
-	<ROSETTASCRIPTS>
-		<SCOREFXNS></SCOREFXNS>
-		<TASKOPERATIONS></TASKOPERATIONS>
-		<FILTERS>
-			<Ddg name="element_1" />
-		</FILTERS>
-		<MOVERS>
-			<Docking name="element_0" />
-		</MOVERS>
-		<APPLY_TO_POSE></APPLY_TO_POSE>
-		<PROTOCOLS>
-			<Add mover_name=element_0/>
-			<Add filter_name=element_1/>
-		</PROTOCOLS>
-	</ROSETTASCRIPTS>
-	
 
+Now, notice the change in the Rosetta Script code, in the Code section:
+<pre>
+	&lt;ROSETTASCRIPTS&gt;
+		&lt;SCOREFXNS&gt;&lt;/SCOREFXNS&gt;
+		&lt;TASKOPERATIONS&gt;&lt;/TASKOPERATIONS&gt;
+		&lt;FILTERS&gt;
+			&lt;Ddg name=&quot;element_1&quot; /&gt;
+		&lt;/FILTERS&gt;
+		&lt;MOVERS&gt;
+			&lt;Docking name=&quot;element_0&quot; /&gt;
+		&lt;/MOVERS&gt;
+		&lt;APPLY_TO_POSE&gt;&lt;/APPLY_TO_POSE&gt;
+		&lt;PROTOCOLS&gt;
+			&lt;Add mover_name=element_0/&gt;
+			&lt;Add filter_name=element_1/&gt;
+		&lt;/PROTOCOLS&gt;
+	&lt;/ROSETTASCRIPTS&gt;
+	
+</pre>
