@@ -23,6 +23,7 @@ Creating a protocol
 
 In order to add elements (movers/filters/task operations) to the diagram, simply click on the corresponding element in the palette. The element should then appear as a colored rectangle on the canvas:	
 ![Diagram Elements](https://raw.github.com/LiorZ/RosettaDiagrams/master/readme_files/elements.png)
+Each type of element has a different color. Movers appear green, filters are orange and task operations are blue. Control structures (IFMover for example) appear red.
 
 A Rosetta Scripts protocol usually has a well-defined sequence. This sequence is usually composed of movers and filters. A mover typically alters the structure of the *pose* , a filter usually discards simulations in which a certain condition doesn't hold. Task operations which are essentially just instructions to the packer and don't alter the sequence of a protocol. 
 In the following figure, the Docking mover will be applied to the pose , and then the Ddg filter.
@@ -50,5 +51,9 @@ Now, notice the change in the Rosetta Script code, in the Code section:
 	&lt;/ROSETTASCRIPTS&gt;
 	
 </pre>
+In the *Properties Section* we can modify the attributes of each element in the diagram. For example , in the above example we can enter a threshold for the Ddg filter to serve as cutoff, or change some of the attributes of the Docking mover such as fullatom (true/false or 1/0). To bring up the properties simply click on the element you want to change and hover with your mouse over the **Properties** rectangle in the bottom of the screen.  
+The *Add Attribute* button allows you to add your own attribute if there is one that is not listed in the table.
+![Properties section](https://raw.github.com/LiorZ/RosettaDiagrams/master/readme_files/properties_section.png)
+
 
 
