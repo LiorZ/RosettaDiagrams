@@ -1,404 +1,72 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <meta http-equiv='cache-control' content='no-cache'>
-        <meta http-equiv='expires' content='0'>
-        <meta http-equiv='pragma' content='no-cache'>
-        <script src="js/lib/joint/json2.js" type="text/javascript"></script>
-        <script src="js/lib/joint/raphael.js" type="text/javascript"></script>
-		<script src="js/lib/joint/joint.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.arrows.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.serializer.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.fsa.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.uml.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.pn.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.devs.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.cdm.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.erd.js" type="text/javascript"></script>
-        <script src="js/lib/joint/joint.dia.org.js" type="text/javascript"></script>
-        <script src="js/lib/jquery/jquery.min.js" type="text/javascript"></script>
-        <script src="js/lib/underscore/underscore-min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="js/lib/prettify/prettify.js"></script>
-        
-        <script src="js/lib/backbone/backbone.js" type="text/javascript"></script>
-        <script src="js/lib/vkbeautify/vkbeautify.0.99.00.beta.js" type="text/javascript"></script>
-        <!-- JQuery UI v1.9.2 reference for an older version of JQueryUI, because of a bug in the menu display -->
-        <script src="js/lib/jquery-ui/jqueryui.js" type='text/javascript'></script>  
-
-		<script src="js/lib/jquery-ui/plugins/tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
-        
-        <script src="js/backbone/view/appView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/AttributeView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/DiagramElementView.js" type="text/javascript"></script>
-
-        <script src="js/backbone/view/DiagramElementPropertiesView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/DiagramConnectionView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/SubdiagramView.js" type="text/javascript"></script>
-        
-        <script src="js/backbone/view/CodeView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/XMLMoversView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/XMLProtocolView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/PaletteView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/PaletteEntryView.js" type="text/javascript"></script>
-        <script src="js/backbone/view/InformationMessageView.js" type="text/javascript"></script>
-        
-        
-        <script src="js/backbone/view/MenuView.js" type="text/javascript"></script>
-        
-        
-        <script src="js/backbone/model/Attribute.js" type="text/javascript"></script>
-        <script src="js/backbone/model/TaskOAttribute.js" type="text/javascript"></script>
-        
-        <script src="js/backbone/model/InformationMessage.js" type="text/javascript"></script>
-        <script src="js/backbone/model/DiagramElement.js" type="text/javascript"></script>
-        <script src="js/backbone/model/IFMover.js" type="text/javascript"></script>
-
-        <script src="js/backbone/model/DiagramConnection.js" type="text/javascript"></script>
-        <script src="js/backbone/model/DiagramContainment.js" type="text/javascript"></script>
-        <script src="js/backbone/collections/DiagramElementCollection.js" type="text/javascript"></script>
-        <script src="js/backbone/collections/DiagramConnectionCollection.js" type="text/javascript"></script>
-        <script src="js/backbone/model/Diagram.js" type="text/javascript"></script>
-        
-        <script src="js/behavior/EasingMenu.js" type="text/javascript"></script>
-        <script src="js/backbone/app.js" type="text/javascript"></script>
-
-        <link rel="stylesheet" href="js/lib/jquery-ui/plugins/tablesorter/themes/blue/style.css"/>
-        
-        
-        <script type="text/template" id="attribute_template">
-			<td><input type="text" value="<%= key %>" id="attr_key"/></td>
-		    <td><input type="text" value="<%= value %>" id="attr_value"/></td>  
-			<td><button id="deleteBtn">X</button></td>
-
-		</script>
-		<script type="text/template" id="movers_template">
-&lt;<%=name%><%
-var attributes = attributes.nonEmpty();
-for (var i=0; i<attributes.length; ++i) {
-	var attr = attributes[i];
-
- %> <%= attr.get('key') %>='<%= attr.get('value') %>'<% } %>/&gt;
-		</script>
-		<script type="text/template" id="protocols_template">
-&lt;Add <%=typeObj.add_protocol%>='<%= attributes.byKey("name").get('value') %>'/&gt;
-		</script>
-		<script type="text/template" id="information_message_template">
-				<div id='information_message_body' class="<% if (type == 'error') {%> ui-state-error <%} else {%> ui-state-highlight <%}%> ui-corner-all"
-					style="margin-top: 20px; padding: 0 .7em; margin:0px auto; width:50%;">
-					<p>
-						<span class="ui-icon ui-icon-info"
-							style="float: left; margin-right: .3em;"></span> <strong><%=title%></strong>
-						<%=message%>
-					</p>
-				</div>
-		</script>
-        <title>Rosetta Diagrams</title>
-
-        <style type="text/css">
-          html { overflow: hidden; }
-        
-          .body_class {
-            background-color: #ffffff;
-            background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2NkYGDwAeIthGhGoAKiAEghzES8GkZNxBs8ALOvCQtmZ8UqAAAAAElFTkSuQmCC   ) repeat;
-          }
-          .blur {
-          	background-color:rgba(192,192,192,0.5)
-          }
-          
-          #world {
-            width: 100%;
-            height: 100%;
-            background-image:url('icons/large/logo_transparent.png');
-            background-repeat:no-repeat;
-            background-position: center center;
-            background-size:60%;
-          }
-          
-          .rounded_border { 
-            border: 3px solid gray;
-            border-radius: 30px;
-          }
-          
-          #title {
-            position: fixed;
-            left: 10px;
-            top: 10px;
-            color: white;
-            font-size: 14px;
-          }
-          #description {
-            position: fixed;
-            left: 10px;
-            top: 45px;
-            color: white;
-            font-size: 12px;
-            width: 250px;
-          }
-          #source {
-            position: fixed;
-            left: 20px;
-            top: 37px;
-            color: white;
-            font-size: 12px;
-          }
-          #menu_container {
-          	background-color: white;
-          	height: 99%;
-          	padding: 3px;
-          	margin-right:5px;
-          	font-size:12px;
-          	position:absolute;
-          	left:-295px;
-          }
-          .menuItem { 
-          	position: absolute;
-          	width:26px;
-          	height:26px;
-          	background-color: black;
-          	display:none;
-          }
-          #instructionLabel {
-          	text-align: center;
-          	display: inline;
-          }
-          #mover_div { 
-          	text-align: center
-          }
-          #container { 
-          	width: 100%;
-          	height: 100%;
-          }
-          #workspace_container { 
-          	height:100%;
-          	width:100%;
-          }
-          
-          #display_code { 
-          	height:587px;
-          	width: 700px;
-          	margin:0px;
-          	margin-left:5px;
-          	background-color:white;
-          }
-          .wordwrap { 
-			   white-space: pre-wrap;      /* CSS3 */   
-			   white-space: -moz-pre-wrap; /* Firefox */    
-			   white-space: -pre-wrap;     /* Opera <7 */   
-			   white-space: -o-pre-wrap;   /* Opera 7 */    
-			   word-wrap: break-word;      /* IE */
-			}
-          #code { 
-          	display:none;
-          }
-          #toolbar { 
-          	display:none;
-          	position: absolute;	
-          	padding: 2px;
-          	font-size: 12px;
-          }
-          
-          td input {
-          	width: 100%;
-          	height: 100%;
-          }
-          td {
-          	text-align:center;
-          	
-          }
-          html,body { 
-          	height:100%;
-          }
-          #mover_properties_label { 
-          	float:top;
-          	text-align:center;
-          }
-          #mover_properties {
-          	width:40%;
-          	background-color:white;
-          	margin: 0 auto;
-          }
-          #mover_properties_container {
-          	margin-top: 1%;
-          	position:absolute;
-			bottom:-200px;
-			height:250px;
-			padding-top:0px;
-			width:100%;
-			margin:0 auto;
-		}
-		.palette_button {
-			display:block;
-			margin-top:5px;
-		}		
-		
-		.label_border {
-			border:1px solid black; 
-            border-radius: 10px;
-		}
-		
-		#menu_label {
-			/*display:table-cell;*/ 
-		}
-		
-		#display_code_container { 
-			display:table; 
-			position:absolute; 
-			right:-715px;
-			height:99%;
-			background-color:white;
-			
-		}
-		
-		#display_code_label {
-			display: table-cell; 
-			vertical-align:middle; 
-			width:50px;
-		}
-		#information_panel_wrapper{
-			display:none;
-			position:absolute;
-			width:100%;
-		}
-		#progressbar{
-		    background-color: #ccc;
-		}
-        </style>
-   		<link href="js/lib/prettify/prettify.css" type="text/css" rel="stylesheet" />
-   		<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
-    </head>
-    <body class='body_class' onload="prettyPrint()">
-    	<div id="container">
-    	<div id="workspace_container">
-
-<div id='mover_properties_container'>
-<div id='mover_properties' class='label_border' >
-<div id='mover_properties_label' style='margin: 0 auto;'>
-<img src='icons/large/rscripts_properties_label.png'/>
-</div>
-<div id='mover_properties_content' style='overflow:auto; height:200px;'>
-    <button id="add_attribute">Add Attribute</button>
-	<table id='attribute_list' class='tablesorter'>
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Value</th>
-			<th>Delete</th>
-		</tr>
-	</thead>
-	<tbody id='attribute_list_body'>
-	
-	</tbody>
-	</table>
-</div>
-</div>
-</div>
-
-<div id='menu_container' class='label_border'  >
-<div id='menu_label' style='float:right; height:100%;'>
-<table style='height:100%'><tr><td valign="middle">
-	<img src='icons/large/rscripts_palette_label.png'/></td></tr></table>
-
-</div>
-<div id='menu_resizer' style='height:99%; width:340px;'>
-<div id="menu" style='float:left; '>
-
-  <h3>Movers</h3>
-  <div id='movers_menu'>
   
-  </div>
-  <h3>Filters</h3>
-  <div id='filters_menu'>
+  <head>
+    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" href="website_css/bootstrap.css">
+    <link rel="stylesheet" href="website_css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="website_css/local.css">
+    <script src="js/lib/jquery/jquery.min.js"></script>
+    <script src="js/lib/bootstrap/bootstrap.min.js"></script>
+  </head>
   
-  </div>
-  <h3>TaskOperations</h3>
-  <div id ='task_operations_menu'>
-
-  </div>
-  
-  <h3>Control structures</h3>
-  <div id='logic_menu'>
-  
-  </div>
-
-</div>
-</div>
-</div>
-<div id='display_code_container'  class='label_border'  >
-<div id='display_code_label' style='display: table-cell; vertical-align:middle; width:50px;' >
-	<img src='icons/large/rscripts_code_label.png'/>
-</div>
-<pre id='display_code' class='prettyprint wordwrap' style="display:table-cell;">
-
-</pre>       	
-</div>
-<div id='progressbar_dialog'>
-<div id="progressbar"></div>
-</div>
-
-<div id='information_panel_wrapper'>
-
-</div>
-			<div id="world">
-
-        </div> <!-- world -->
-		</div> <!--  workspace container -->
-
-<div id="code">
-<pre>
-&lt;ROSETTASCRIPTS&gt;
-
-        &lt;SCOREFXNS&gt;
-        &lt;/SCOREFXNS&gt;
-
-        &lt;TASKOPERATIONS&gt;
-<span id=xml_task_operations>
-
-</span>
-        &lt;/TASKOPERATIONS&gt;
-
-        &lt;FILTERS&gt;
-<span id=xml_filters>
-	
-</span>
-        &lt;/FILTERS&gt;
-
-        &lt;MOVERS&gt;
-</pre>
-<span id=xml_movers>
-	
-</span>
-<pre>
-        &lt;/MOVERS&gt;
-
-        &lt;APPLY_TO_POSE&gt;
-        &lt;/APPLY_TO_POSE&gt;
-
-        &lt;PROTOCOLS&gt;
-<span id=xml_protocols>
-	
-</span>
-        &lt;/PROTOCOLS&gt;
-
-&lt;/ROSETTASCRIPTS&gt;
-</pre>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Rosetta Diagrams</a>
+          <div class="navbar-content">
+            <ul class="nav ">
+              <li class="active">
+                <a href="#">Home</a> 
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hero-unit hidden-phone title-bg">
+        <h1>Rosetta Diagrams</h1>
+        <h1></h1>
+        <p>
+          <i>Create protein modeling protocols for Rosetta, with style.</i> 
+        </p>
+        <img>
+        <p></p>
+        <a class="btn btn-danger btn-large" href="app.html">Try the alpha version</a>
+        <a class="btn btn-info btn-large" href="https://github.com/LiorZ/RosettaDiagrams/blob/master/README.md"
+        style="margin-left:2em">User's manual</a> 
+      </div>
+      <a class="btn btn-large btn-primary btn-block visible-phone" href="#"><span class="btn-label">Sign Up Today!</span></a>
+      <div class="row main-features">
+        <div class="span4">
+          <div class="well">
+            <h4>Easily create complex protocols</h4>
+            <p>Rosetta Diagrams allows you to create complex Rosetta protocols by drawing
+              them as diagrams</p>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="well">
+            <h4>Export to Rosetta Scripts</h4>
+            <p>Export the diagram to Rosetta Scripts and run it on any machine that has
+              Rosetta installed.</p>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="well">
+            <h4>Completely open source</h4>
+            <br> Follow us on
+            <a href="https://github.com/LiorZ/RosettaDiagrams/">
+        <img src="website_images/GitHub-Mark-32px.png"><img src="website_images/GitHub_Logo.png" style="height:32px"> </a> 
+          </div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </body>
 
-	<div id="toolbar" class="ui-widget-header ui-corner-all">
-			<button id='btn_delete' class="ui-icon-trash">Delete element</button>
-			<button id='btn_connect' class="ui-icon-arrowthick-1-e">Form a connection</button>
-			<button id='btn_info' class='ui-icon-info'>About</button>
-			<button id='btn_subdiagram' class='ui-icon-newwin'>Open Subdiagram</button>
-		</div>
-	</div> <!--container -->
-	<div id='wiki_info' display:none;'>
-
-		<iframe style='width:100%; height:100%; display:none; overflow-x:hidden; border-width:0px;'>
-		
-		</iframe>
-	
-	</div>
-    </body>
 </html>
-

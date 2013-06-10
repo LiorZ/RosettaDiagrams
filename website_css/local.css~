@@ -1,0 +1,9 @@
+.main-features {
+  margin-top: 10px;      
+}
+.title-bg {
+  background-image:url('https://dl.dropboxusercontent.com/sh/is9o2fdubkmsg2v/ZSb_XbACOr/RosettaDiagrams/only_scaffold.png');
+  background-repeat:no-repeat;
+  background-color:white;
+  background-position: -140px -10px;
+}
