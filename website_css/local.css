@@ -7,3 +7,7 @@
   background-color:white;
   background-position: -140px -10px;
 }
+
+.box_limit_height {
+	height:250px;
+}
