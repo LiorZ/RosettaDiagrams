@@ -1297,13 +1297,111 @@ Joint.currentJoint = null;
  */
 Joint.paper = function paper(){
     var p = arguments[0];
+    
     if (p === undefined){
     	return this._paper;
     }
     this._paperArguments = arguments;	// save for later reset
     if (!(p instanceof global.Raphael)){
-    	return (this._paper = global.Raphael.apply(global, arguments));
+    	this._paper = global.Raphael.apply(global, arguments)
+    	var paper = this._paper;
+    	paper.viewBoxWidth = paper.width;
+    	paper.viewBoxHeight = paper.height;
+    	var oX = 0, oY = 0, oWidth = paper.viewBoxWidth, oHeight = paper.viewBoxHeight;
+    	var viewBox = this._paper.setViewBox(0,0,paper.width,paper.height);
+
+    	viewBox.X = oX;
+    	viewBox.Y = oY;
+    	var handle = function(delta,event) {
+    	    var vBHo = paper.viewBoxHeight;
+	        var vBWo = paper.viewBoxWidth;
+	        
+            var temp_tY = (paper.height/2 - (paper.height-event.pageY))/10;
+            var tX = 100*(temp_tX / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
+            var tY = 100*(temp_tY / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
+            
+            console.log("tX: " + tX + " tY: " + tY);
+	        
+            if (delta < 0) {
+	        	paper.viewBoxWidth *= 0.95;
+	        	paper.viewBoxHeight*= 0.95;
+	        }
+	        else {
+	        	paper.viewBoxWidth *= 1.05;
+	        	paper.viewBoxHeight *= 1.05;
+	        }
+    	                        
+	        viewBox.X -= (paper.viewBoxWidth - vBWo) / 2;
+	        viewBox.Y -= (paper.viewBoxHeight - vBHo) / 2;          
+	        paper.setViewBox(viewBox.X+temp_tX,viewBox.Y+temp_tY,paper.viewBoxWidth,paper.viewBoxHeight);
+	        
+    	}
+	    var wheel = function(event) {
+            var delta = 0;
+            if (!event) /* For IE. */
+                    event = window.event;
+            if (event.wheelDelta) { /* IE/Opera. */
+                    delta = event.wheelDelta/120;
+            } else if (event.detail) { 
+            		/** Mozilla case. */
+                    /** In Mozilla, sign of delta is different than in IE.
+                     * Also, delta is multiple of 3.
+                     */
+                    delta = -event.detail/3;
+            }
+            /** If delta is nonzero, handle it.
+             * Basically, delta is now positive if wheel was scrolled up,
+             * and negative, if wheel was scrolled down.
+             */
+            if (delta)
+                    handle(delta,event);
+            /** Prevent default actions caused by mouse wheel.
+             * That might be ugly, but we handle scrolls somehow
+             * anyway, so don't bother here..
+             */
+            if (event.preventDefault)
+                    event.preventDefault();
+            event.returnValue = false;
+	    
+	    }
+    	    
+        if (window.addEventListener)
+            /** DOMMouseScroll is for mozilla. */
+            this._paper.canvas.addEventListener('DOMMouseScroll', wheel, false);
+    		/** IE/Opera. */
+    	this._paper.canvas.onmousewheel = wheel;
+    	
+//    	var mousedown = false;
+//    	var startX,startY;
+//
+//    	this._paper.canvas.mousedown = function(e){
+//            
+//            if (paper.getElementByPoint( e.pageX, e.pageY ) != null) {return;}
+//            mousedown = true;
+//            startX = e.pageX; 
+//            startY = e.pageY;
+//    	}
+//    	
+//    	this._paper.canvas.mousedown = function(e){
+//            
+//            if (paper.getElementByPoint( e.pageX, e.pageY ) != null) {return;}
+//            mousedown = true;
+//            startX = e.pageX; 
+//            startY = e.pageY;
+//		}
+//    	
+//    	this._paper.canvas.mouseup = function(e){
+//            if ( mousedown == false ) return; 
+//            viewBox.X += dX; 
+//            viewBox.Y += dY; 
+//            mousedown = false; 
+//            
+//        }
+    	
+    	
+    	return this._paper;
     }
+
     return (this._paper = p);
 };
 
@@ -1595,6 +1693,8 @@ var JointDOMBuilder = {
     startCap: function(){
 	var opt = this.opt.arrow.start,
 	    startCap = this.paper.path(opt.path.join(" ")).attr(opt.attrs);
+	
+
 	startCap.translate(this.jointLocation.start.translate.x,
 			   this.jointLocation.start.translate.y);
 	startCap.rotate(this.jointLocation.start.rotate);
@@ -1602,13 +1702,14 @@ var JointDOMBuilder = {
 	return startCap;
     },
     endCap: function(){
-	var opt = this.opt.arrow.end,
-	    endCap = this.paper.path(opt.path.join(" ")).attr(opt.attrs);
-	endCap.translate(this.jointLocation.end.translate.x,
-			 this.jointLocation.end.translate.y);
-	endCap.rotate(this.jointLocation.end.rotate);
-	endCap.show();
-	return endCap;
+		var opt = this.opt.arrow.end,
+		
+		endCap = this.paper.path(opt.path.join(" ")).attr(opt.attrs);
+		endCap.translate(this.jointLocation.end.translate.x,
+				 this.jointLocation.end.translate.y);
+		endCap.rotate(this.jointLocation.end.rotate);
+		endCap.show();
+		return endCap;
     }
 };
 
@@ -2267,6 +2368,21 @@ Joint.DeepSupplement = DeepSupplement;
  * instead it sets transformation directly to let the browser
  * SVG engine compute the position.
  */
+
+var _translate = global.Raphael.el.translate;
+global.Raphael.el.translate = function(dx,dy) {
+	var paper = this.paper;
+	if (dx != 0 || dy != 0 ){
+		_translate.apply(this,[dx,dy]);
+	    for (var i = this.joints().length - 1; i >= 0; --i){
+	    	var joint = this.joints()[i];
+    	    joint.update();
+    	    joint.callback("objectMoving", joint, [this]);
+	    }
+	}
+}
+
+
 var _attr = global.Raphael.el.attr;
 global.Raphael.el.attr = function(){
     // is it a getter or el is not a joint object?

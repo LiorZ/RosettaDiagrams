@@ -444,15 +444,20 @@ Element.prototype = {
      */
     translate: function(dx, dy){
 	// save translation
-	this.properties.dx += dx;
-	this.properties.dy += dy;
+	scaleFactorWidth = (this.paper.viewBoxWidth/this.paper.width);
+	scaleFactorHeight = (this.paper.viewBoxHeight/this.paper.height);
+	var new_dx = dx*scaleFactorWidth, new_dy = dy*scaleFactorHeight;
+	
+	this.properties.dx += new_dx;
+	this.properties.dy += new_dy;
 	// translate wrapper, all inner and toolbox
-	this.wrapper.translate(dx, dy);
-	this.shadow && this.shadow.translate(dx, dy);
+	this.wrapper.translate(new_dx, new_dy);
+	
+	this.shadow && this.shadow.translate(new_dx, new_dy);
 	for (var i = this.inner.length - 1; i >= 0; --i){
-	    this.inner[i].translate(dx, dy);
+	    this.inner[i].translate(new_dx, new_dy);
 	}
-	this.translateToolbox(dx, dy);
+	this.translateToolbox(new_dx, new_dy);
         this.paper.safari();
     },
 
