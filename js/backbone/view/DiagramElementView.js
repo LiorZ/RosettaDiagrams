@@ -133,21 +133,19 @@ $(function() {
 			app.EventAgg.trigger('hide_menu_now');
 			if ( connectionMode == true ) { 
 				if ( app.pendingConnection != undefined ) { 
-					var target_con = app.ActiveDiagram.connection_by_target(this.model);
-					if ( (target_con != undefined && target_con.get('source').get('type') != 'task_operation') &&
-							app.pendingConnection.get('source').get('type') != 'task_operation' ){
-						//Not allowing more than one incoming connection! (PUT HERE INFORMATION MESSAGE)
-						app.pendingConnection = undefined;
-						var info_msg_model = new app.InformationMessage({message:"Can't connect more than one node", type:'error',title:'Error: '});
-						
-						app.EventAgg.trigger('wrong_connection_created',{info_msg: info_msg_model});
-						return;
-					}
-					
-					app.EventAgg.trigger('connection_mode_deactivated');
 					app.pendingConnection.set("target",this.model);
-					app.ActiveDiagram.add_connection(app.pendingConnection);
+					var status = app.DiagramVerifier.is_valid_connection(app.pendingConnection);
+					if ( status.valid ){
+						app.EventAgg.trigger('connection_mode_deactivated');
+						app.ActiveDiagram.add_connection(app.pendingConnection);
+					}else {
+						var info_msg_model = new app.InformationMessage({message:status.message, type:'error',title:'Error: '});
+						app.EventAgg.trigger('wrong_connection_created',{info_msg: info_msg_model});
+						app.pendingConnection.destroy();
+
+					}
 					app.pendingConnection = undefined;
+
 				}
 			}
 		}

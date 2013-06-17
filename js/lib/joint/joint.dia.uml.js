@@ -117,6 +117,7 @@ uml.State = Element.extend({
                 exit: null,
                 inner: []
             },
+            labelAttrs: { 'font-weight': 'bold' },
             actionsOffsetX: 5,
             actionsOffsetY: 5
         });
@@ -135,7 +136,7 @@ uml.State = Element.extend({
 	tbb = t.getBBox();
 	t.translate(bb.x - tbb.x + p.labelOffsetX,
 		    bb.y - tbb.y + p.labelOffsetY);
-	this.centerLabel(t);
+//	this.centerLabel(t);
 	return t;
     },
     

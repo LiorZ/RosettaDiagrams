@@ -20,6 +20,7 @@ head.js(
 		"js/lib/vkbeautify/vkbeautify.0.99.00.beta.js",
 		"js/lib/jquery-ui/jqueryui.js",
 		"js/lib/jquery-ui/plugins/tablesorter/jquery.tablesorter.js",
+		"js/backbone/controllers/DiagramVerifier.js",
 		"js/backbone/view/appView.js",
 		"js/backbone/view/AttributeView.js",
 		"js/backbone/view/DiagramElementView.js",
