@@ -1316,11 +1316,11 @@ Joint.paper = function paper(){
     	    var vBHo = paper.viewBoxHeight;
 	        var vBWo = paper.viewBoxWidth;
 	        
-            var temp_tY = (paper.height/2 - (paper.height-event.pageY))/10;
-            var tX = 100*(temp_tX / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
-            var tY = 100*(temp_tY / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
-            
-            console.log("tX: " + tX + " tY: " + tY);
+//            var temp_tY = (paper.height/2 - (paper.height-event.pageY))/10;
+//            var tX = 100*(temp_tX / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
+//            var tY = 100*(temp_tY / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
+//            
+//            console.log("tX: " + tX + " tY: " + tY);
 	        
             if (delta < 0) {
 	        	paper.viewBoxWidth *= 0.95;
@@ -1333,7 +1333,7 @@ Joint.paper = function paper(){
     	                        
 	        viewBox.X -= (paper.viewBoxWidth - vBWo) / 2;
 	        viewBox.Y -= (paper.viewBoxHeight - vBHo) / 2;          
-	        paper.setViewBox(viewBox.X+temp_tX,viewBox.Y+temp_tY,paper.viewBoxWidth,paper.viewBoxHeight);
+	        paper.setViewBox(viewBox.X,viewBox.Y,paper.viewBoxWidth,paper.viewBoxHeight);
 	        
     	}
 	    var wheel = function(event) {
