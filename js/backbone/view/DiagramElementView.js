@@ -144,6 +144,7 @@ $(function() {
 						app.pendingConnection.destroy();
 
 					}
+					this.model.set('connectionReady',false);
 					app.pendingConnection = undefined;
 
 				}
