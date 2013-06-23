@@ -55,15 +55,6 @@ $(function( $ ) {
 		main_joint: undefined,
 		el: '#container',
 		connectionReady: false,
-		viewBoxHeight: 0,
-		viewBoxWidth:0,
-		viewBox:{
-			X:0,
-			Y:0
-		},
-		events: {
-			"mousewheel":"handle_mouse_wheel"
-		},
 		toggleDeleteMode: function() { 
 			app.EventAgg.trigger('toggleDeleteMode');
 		},
@@ -145,49 +136,6 @@ $(function( $ ) {
 			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
 			this.$("#menu").accordion('refresh');
 		},
-		
-		zoom: function(delta) {
-	        vBHo = this.viewBoxHeight;
-	        vBWo = this.viewBoxWidth;
-	        if (delta < 0) {
-	        this.viewBoxWidth *= 0.95;
-	        this.viewBoxHeight*= 0.95;
-	        }
-	        else {
-	        this.viewBoxWidth *= 1.05;
-	        this.viewBoxHeight *= 1.05;
-	        }
-	                        
-	        this.viewBox.X -= (this.viewBoxWidth - vBWo) / 2;
-	        this.viewBox.Y -= (this.viewBoxHeight - vBHo) / 2;          
-	        this.main_joint.setViewBox(this.viewBox.X,this.viewBox.Y,this.viewBoxWidth,this.viewBoxHeight);
-		},
-		handle_mouse_wheel:function(e,delta) {
-//            var delta = 0;
-//            if (!event) /* For IE. */
-//                    event = window.event;
-//            if (event.wheelDelta) { /* IE/Opera. */
-//                    delta = event.wheelDelta/120;
-//            } else if (event.detail) { /** Mozilla case. */
-//                    /** In Mozilla, sign of delta is different than in IE.
-//                     * Also, delta is multiple of 3.
-//                     */
-//                    delta = -event.detail/3;
-//            }
-//            /** If delta is nonzero, handle it.
-//             * Basically, delta is now positive if wheel was scrolled up,
-//             * and negative, if wheel was scrolled down.
-//             */
-//            if (delta)
-//                    this.zoom(delta);
-//            /** Prevent default actions caused by mouse wheel.
-//             * That might be ugly, but we handle scrolls somehow
-//             * anyway, so don't bother here..
-//             */
-//            if (event.preventDefault)
-//                    event.preventDefault();
-//            event.returnValue = false;
-		}
 		
 	});
 	

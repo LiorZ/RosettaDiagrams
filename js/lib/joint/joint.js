@@ -1309,30 +1309,36 @@ Joint.paper = function paper(){
     	paper.viewBoxHeight = paper.height;
     	var oX = 0, oY = 0, oWidth = paper.viewBoxWidth, oHeight = paper.viewBoxHeight;
     	var viewBox = this._paper.setViewBox(0,0,paper.width,paper.height);
-
+    	
+    	var translate_dX = 0;
+    	var translate_dY = 0;
+    	
+    	var startX = 0, startY =0;
     	viewBox.X = oX;
+        var mousedown = false;
     	viewBox.Y = oY;
     	var handle = function(delta,event) {
-    	    var vBHo = paper.viewBoxHeight;
-	        var vBWo = paper.viewBoxWidth;
-	        
-//            var temp_tY = (paper.height/2 - (paper.height-event.pageY))/10;
-//            var tX = 100*(temp_tX / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
-//            var tY = 100*(temp_tY / Math.sqrt(temp_tX*temp_tX+ temp_tY*temp_tY));
-//            
-//            console.log("tX: " + tX + " tY: " + tY);
-	        
+            x = paper.viewBoxWidth / paper.width;
+            y = paper.viewBoxHeight / paper.height;
+            var scale_factor;
             if (delta < 0) {
-	        	paper.viewBoxWidth *= 0.95;
-	        	paper.viewBoxHeight*= 0.95;
+            	scale_factor = 0.95;
 	        }
 	        else {
-	        	paper.viewBoxWidth *= 1.05;
-	        	paper.viewBoxHeight *= 1.05;
+	        	scale_factor = 1.05;
 	        }
-    	                        
-	        viewBox.X -= (paper.viewBoxWidth - vBWo) / 2;
-	        viewBox.Y -= (paper.viewBoxHeight - vBHo) / 2;          
+        	paper.viewBoxWidth *= scale_factor;
+        	paper.viewBoxHeight *= scale_factor;
+
+        	dX = event.pageX - event.pageX * scale_factor;
+        	dY = event.pageY - event.pageY * scale_factor;
+    	    
+            console.log("dX: " +dX + " dY: " + dY);
+            
+	        viewBox.X += dX;
+	        viewBox.Y += dY;
+	        
+	        console.log (" viewBox.X: " + viewBox.X + " viewBox.Y: " + viewBox.Y);
 	        paper.setViewBox(viewBox.X,viewBox.Y,paper.viewBoxWidth,paper.viewBoxHeight);
 	        
     	}
@@ -1371,34 +1377,35 @@ Joint.paper = function paper(){
     		/** IE/Opera. */
     	this._paper.canvas.onmousewheel = wheel;
     	
-//    	var mousedown = false;
-//    	var startX,startY;
-//
-//    	this._paper.canvas.mousedown = function(e){
-//            
-//            if (paper.getElementByPoint( e.pageX, e.pageY ) != null) {return;}
-//            mousedown = true;
-//            startX = e.pageX; 
-//            startY = e.pageY;
-//    	}
-//    	
-//    	this._paper.canvas.mousedown = function(e){
-//            
-//            if (paper.getElementByPoint( e.pageX, e.pageY ) != null) {return;}
-//            mousedown = true;
-//            startX = e.pageX; 
-//            startY = e.pageY;
-//		}
-//    	
-//    	this._paper.canvas.mouseup = function(e){
-//            if ( mousedown == false ) return; 
-//            viewBox.X += dX; 
-//            viewBox.Y += dY; 
-//            mousedown = false; 
-//            
-//        }
-    	
-    	
+    	paper.canvas.onmousedown = function(e){
+            
+            if (paper.getElementByPoint( e.pageX, e.pageY ) != null) {return;}
+            mousedown = true;
+            startX = e.pageX; 
+            startY = e.pageY;    
+        };
+        
+        paper.canvas.onmousemove = function(e){
+            if (mousedown == false) {return;}
+            translate_dX = startX - e.pageX;
+            translate_dY = startY - e.pageY;
+            var x = paper.viewBoxWidth / paper.width; 
+            var y = paper.viewBoxHeight / paper.height; 
+
+            translate_dX *= x; 
+            translate_dY *= y; 
+            
+            paper.setViewBox(viewBox.X + translate_dX, viewBox.Y + translate_dY, paper.viewBoxWidth, paper.viewBoxHeight);
+
+        };
+        
+        paper.canvas.onmouseup = function(e) {
+            if ( mousedown == false ) return; 
+              viewBox.X += translate_dX; 
+              viewBox.Y += translate_dY; 
+            mousedown = false; 
+            
+        }
     	return this._paper;
     }
 
