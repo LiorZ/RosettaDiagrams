@@ -15,6 +15,7 @@
 			attributes: undefined,
 			typeObj: undefined,
 			type:undefined,
+			target_node: undefined,
 			width: 0, // defined in the initialize section, getting an undefined value here .. 
 			height: 0,
 			subdiagram:undefined, //an element that contains that particular element

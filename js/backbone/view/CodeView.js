@@ -33,11 +33,22 @@ $(function() {
 		
 		renderConnections: function() {
 			this.$('#xml_protocols').empty();
-			var order = app.MainDiagram.get_ordered_elements();
-			for(var i=0; i<order.length; ++i){ 
-				var htmlCode = order[i].get_protocols_string();
-				this.$('#xml_protocols').append(htmlCode);
+			var has_linear = app.DiagramVerifier.has_linear_path();
+			if ( !has_linear ) {
+				return;
 			}
+			
+			var all_sources = app.DiagramVerifier.get_sources();
+			if ( _.isUndefined(all_sources) || all_sources.length == 0 ) {
+				return;
+			}
+			
+			var order = all_sources[0];
+			do {
+				var htmlCode = order.get_protocols_string();
+				this.$('#xml_protocols').append(htmlCode);
+				order = order.get('target_node');
+			} while(order != undefined);
 		}
 		
 	});

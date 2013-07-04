@@ -73,7 +73,12 @@
 			return (this.get('elements') == undefined || this.get('elements').length == 0 );
 		},
 		
-		
+		get_connections: function() {
+			return this.get("connections");
+		},
+		get_elements: function() {
+			return this.get("elements");
+		},
 		/**
 		 * Returns elements ordered according to the way they appear on the diagram.
 		 */

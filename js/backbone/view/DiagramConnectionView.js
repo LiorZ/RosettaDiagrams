@@ -32,6 +32,13 @@ $(function() {
 					app.EventAgg.trigger('wrong_connection_created',{info_msg: info_msg_model});
 					return false;
 				}
+//				if ( !app.DiagramVerifier.has_linear_path() ){
+//					view.undo_connection(side);
+//					var status = app.DiagramVerifier.get_non_linear_status();
+//					var info_msg_model = new app.InformationMessage({message:status.message, type:'error',title:'Error: '});
+//					app.EventAgg.trigger('wrong_connection_created',{info_msg: info_msg_model});
+//					return false;
+//				}
 				
 				view.stopListening(obj.get('source'));
 				view.stopListening(obj.get('target'));

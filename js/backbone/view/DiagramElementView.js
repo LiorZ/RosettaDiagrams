@@ -57,7 +57,7 @@ $(function() {
 			app.EventAgg.off('editDiagramElement', this.toggleHighlight);
 			this.remove();
 		},
-		
+			
 		//Toggles the highlighting of an element upon clicking on it.
 		toggleHighlight: function(element){ 
 			if ( this.model.get('parent_diagram') != app.ActiveDiagram ) {
@@ -75,7 +75,6 @@ $(function() {
 		toggleDeleteMode: function() {
 			var delMode = this.model.get('deleteMode');
 			this.model.set('deleteMode',!delMode);
-			
 		},
 		
 		model_changed: function(){
@@ -105,17 +104,14 @@ $(function() {
 				jointObj.properties.actions.inner.push(value_attr);
 			}
 			jointObj.zoom();
-
-			
 		},
+		
 		mouseUp: function(e) { 
 			var pos = this.$el.offset();
 			app.EventAgg.trigger('show_menu_delay',this.model,pos);
 			
 			var connectionMode = this.model.get("connectionReady");
-			if ( ! connectionMode ) {
-				app.EventAgg.trigger('editDiagramElement',this.model);
-			}
+			app.EventAgg.trigger('editDiagramElement',this.model);
 		},
 		
 		mouseenter: function(e) { 
@@ -142,8 +138,8 @@ $(function() {
 						var info_msg_model = new app.InformationMessage({message:status.message, type:'error',title:'Error: '});
 						app.EventAgg.trigger('wrong_connection_created',{info_msg: info_msg_model});
 						app.pendingConnection.destroy();
-
 					}
+					
 					this.model.set('connectionReady',false);
 					app.pendingConnection = undefined;
 
