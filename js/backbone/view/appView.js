@@ -136,6 +136,7 @@ $(function( $ ) {
 			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
 			this.$("#menu").accordion('refresh');
 		},
+		
 	});
 	
 	
