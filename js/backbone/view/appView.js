@@ -105,8 +105,21 @@ $(function( $ ) {
 		addMenuView: function() {
 			app.menuView = new app.MenuView({eventagg: app.EventAgg});
 		},
+		/*
+		 * Returns a position for the new page , in the middle of the editor, takes into account translate and zoom..
+		 */
+		getPosForNewPage: function() {
+			var newPos = {
+					x: (this.main_joint.viewBoxWidth/2+this.main_joint.viewBox.X),
+					y: (this.main_joint.viewBoxHeight/2+this.main_joint.viewBox.Y)
+			};
+			
+			return newPos;
+		},
 		
 		addElementView: function(element) {
+			var new_pos = this.getPosForNewPage();
+			element.set(new_pos);
 			var view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
 			view.render();
 		},
