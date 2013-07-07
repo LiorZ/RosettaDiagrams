@@ -115,6 +115,9 @@ $(function() {
 		},
 		
 		mouseenter: function(e) { 
+			if ( e.which == 1 )
+				return;
+			
 			var pos = this.$el.offset();
 			app.EventAgg.trigger('show_menu_delay',this.model,pos);
 		},
