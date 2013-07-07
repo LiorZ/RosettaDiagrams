@@ -9,12 +9,10 @@ var app = app || {};
    	      this.constructor.__super__.initialize.apply(this, [options])
 			this.set('moversList',new app.DiagramElementList());
 			this.set('key','task_operations');
-			this.listenTo(this.get('moversList'),'add remove change',this.reset_value);
-			
+			this.listenTo( this.get('moversList'), 'add remove change', this.reset_value );
 		},
 		
 		reset_value:function() {
-			console.log('reset is called');
 			var movers = this.get('moversList');
 			
 			if ( movers.length == 0 )
@@ -31,9 +29,13 @@ var app = app || {};
 		},
 		
 		add_task: function(new_task_element) {
+			var name_attr = new_task_element.get('attributes').byKey('name');
+			this.listenTo(name_attr,'change:value',this.reset_value);
 			this.get('moversList').add(new_task_element);
 		},
 		remove_task: function(task) {
+			var name_attr = task.get('attributes').byKey('name');
+			this.stopListening(name_attr);
 			this.get('moversList').remove(task);
 		}
 		
