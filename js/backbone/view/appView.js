@@ -55,12 +55,6 @@ $(function( $ ) {
 		main_joint: undefined,
 		el: '#container',
 		connectionReady: false,
-		viewBoxHeight: 0,
-		viewBoxWidth:0,
-		viewBox:{
-			X:0,
-			Y:0
-		},
 		toggleDeleteMode: function() { 
 			app.EventAgg.trigger('toggleDeleteMode');
 		},
