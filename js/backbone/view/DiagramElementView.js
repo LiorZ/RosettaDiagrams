@@ -38,7 +38,6 @@ $(function() {
 			app.EventAgg.bind('editDiagramElement',this.toggleHighlight);
 			var context = this;
 			jointObj.registerCallback('elementMoved',function(new_loc){
-				console.log(new_loc);
 				context.model.set('x',new_loc.x);
 				context.model.set('y',new_loc.y);
 			});
