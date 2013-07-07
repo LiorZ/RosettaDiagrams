@@ -10,7 +10,13 @@ $(function() {
 			this.listenTo(app.MainDiagram,'remove:element',this.render);
 			this.listenTo(app.MainDiagram,'remove:connection',this.render);
 			this.listenTo(app.MainDiagram,'add:element',this.render);
+			this.listenTo(app.MainDiagram,'add:element',this.attach_to_attributes);
 			this.listenTo(app.MainDiagram,'add:connection',this.render);
+		},
+		
+		attach_to_attributes:function(elem) {
+			var attrs = elem.get('attributes');
+			this.listenTo(attrs,'change add remove',this.render);
 		},
 		
 		render: function() { 
