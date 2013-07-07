@@ -38,9 +38,9 @@ $(function() {
 			app.EventAgg.bind('editDiagramElement',this.toggleHighlight);
 			var context = this;
 			jointObj.registerCallback('elementMoved',function(new_loc){
+				console.log(new_loc);
 				context.model.set('x',new_loc.x);
 				context.model.set('y',new_loc.y);
-				this.embed();
 			});
 			this.model_changed();
 			this.refresh_attributes();
@@ -115,9 +115,6 @@ $(function() {
 		},
 		
 		mouseenter: function(e) { 
-			if ( e.which == 1 )
-				return;
-			
 			var pos = this.$el.offset();
 			app.EventAgg.trigger('show_menu_delay',this.model,pos);
 		},

@@ -109,9 +109,13 @@ $(function( $ ) {
 		 * Returns a position for the new page , in the middle of the editor, takes into account translate and zoom..
 		 */
 		getPosForNewPage: function() {
+			var jointObj = app.ActiveDiagram.get('jointObj');
+			if ( jointObj == undefined ){
+				return undefined;
+			}
 			var newPos = {
-					x: (this.main_joint.viewBoxWidth/2+this.main_joint.viewBox.X),
-					y: (this.main_joint.viewBoxHeight/2+this.main_joint.viewBox.Y)
+					x: (jointObj.viewBoxWidth/2+jointObj.viewBox.X),
+					y: (jointObj.viewBoxHeight/2+jointObj.viewBox.Y)
 			};
 			
 			return newPos;

@@ -39,6 +39,7 @@ $(function() {
 			
 			elements.each(
 					function( element ) {
+						console.log(element);
 						var element_view = new app.DiagramElementView({model:element});
 			});
 			

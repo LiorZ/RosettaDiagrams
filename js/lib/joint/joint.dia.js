@@ -947,7 +947,9 @@ Element.mouseUp = function(e){
 	
     }
     if ( dia._currentDrag )
-    	dia._currentDrag.callback('elementMoved',dia._currentDrag,[{x:dia._currentDrag.wrapperPos().x, y: dia._currentDrag.wrapperPos().y}]);
+//    	dia._currentDrag.callback('elementMoved',dia._currentDrag,[{x:dia._currentDrag.wrapperPos().x, y: dia._currentDrag.wrapperPos().y}]);
+    	//LIORZ: Switched the notification from the wrapper position to the bb, the wrapper from some reason isn't updated, couldn't find why, probably related to the new raphaeljs version.
+    	dia._currentDrag.callback('elementMoved',dia._currentDrag,[{x:dia._currentDrag.getBBox().x, y: dia._currentDrag.getBBox().y}]);
     dia._currentDrag = false;
     dia._currentZoom = false;
 };
