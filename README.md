@@ -5,18 +5,20 @@ Rosetta Diagrams
 Introduction
 -------------
 
-Rosetta Diagrams allows you to create protein modeling protocols with Rosetta by drawing the protocol as a diagram on a browser. The diagram can then be exported as a Rosetta Script and ran on any Rosetta installation. This tutorial assumes you are already familiar with protein modeling and have a basic understanding of Rosetta. No programming skills required.
+Rosetta Diagrams allows you to create protein modeling protocols with Rosetta by drawing the protocol as a diagram in a browser. The diagram can then be exported to a Rosetta Script and run on any Rosetta installation. This tutorial assumes you are already familiar with protein modeling and have a basic understanding of Rosetta. No programming skills required.
 
 The workspace
 -------------
 	
 ![Workspace](https://raw.github.com/LiorZ/RosettaDiagrams/master/readme_files/screenshot_clean.png)
-The screen above is the workspace in which the diagrams are sketched. It is composed of 4 main sections:
+The image above features the workspace in which the diagrams are sketched. It is composed of 4 main sections:
 
-1. The Code section - where the Rosetta Scripts XML code is displayed. This section is updated every time the diagram is changed.
-2. The Palette - contains all elements available within Rosetta for the creation of a Rosetta Scripts protocol. (Movers, Filters, TaskOperations and Control Structure movers (currently, there is only IFMover)
-3. The Properties section - displays relevant information in the form of a key-value pairs for elements that are selected in the diagram. This pairs are actually the attributes that appear in the XML tags of the elements in the Rosetta Scripts code. The *Add Attribute* button adds another key-value pair , that is also added to the element's tag in the XML file. All these sections appear when the mouse hover them , and retract once no longer needed.
+1. The Code section - where the Rosetta Scripts XML code is displayed. This section is synchronized with the diagram and updates on every change.
+2. The Palette - contains all the elements that are available within Rosetta for the creation of a Rosetta Scripts protocol. (Movers, Filters, TaskOperations and Control Structure movers (currently, there is only IFMover)
+3. The Properties section - displays relevant information in the form of a key-value pairs for elements that are selected in the diagram. These pairs are actually the attributes that appear in the XML tags of the elements in the Rosetta Scripts code. The *Add Attribute* button adds another key-value pair , that is also added to the element's tag in the XML file. All these sections appear when the mouse hover them , and retract once no longer needed.
 4. The Canvas - the area in which the diagram is drawn.
+
+The workspace can be zoomed in/out with the mouse wheel and dragged by the usual means (left mouse button).
 	
 Creating a protocol
 --------------------
@@ -55,5 +57,24 @@ In the *Properties Section* we can modify the attributes of each element in the 
 The *Add Attribute* button allows you to add your own attribute if there is one that is not listed in the table.
 ![Properties section](https://raw.github.com/LiorZ/RosettaDiagrams/master/readme_files/properties_section.png)
 
+To remove an element, simply click the trash can logo on the menu.
 
+Subdiagrams
+------------
+Some movers in Rosetta can contain nested elements as part of their operation. A good example for one of these elements is the MetropolisHastings mover which can have nested movers in one of the following 2 ways:
 
+1. Defining the movers within MetropolisHastings:
+<pre>
+	&lt; MetropolisHastings ... &gt;
+	  &lt; Backrub sampling_weight=(1 &Real) .../&gt;
+	&lt; /MetropolisHastings &gt;
+</pre>
+2. Referencing previously defined movers:
+<pre>
+	&lt;Backrub name=backrub .../&gt;
+	&lt;MetropolisHastings ...&gt;
+	  &lt;Add mover_name=backrub sampling_weight=(1 &Real)/&gt;
+	&lt;/MetropolisHastings &gt;
+</pre>
+
+RosettaDiagrams supports nested movers in the form of Subdiagrams.
