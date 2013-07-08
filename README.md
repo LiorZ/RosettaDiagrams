@@ -77,4 +77,7 @@ Some movers in Rosetta can contain nested elements as part of their operation. A
 	&lt;/MetropolisHastings &gt;
 </pre>
 
-RosettaDiagrams supports nested movers in the form of Subdiagrams.
+RosettaDiagrams supports nested movers in the form of Subdiagrams in the second format described above. To create a subdiagram and add nested elements, click the subdiagram icon in the menu:
+![Subdiagram menu item](https://raw.github.com/LiorZ/RosettaDiagrams/master/readme_files/subdiagram_icon.png)
+Upon clicking , a new canvas will appear where new elements could be added and a new flow could be defined.
+![Subdiagram menu item](https://raw.github.com/LiorZ/RosettaDiagrams/master/readme_files/subdiagram_annotated.png)
