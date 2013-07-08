@@ -43,6 +43,25 @@ $(function() {
 			});
 			this.model_changed();
 			this.refresh_attributes();
+			
+			var subdiagram = this.model.get('subdiagram');
+			this.listenTo(subdiagram,'add:element',this.show_subdiagram_icon);
+			this.listenTo(subdiagram,'remove:element',this.hide_subdiagram_icon);
+		},
+		
+		show_subdiagram_icon:function() {
+			var joint = this.model.get('jointObj');
+			joint.set_has_subdiagram(true);
+			joint.zoom();
+		},
+		
+		hide_subdiagram_icon:function() {
+			var subdiagram = this.model.get('subdiagram');
+			if (subdiagram.get('elements').length > 0 )
+				return;
+			var joint = this.model.get('jointObj');
+			joint.set_has_subdiagram(false);
+			joint.zoom();
 		},
 		
 		destroyElement:function() {

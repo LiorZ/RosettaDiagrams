@@ -669,20 +669,25 @@ Element.prototype = {
      * @return {null}
      */
     liquidate: function(){
-	var joints = this.joints(), idx = joints.length, j, inners = this.inner;
+    var joints = this.joints();
+    var inners = this.inner;
+    if ( joints != undefined ){
+    	var idx = joints.length, j;
 	// remove joints
-	while (idx--){
-	    j = joints[idx];
-	    j.freeJoint(j.startObject());
-	    j.freeJoint(j.endObject());
-	    j.clean(["connection", "startCap", "endCap", "handleStart", "handleEnd", "label"]);
-	    dia.unregisterJoint(j);
-	    j.unregister(this);
-	}
+		while (idx--){
+		    j = joints[idx];
+		    j.freeJoint(j.startObject());
+		    j.freeJoint(j.endObject());
+		    j.clean(["connection", "startCap", "endCap", "handleStart", "handleEnd", "label"]);
+		    dia.unregisterJoint(j);
+		    j.unregister(this);
+		}
+    }
+    
 	this.removeToolbox();
 	this.unembed();
 	// liquidate subelements
-	idx = inners.length;
+	var idx = inners.length;
 	while (idx--){
 	    if (inners[idx].liquidate) inners[idx].liquidate();
 	    else inners[idx].remove();

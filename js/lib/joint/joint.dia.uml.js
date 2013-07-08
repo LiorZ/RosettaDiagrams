@@ -8,6 +8,7 @@ var Joint = global.Joint,
  * @name Joint.dia.uml
  * @namespace Holds functionality related to UML diagrams.
  */
+
 var uml = Joint.dia.uml = {};
 
 Joint.arrows.aggregation = function(size){
@@ -119,7 +120,13 @@ uml.State = Element.extend({
             },
             labelAttrs: { 'font-weight': 'bold' },
             actionsOffsetX: 5,
-            actionsOffsetY: 5
+            actionsOffsetY: 5,
+            subdiagram_icon:'icons/small/subdiagram.png',
+            is_subdiagram:false,
+            padding:{
+            	x:5,
+            	y:5
+            }
         });
 	// wrapper
 	this.setWrapper(this.paper.rect(p.rect.x, p.rect.y, p.rect.width, p.rect.height, p.radius).attr(p.attrs));
@@ -127,6 +134,12 @@ uml.State = Element.extend({
 	this.addInner(this.getLabelElement());
 	this.addInner(this.getSwimlaneElement());
 	this.addInner(this.getActionsElement());
+	if ( p.is_subdiagram )
+		this.addInner(this.getSubdiagramIcon());
+    },
+    
+    set_has_subdiagram:function(has) {
+    	this.properties.is_subdiagram = has;
     },
     getLabelElement: function(){
 	var
@@ -138,6 +151,13 @@ uml.State = Element.extend({
 		    bb.y - tbb.y + p.labelOffsetY);
 //	this.centerLabel(t);
 	return t;
+    },
+    
+    getSubdiagramIcon: function() {
+    	var p = this.properties;
+    	var bb = this.getBBox();
+    	console.log(bb);
+    	return this.paper.image(p.subdiagram_icon, bb.x+p.padding.x,bb.y + bb.height-24-p.padding.y, 24,24);
     },
     
     centerLabel:function(label) {
@@ -178,9 +198,14 @@ uml.State = Element.extend({
 	this.inner[0].remove();	// label
 	this.inner[1].remove();	// swimlane
 	this.inner[2].remove();	// actions
+	this.inner.length > 3 && this.inner[3].remove();
+	
 	this.inner[0] = this.getLabelElement();
 	this.inner[1] = this.getSwimlaneElement();
 	this.inner[2] = this.getActionsElement();
+	if ( this.properties.is_subdiagram ) {
+		this.inner[3] = this.getSubdiagramIcon();
+	}
     }
 });
 
@@ -311,8 +336,10 @@ uml.Class = Element.extend({
             attributesOffsetY: 5,
             methods: [],
             methodsOffsetX: 5,
-            methodsOffsetY: 5
+            methodsOffsetY: 5,
         });
+	
+	
 	// wrapper
 	this.setWrapper(this.paper.rect(p.rect.x, p.rect.y, p.rect.width, p.rect.height).attr(p.attrs));
 	// inner
@@ -322,6 +349,7 @@ uml.Class = Element.extend({
 	this.addInner(this.getSwimlane2Element());
 	this.addInner(this.getMethodsElement());
     },
+    
     getLabelElement: function(){
 	var
 	p = this.properties,
@@ -375,16 +403,20 @@ uml.Class = Element.extend({
 	return t;
     },
     zoom: function(){
-	this.inner[0].remove();	// label
-	this.inner[1].remove();	// swimlane1
-	this.inner[2].remove();	// attributes
-	this.inner[3].remove();	// swimlane2
-	this.inner[4].remove();	// methods
-	this.inner[0] = this.getLabelElement();
-	this.inner[1] = this.getSwimlane1Element();
-	this.inner[2] = this.getAttributesElement();
-	this.inner[3] = this.getSwimlane2Element();
-	this.inner[4] = this.getMethodsElement();
+		this.inner[0].remove();	// label
+		this.inner[1].remove();	// swimlane1
+		this.inner[2].remove();	// attributes
+		this.inner[3].remove();	// swimlane2
+		this.inner[4].remove();	// methods
+		this.inner[5].remove();
+		
+		this.inner[0] = this.getLabelElement();
+		this.inner[1] = this.getSwimlane1Element();
+		this.inner[2] = this.getAttributesElement();
+		this.inner[3] = this.getSwimlane2Element();
+		this.inner[4] = this.getMethodsElement();
+		this.inner[5] = this.getSubdiagramIcon();
+	
     }
 });
 
