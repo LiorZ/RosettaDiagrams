@@ -136,6 +136,7 @@ $(function() {
 		hide_menu_now: function(e) { 
 			this.hide_menu_delay(0);
 		},
+		
 		hide_menu_delay: function(time_out){
 			if ( time_out == undefined )
 				time_out = consts.MENU_TIMEOUT;	
