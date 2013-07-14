@@ -46,10 +46,16 @@ $(function() {
 				view.undo_connection(side);
 			});
 			
+			
 			this.listenTo(source,'destroy',this.delete_connection);
 			this.listenTo(target,'destroy',this.delete_connection);
 		},
-		
+		events: {
+			'mousedown': 'handle_mouse_enter'
+		},
+		handle_mouse_enter:function(e){ 
+			console.log("Helllooooo");
+		},
 		undo_connection:function(side){
 			var jointObj = this.model.get('jointObj');
 			var prev_node = jointObj.prev_node;
