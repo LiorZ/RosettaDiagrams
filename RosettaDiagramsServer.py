@@ -25,7 +25,6 @@ class MainHandler(tornado.web.RequestHandler):
 			pyobs.add_observer(pose) 
 		
 		protocol = urllib.unquote(self.get_argument('txt_protocol'))
-		print "PROTOCOL String: \n" ,protocol
 		self.write_file(protocol,'temp.xml')
 		
 		dpp=protocols.jd2.DockDesignParser()
