@@ -2,13 +2,16 @@ var app = app || {};
 $(function() {
 	
 	app.DiagramConnectionView = Backbone.View.extend({
-		
 		initialize: function() {
 			var model = this.model;
 			var source = model.get('source');
 			var target =  model.get('target');
 			var target_joint = target.get('jointObj');
 			var jointObj = source.get('jointObj').joint(target_joint,_.extend(model.get('type'),{label:this.model.get("title")}));
+			var dom_obj = jointObj.dom.connection[jointObj.dom.connection.length-1];
+			
+			this.$el = $(dom_obj.node);
+			
 			var elements = app.ActiveDiagram.get('elements');
 			if ( elements ) {
 				jointObj.registerForever(elements.as_joints_array());
@@ -45,17 +48,27 @@ $(function() {
 			jointObj.registerCallback( "floating",function(side)  {
 				view.undo_connection(side);
 			});
+			var context = this;
+			jointObj.registerCallback("mouseEnter",function(m_x,m_y) {
+				var options = {
+						items_to_hide: context.which_menu_items()
+				}
+				app.EventAgg.trigger('show_menu_delay',context.model,{left:m_x,top:m_y},options);
+			})
 			
-			
+//			jointObj.registerCallback("redraw",function(new_obj) {
+//				context.$el = $(new_obj.node);
+//			});
+			this.listenTo(this.model,'destroy',this.delete_connection);
+
 			this.listenTo(source,'destroy',this.delete_connection);
 			this.listenTo(target,'destroy',this.delete_connection);
 		},
-		events: {
-			'mousedown': 'handle_mouse_enter'
+		
+		which_menu_items:function() {
+			return ['#btn_connect','#btn_info','#btn_subdiagram'];
 		},
-		handle_mouse_enter:function(e){ 
-			console.log("Helllooooo");
-		},
+		
 		undo_connection:function(side){
 			var jointObj = this.model.get('jointObj');
 			var prev_node = jointObj.prev_node;
@@ -66,7 +79,15 @@ $(function() {
 		
 		delete_connection:function() {
 			this.stopListening();
+			var elemA = this.model.get('source').get('jointObj');
+			var elemB = this.model.get('target').get('jointObj');
+			
+			var jointObj = this.model.get('jointObj');
+			if ( jointObj != undefined ){
+				Joint.dia.remove_joint(jointObj,elemA,elemB);
+			}
 			this.model.destroy();
+			
 			this.remove();
 		}
 		

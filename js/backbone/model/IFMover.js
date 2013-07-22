@@ -38,6 +38,8 @@
 		},
 		
 		handle_connect_filter: function(conn) {
+			console.log("handle_connect_filter");
+
 			var target = conn.get('target');
 			var source = conn.get('source');
 			if ( target != this ){

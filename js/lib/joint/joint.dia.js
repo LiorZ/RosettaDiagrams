@@ -98,7 +98,62 @@ var dia = Joint.dia = {
 	while (idx--)
 	    if (register[idx] === j)
 		register.splice(idx, 1);
+    },
+    
+    remove_from_elem: function(elem,j) {
+        var joints = elem.joints();
+        if ( joints != undefined && joints.length > 0 && elem != undefined ) {
+     	   var index = joints.indexOf(j);
+     	   if ( index >= 0)
+     		   joints.splice(index,1);
+        }
+    },
+    
+    remove_joint:function(j,elemA,elemB) {
+       var con_len = j.dom.connection.length;
+       for ( var i=0; i<con_len; ++i ) {
+    	   j.dom.connection[i].unmouseover(j.mouse_over_handler);
+       }
+       clearTimeout(j._opt.handle.timeoutId);
+	   j.freeJoint(j.startObject()); 
+	   j.freeJoint(j.endObject()); 
+	   j.clean(["connection", "startCap", "endCap", "handleStart", "handleEnd", "label"]);
+	   this.unregisterJoint(j);
+	   j.unregister(this);
+	   delete j;
+     },
+      
+      /**
+    liquidate: function(){
+    var joints = this.joints();
+    var inners = this.inner;
+    if ( joints != undefined ){
+    	var idx = joints.length, j;
+	// remove joints
+		while (idx--){
+		    j = joints[idx];
+		    j.freeJoint(j.startObject());
+		    j.freeJoint(j.endObject());
+		    j.clean(["connection", "startCap", "endCap", "handleStart", "handleEnd", "label"]);
+		    dia.unregisterJoint(j);
+		    j.unregister(this);
+		}
     }
+    
+	this.removeToolbox();
+	this.unembed();
+	// liquidate subelements
+	var idx = inners.length;
+	while (idx--){
+	    if (inners[idx].liquidate) inners[idx].liquidate();
+	    else inners[idx].remove();
+	}
+	this.wrapper.remove();
+	dia.unregister(this);
+        this.removed = true;
+        return null;
+    },
+       */
 };
 
 /**

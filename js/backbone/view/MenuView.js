@@ -85,22 +85,24 @@ $(function() {
 
 		},
 		
-		show_menu_delay:function(element,pos,width,height){
+		show_menu_delay:function(element,pos,options){
 			this.model = element;
+			
 			clearTimeout(this.timeoutId);
 			
 			if ( this.model == undefined ){
 				alert("ERROR: Undefined element!");
 				return;
 			}
-			//Not allowing more than one outgoing connection:
-			var source_connection = app.ActiveDiagram.connection_by_source(this.model);
-			if ( this.model.get('type') != 'task_operation' && this.model.get('type') != 'logic' && source_connection != undefined) {
-				this.$('#btn_connect').button({disabled: true});
-			}else { 
-				this.$('#btn_connect').button({disabled: false});
-			}
 			
+			var items_to_hide = options.items_to_hide;
+			var context = this;
+			context.$('button').button({disabled:false});
+			if ( items_to_hide != undefined ) {
+				_.each(items_to_hide,function(item) { 
+					context.$(item).button({disabled: true});
+				});
+			}
 			this.$el.css(
 				{
 					display:'inline',

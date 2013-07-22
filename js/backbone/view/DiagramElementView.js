@@ -81,7 +81,6 @@ $(function() {
 			if ( this.model.get('parent_diagram') != app.ActiveDiagram ) {
 				return;
 			}
-			console.log(this.model.get('name'));
 			var jointObj = this.model.get('jointObj');
 			if (element == this.model) {
 				jointObj.highlight();
@@ -124,17 +123,35 @@ $(function() {
 			jointObj.zoom();
 		},
 		
-		mouseUp: function(e) { 
+		which_menu_items: function() {
+			//Not allowing more than one outgoing connection:
+			var source_connection = app.ActiveDiagram.connection_by_source(this.model);
+			if ( this.model.get('type') != 'task_operation' && this.model.get('type') != 'logic' && !_.isUndefined(source_connection)) {
+				return ['#btn_connect'];
+			}else { 
+				return undefined;
+			}
+
+		},
+		
+		trigger_menu: function() {
+			var which_menu_items = this.which_menu_items();
+			var options = {
+					items_to_hide: which_menu_items
+			};
 			var pos = this.$el.offset();
-			app.EventAgg.trigger('show_menu_delay',this.model,pos);
+			app.EventAgg.trigger('show_menu_delay',this.model,pos,options);
 			
-			var connectionMode = this.model.get("connectionReady");
+		},
+		
+		mouseUp: function(e) { 
+			this.trigger_menu();
 			app.EventAgg.trigger('editDiagramElement',this.model);
 		},
 		
-		mouseenter: function(e) { 
-			var pos = this.$el.offset();
-			app.EventAgg.trigger('show_menu_delay',this.model,pos);
+		mouseenter: function(e) {
+			if ( e.which != 0 ) return;
+			this.trigger_menu();
 		},
 		
 		mouseleave: function(e){

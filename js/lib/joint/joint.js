@@ -289,7 +289,9 @@ function Joint(from, to, opt){
 	justBroken: function(mousePos){},
 	wiring: function(mousePos){},
 	objectMoving: function(obj){},
-	floating: function(side){}
+	floating: function(side){},
+	mouseEnter:function(x,y){},
+	redraw:function(new_obj){}
     },
     // connection from start to end
     this._start = { // start object
@@ -300,7 +302,7 @@ function Joint(from, to, opt){
 	shape: null,		// Raphael object
 	dummy: false		// is it a dummy object?
     };
-
+    this.mouse_over_handler = {};
     // connection options
     this._opt = {
 	vertices: [],	// joint path vertices
@@ -348,6 +350,7 @@ function Joint(from, to, opt){
 	// handles (usefull when picking "none" type of arrow)
 	handle: {
 	    timeout: 2000,
+		timeoutId: 0, //Timeout id of the handle
 	    start: {
 		enabled: false,
 		dragging:true,
@@ -360,7 +363,7 @@ function Joint(from, to, opt){
 		dragging: true,
 		attrs: { opacity: 1.0, fill: "red", stroke: "black" }
 	    }
-	}
+	},
     };
     // used arrows (default values)
     this._opt.arrow = {
@@ -487,6 +490,13 @@ Joint.prototype = {
     freeJoint: function(obj){
 	var jar = obj.yourself().joints(),
 	    i = jar.indexOf(this);
+	if ( i < 0 )
+		return;
+	console.log(jar[i]);
+	jar[i].dom.connection[0].mouseover(function(e){
+		console.log("MOUSEOVER!!!!1111");
+		
+	});
 	jar.splice(i, 1);
 	return this;
     },
@@ -627,6 +637,7 @@ Joint.prototype = {
     redraw: function(){
 	this.clean(["connection", "startCap", "endCap", "handleStart", "handleEnd", "label"]);
 	this.draw(["connection", "startCap", "endCap", "handleStart", "handleEnd", "label"]);
+	this._callbacks.redraw(this.dom.connection[0]);
 	return this;
     },
     listenAll: function(){
@@ -650,10 +661,10 @@ Joint.prototype = {
         i = this.dom.connection.length;
         while (i--) {
 	    this.dom.connection[i].mousedown(function(e){
-                Joint.fixEvent(e);
-		self.connectionMouseDown(e);
-		e.stopPropagation();
-		e.preventDefault();
+//                Joint.fixEvent(e);
+//		self.connectionMouseDown(e);
+//		e.stopPropagation();
+//		e.preventDefault();
             });
         }
 	if (this._opt.handle.start.enabled){
@@ -674,20 +685,25 @@ Joint.prototype = {
 	}
 	if (this._opt.handle.timeout !== Infinity){
             i = this.dom.connection.length;
+            this.mouse_over_handler = function(e){
+ 	           Joint.fixEvent(e);
+ 			   self.showHandle();
+ 			   	   clearTimeout(self._opt.handle.timeoutId);
+ 		           self._opt.handle.timeoutId = setTimeout(function(){
+ 			       self.hideHandle();
+ 			   }, self._opt.handle.timeout);
+ 		    	   self._callbacks.mouseEnter(e.clientX,e.clientY);
+ 			   e.stopPropagation();
+ 			   e.preventDefault();
+ 		        }
+           
             while (i--) {
-	       this.dom.connection[i].mouseover(function(e){
-	           Joint.fixEvent(e);
-		   self.showHandle();
-	           setTimeout(function(){
-		       self.hideHandle();
-		   }, self._opt.handle.timeout);
-		   e.stopPropagation();
-		   e.preventDefault();
-	        });
+	       this.dom.connection[i].mouseover(this.mouse_over_handler);
             }
 	}
 	return this;
     },
+    
     /**
      * @private
      */
