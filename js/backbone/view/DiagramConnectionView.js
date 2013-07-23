@@ -40,8 +40,8 @@ $(function() {
 				view.stopListening(obj.get('target'));
 				obj.changeConnectedElement(side,rawElement);
 				
-				view.listenTo(obj.get('source'),'destroy',view.delete_connection);
-				view.listenTo(obj.get('target'),'destroy',view.delete_connection);
+				view.listenTo(obj.get('source'),'destroy',view.delete_connection_after_element);
+				view.listenTo(obj.get('target'),'destroy',view.delete_connection_after_element);
 				return true;
 			});
 			
@@ -59,10 +59,10 @@ $(function() {
 //			jointObj.registerCallback("redraw",function(new_obj) {
 //				context.$el = $(new_obj.node);
 //			});
-			this.listenTo(this.model,'destroy',this.delete_connection);
+			this.listenTo(this.model,'destroy',this.delete_connection_joint);
 
-			this.listenTo(source,'destroy',this.delete_connection);
-			this.listenTo(target,'destroy',this.delete_connection);
+			this.listenTo(source,'destroy',this.delete_connection_after_element);
+			this.listenTo(target,'destroy',this.delete_connection_after_element);
 		},
 		
 		which_menu_items:function() {
@@ -76,19 +76,17 @@ $(function() {
 		    jointObj.addJoint(prev_node);
 		    jointObj.update();	
 		},
-		
-		delete_connection:function() {
+		delete_connection_after_element: function() {
 			this.stopListening();
-			var elemA = this.model.get('source').get('jointObj');
-			var elemB = this.model.get('target').get('jointObj');
-			
+			this.model.destroy();
+			this.remove();
+		},
+		
+		delete_connection_joint:function() {
 			var jointObj = this.model.get('jointObj');
 			if ( jointObj != undefined ){
-				Joint.dia.remove_joint(jointObj,elemA,elemB);
+				Joint.dia.remove_joint(jointObj);
 			}
-			this.model.destroy();
-			
-			this.remove();
 		}
 		
 	});

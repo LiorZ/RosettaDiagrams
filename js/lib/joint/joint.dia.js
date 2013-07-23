@@ -109,11 +109,13 @@ var dia = Joint.dia = {
         }
     },
     
-    remove_joint:function(j,elemA,elemB) {
-       var con_len = j.dom.connection.length;
-       for ( var i=0; i<con_len; ++i ) {
-    	   j.dom.connection[i].unmouseover(j.mouse_over_handler);
-       }
+    remove_joint:function(j) {
+    	if ( j.dom.connection != undefined) {
+	       var con_len = j.dom.connection.length;
+	       for ( var i=0; i<con_len; ++i ) {
+	    	   j.dom.connection[i].unmouseover(j.mouse_over_handler);
+	       }
+    	}
        clearTimeout(j._opt.handle.timeoutId);
 	   j.freeJoint(j.startObject()); 
 	   j.freeJoint(j.endObject()); 
