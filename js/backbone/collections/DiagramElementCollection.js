@@ -63,4 +63,8 @@ var app = app || {};
 		}
 	};
 	app.PaletteElements.url='js/json/elements.json';
+	
+	app.PaletteElements.comparator = function(element) { 
+		return element.get('name');
+	}
 }());
