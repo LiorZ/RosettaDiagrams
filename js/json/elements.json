@@ -7183,6 +7183,117 @@
     "name": "RestrictToCDRH3Loop"
   },
   {
+  	"type":"task_operation",
+  	"name":"ResidueIndexIs",
+  	"attributes":[
+  		{
+  			"key":"indices",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
+    "type":"task_operation",
+  	"name":"ResidueType",
+  	"attributes":[
+  		{
+  			"key":"aromatic",
+  			"value":""
+  		},
+  		{
+  			"key":"apolar",
+  			"value":""
+  		},
+  		{
+  			"key":"polar",
+  			"value":""
+  		},
+  		{
+  			"key":"charged",
+  			"value":""
+  		}
+  	]
+  },
+  
+    {
+    "type":"task_operation",
+  	"name":"ResidueHasProperty",
+  	"attributes":[
+  		{
+  			"key":"property",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
+    "type":"task_operation",
+  	"name":"ResidueHasProperty",
+  	"attributes":[
+  		{
+  			"key":"property",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
+    "type":"task_operation",
+  	"name":"ChainIs",
+  	"attributes":[
+  		{
+  			"key":"chain",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
+    "type":"task_operation",
+  	"name":"ChainIsnt",
+  	"attributes":[
+  		{
+  			"key":"chain",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
+    "type":"task_operation",
+  	"name":"ResidueIndexIsnt",
+  	"attributes":[
+  		{
+  			"key":"indices",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
+    "type":"task_operation",
+  	"name":"ResidueName3Is",
+  	"attributes":[
+  		{
+  			"key":"name3",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
+    "type":"task_operation",
+  	"name":"ResidueName3Isnt",
+  	"attributes":[
+  		{
+  			"key":"name3",
+  			"value":""
+  		}
+  	]
+  },
+  
+  {
     "attributes": [
       {
         "value": "",
