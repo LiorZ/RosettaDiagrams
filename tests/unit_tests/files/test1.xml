@@ -1,0 +1,21 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS></SCOREFXNS>
+    <TASKOPERATIONS>
+        <IncludeCurrent name="element_3" />
+    </TASKOPERATIONS>
+    <FILTERS>
+        <AlaScan name="element_2" interface_distance_cutoff="10.0" scorefxn="score12" />
+    </FILTERS>
+    <MOVERS>
+        <DockingProtocol name="element_0" docking_score_high="score12" task_operations="element_3" />
+        <MinMover name="element_1" chi="1" />
+    </MOVERS>
+    <APPLY_TO_POSE></APPLY_TO_POSE>
+    <PROTOCOLS>
+        <Add mover_name=element_0/>
+        <Add mover_name=element_1/>
+        <Add filter_name=element_2/>
+    </PROTOCOLS>
+</ROSETTASCRIPTS>
+
+        

@@ -1,0 +1,13 @@
+{
+    "name": "RosettaDiagrams_System_Testing_Framework",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+      "underscore":">=1.4.4",
+      "mocha":">=1.9",
+      "should":"=1.2.2",
+      "almond":"=0.2.5",
+      "webdriverjs":"=0.7.11"
+  }
+}
+

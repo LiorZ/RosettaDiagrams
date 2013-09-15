@@ -14,6 +14,7 @@ head.js(
 		"js/lib/joint/joint.dia.erd.js",
 		"js/lib/joint/joint.dia.org.js",
 		"js/lib/jquery/jquery.min.js",
+		"js/lib/jquery/xml2json/xml2json.js",
 		"js/lib/underscore/underscore-min.js",
 		"js/lib/prettify/prettify.js",
 		"js/lib/backbone/backbone.js",
