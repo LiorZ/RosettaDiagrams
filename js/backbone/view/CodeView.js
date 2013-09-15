@@ -3,7 +3,6 @@ $(function() {
 	
 	app.CodeView = Backbone.View.extend({
 		el:'#code',
-		
 		initialize: function() {
 			this.listenTo(app.MainDiagram,'change:element',this.render);
 			this.listenTo(app.MainDiagram,'change:connection',this.render);

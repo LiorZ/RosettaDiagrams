@@ -12,10 +12,8 @@
     </MOVERS>
     <APPLY_TO_POSE></APPLY_TO_POSE>
     <PROTOCOLS>
-        <Add mover_name=element_0/>
-        <Add mover_name=element_1/>
-        <Add filter_name=element_2/>
+        <Add mover_name='element_0'/>
+        <Add mover_name='element_1'/>
+        <Add filter_name='element_2'/>
     </PROTOCOLS>
 </ROSETTASCRIPTS>
-
-        

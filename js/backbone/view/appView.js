@@ -54,6 +54,9 @@ $(function( $ ) {
 	app.AppView = Backbone.View.extend({
 		main_joint: undefined,
 		el: '#container',
+		events:{
+			'click #btn_paste_code':'paste_code'
+		},
 		connectionReady: false,
 		toggleDeleteMode: function() { 
 			app.EventAgg.trigger('toggleDeleteMode');
@@ -83,6 +86,10 @@ $(function( $ ) {
 			this.listenTo(app.ActiveDiagram,'add:connection', this.addConnectionView);
 		},
 		
+		paste_code: function(){
+			$('#paste_code_dialog').dialog('open');
+		},
+		
 		switch_diagram: function(diagram) {
 			this.stopListening(app.ActiveDiagram);
 			app.ActiveDiagram = diagram;
@@ -98,7 +105,28 @@ $(function( $ ) {
 			app.propertiesView = new app.DiagramElementPropertiesView({eventagg: app.EventAgg});
 		},
 		
+		transformXMLToDiagram: function(xml_str) {
+			app.XMLToDiagram(xml_str);
+		},
+		
 		addCodeView: function() {
+			var context = this;
+			$('#paste_code_dialog').dialog({
+				title:'Diagram from RosettaScript',
+				width:800,
+				height:400,
+				autoOpen:false,
+				buttons: {
+					OK: function(){
+						var xml_str = $(this).find('textarea').val();
+						context.transformXMLToDiagram(xml_str);
+					},
+					Cancel: function() {
+						$(this).dialog('close');
+					}
+				}
+			});
+			
 			app.codeView = new app.CodeView({eventagg: app.EventAgg});
 		},
 		

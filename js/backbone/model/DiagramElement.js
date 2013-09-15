@@ -74,15 +74,25 @@
 			attributes.add(json_attrs);
 				
 		},
+		
+		get_name_attribute: function() {
+			var attrs = this.get('attributes');
+			var name_arr = attrs.filter(function(element){
+				return element.get('key') == 'name';
+			});
+			if ( name_arr.length == 0 ) {
+				alert("No name attribute for " + this.get('name') + " element");
+				return;
+			}
+			return name_arr[0];
+		},
 		set_name_attribute:function(name_value) {
 			var attr = this.get('attributes');
 			if ( attr == undefined ) {
 				attr = new app.AttributeList();
 				this.set('attributes',attr);
 			}
-			var name_arr = attr.filter(function(element){
-				return element.get('key') == 'name';
-			});
+			var name_arr = this.get_name_attribute();
 			if ( name_arr.length > 1 ) {
 				alert ("Error! 2 name attributes found.");
 				return;

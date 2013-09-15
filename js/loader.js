@@ -14,12 +14,14 @@ head.js(
 		"js/lib/joint/joint.dia.erd.js",
 		"js/lib/joint/joint.dia.org.js",
 		"js/lib/jquery/jquery.min.js",
+		"js/lib/dagre/dagre.min.js",
 		"js/lib/jquery/xml2json/xml2json.js",
 		"js/lib/underscore/underscore-min.js",
 		"js/lib/prettify/prettify.js",
 		"js/lib/backbone/backbone.js",
 		"js/lib/vkbeautify/vkbeautify.0.99.00.beta.js",
 		"js/lib/jquery-ui/jqueryui.js",
+        "js/lib/jquery/xml2json/xml2json.js",
 		"js/lib/jquery-ui/plugins/tablesorter/jquery.tablesorter.js",
 		"js/backbone/controllers/DiagramVerifier.js",
 		"js/backbone/view/appView.js",
@@ -46,7 +48,9 @@ head.js(
 		"js/backbone/collections/DiagramConnectionCollection.js",
 		"js/backbone/model/Diagram.js",
 		"js/behavior/EasingMenu.js",
+		"js/backbone/controllers/XMLToDiagram.js",
 		"js/backbone/app.js",
+
 		
 		function(){
 			$("#container").show();

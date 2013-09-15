@@ -79,6 +79,12 @@
 		get_elements: function() {
 			return this.get("elements");
 		},
+		element_by_name: function(name) {
+			var element = this.get('elements').find(function(elem){
+				return elem.get_name_attribute().get('value') == name
+			});
+			return element;
+		},
 		/**
 		 * Returns elements ordered according to the way they appear on the diagram.
 		 */

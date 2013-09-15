@@ -14,10 +14,10 @@
 		
 		initialize:function(options) {
 			if ( options.source ) {
-				this.setSourceObj(options.source);
+				this.setSourceObj(this,options.source);
 			}
 			if ( options.target ) {
-				this.setTargetObj(options.target);
+				this.setTargetObj(this,options.target);
 			}
 			this.listenTo(this,'change:source',this.setSourceObj);
 			this.listenTo(this,'change:target',this.setTargetObj);
