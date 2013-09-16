@@ -15,7 +15,6 @@ $(function() {
 		
 		initialize: function(options) {
 			var type = this.model.get('typeObj');
-			
 			var jointObj = Joint.dia.uml.State.create({
 				  rect: {x: this.model.get('x'), y: this.model.get('y'), width: this.model.get('width'), height:this.model.get('height')},
 				  label: this.model.get('name').slice(0,consts.LENGTH_DIAGRAM_TITLE),

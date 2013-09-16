@@ -120,6 +120,7 @@ $(function( $ ) {
 					OK: function(){
 						var xml_str = $(this).find('textarea').val();
 						context.transformXMLToDiagram(xml_str);
+						$(this).dialog('close');
 					},
 					Cancel: function() {
 						$(this).dialog('close');
@@ -150,8 +151,10 @@ $(function( $ ) {
 		},
 		
 		addElementView: function(element) {
-			var new_pos = this.getPosForNewPage();
-			element.set(new_pos);
+			if ( _.isUndefined(element.get('x')) && _.isUndefined(element.get('y') )){
+				var new_pos = this.getPosForNewPage();
+				element.set(new_pos);
+			}
 			var view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
 			view.render();
 		},

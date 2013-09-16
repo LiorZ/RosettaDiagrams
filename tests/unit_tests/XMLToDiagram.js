@@ -64,7 +64,6 @@ describe('Testing XMLToDiagram',function() {
 	});
 	
 	it("Converting XML To JSON", function() {
-		console.log(xml_str);
 		var json = app.xmlToDiagramJSON(xml_str);
 		var j = _.extend({},json);
 		j.should.be.ok;
@@ -95,6 +94,13 @@ describe('Testing XMLToDiagram',function() {
 		
 	});
 	
-	it("Constructing links between elements", function() {
+	it("Creating connections", function() {
+		var json = app.xmlToDiagramJSON(xml_str);
+		var element_json_arr = app.extractElementsFromJSON(json);
+		var edges = app.getConnections(element_json_arr,json.PROTOCOLS);
+		edges.length.should.eql(3);
+		edges[0].sourceId.should.eql('element_0');
+		edges[1].sourceId.should.eql('element_1');
+		edges[2].sourceId.should.eql('element_3');
 	});
 });
