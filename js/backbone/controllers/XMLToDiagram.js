@@ -1,6 +1,11 @@
 var app = app || {};
 app.xmlToDiagramJSON = function(xml_str) {
-	var jsonObj = $.xml2json(xml_str);
+	try{ 
+		var jsonObj = $.xml2json(xml_str);
+	}catch(err) {
+		alert("Error rendering diagram, the XML appears to be invalid. please correct it and try again.");
+		return undefined;
+	}
 	return jsonObj;
 }
 
@@ -47,7 +52,6 @@ app.createBackboneElements = function(element_array){
 		app.MainDiagram.add_element(bb_elem);
 	});
 }
-
 
 app.arrangeTOPEdges = function(json) {
 	
@@ -106,7 +110,8 @@ app.createConnections = function(edges) {
 			alert("Error creating diagram. Check your task operation references and try again");
 			return;
 		}
-		var new_con = {} 
+		
+		var new_con = {};
 		if (edge.type == 'connection') {
 			new_con = new app.DiagramConnection({source: first_elem, type: Joint.dia.uml.dependencyArrow, target:second_elem});
 		}else if (edge.type='containment'){

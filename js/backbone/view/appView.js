@@ -55,8 +55,9 @@ $(function( $ ) {
 		main_joint: undefined,
 		el: '#container',
 		events:{
-			'click #btn_paste_code':'paste_code'
+			'click #btn_paste_code':'paste_code',
 		},
+		
 		connectionReady: false,
 		toggleDeleteMode: function() { 
 			app.EventAgg.trigger('toggleDeleteMode');
@@ -116,6 +117,7 @@ $(function( $ ) {
 				width:800,
 				height:400,
 				autoOpen:false,
+				modal:true,
 				buttons: {
 					OK: function(){
 						var xml_str = $(this).find('textarea').val();
