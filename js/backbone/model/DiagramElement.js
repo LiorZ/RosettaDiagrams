@@ -23,7 +23,7 @@
 			var existing_arr = this.get('attributes');
 			var new_attr_list;
 			
-			/*If the passing object is json, set the array from json. (when the application starts)
+			/* If the passing object is json, set the array from json. (when the application starts)
 			 * Else, initialize an empty list and let the paletteview add all the relevant attributes
 			 * 
 			 */
@@ -47,6 +47,7 @@
 			this.listenTo(new_attr_list,"remove",this.attributes_changed);
 			this.listenTo(app.EventAgg,'connection_mode_activated',this.connection_mode_activated);
 			this.listenTo(app.EventAgg,'connection_mode_deactivated',this.connection_mode_deactivated);
+			
 		},
 		element_added_subdiagram:function(element) {
 			this.trigger('add:element',element);
@@ -70,7 +71,6 @@
 				this.set('attributes',attributes);
 			}
 			attributes.add(json_attrs);
-				
 		},
 		
 		get_name_attribute: function() {
@@ -79,11 +79,11 @@
 				return element.get('key') == 'name';
 			});
 			if ( name_arr.length == 0 ) {
-				alert("No name attribute for " + this.get('name') + " element");
-				return;
+				return undefined;
 			}
 			return name_arr[0];
 		},
+		
 		set_name_attribute:function(name_value) {
 			var attr = this.get('attributes');
 			if ( attr == undefined ) {
@@ -91,16 +91,18 @@
 				this.set('attributes',attr);
 			}
 			var name_arr = this.get_name_attribute();
-			if ( name_arr.length > 1 ) {
-				alert ("Error! 2 name attributes found.");
-				return;
-			}else if (name_arr.length == 0){
+			if (name_arr == undefined || name_arr.length == 0){
 				attr.add(new app.Attribute({key:'name',value:name_value}));
 				return;
-			}else {
-				var name_attr = name_arr[0];
-				name_attr.set('value',name_value);
 			}
+			
+			if ( name_arr.length > 1 ) {
+				alert ("Error! more than one name attributes found.");
+				return;
+			}
+
+			var name_attr = name_arr[0];
+			name_attr.set('value',name_value);
 			
 			
 		},

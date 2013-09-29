@@ -22,6 +22,13 @@
 			this.listenTo(connections,'remove',this.connection_removed);
 		},
 		
+		clear: function() {
+			var elements = this.get_elements();
+			while(elements.size() > 0){
+				var m = elements.shift();
+				m.destroy();
+			}
+		},
 		element_removed:function() {
 			this.trigger('remove:element');
 		},
@@ -62,6 +69,7 @@
 			var cons = this.get('connections');
 			return cons.byTarget(target);
 		},
+		
 		add_connection:function(con) {
 			this.get('connections').add(con);
 		},

@@ -285,7 +285,7 @@
 						<img src='icons/large/rscripts_code_label.png'/>
 					</div>
 					<button id ='btn_paste_code' style="position:absolute; right:10px; margin-top:1em; font-size:12px;">Paste existing code</button> 
-					<pre id='display_code' class='prettyprint wordwrap' style="display:table-cell; border:1px solid black; "></pre>
+					<pre id='display_code' class='prettyprint wordwrap' style="display:table-cell;"></pre>
 
 				</div>
 				<div id='progressbar_dialog'>
@@ -295,6 +295,10 @@
 				<div id='paste_code_dialog'>
 					<h3>Rosetta Scripts Code:</h3>
 					<textarea style='width:100%; height:70%;'></textarea>
+				</div>
+
+				<div id="dialog-confirm" title="Discard existing diagram?" style='display:none;'>
+				  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>The current diagram will be overwrriten. Are you sure?</p>
 				</div>
 
 				<div id='information_panel_wrapper'>

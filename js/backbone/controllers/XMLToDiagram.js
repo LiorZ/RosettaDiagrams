@@ -18,7 +18,6 @@ var construct_diagram_json = function(xml_element_json,type) {
 		obj['attributes'] =  _.chain(xml_element_json[k]).keys().map(function(elem) { return {key: elem, value: xml_element_json[k][elem]}}).value();
 		obj.type = type;
 		elem_arr.push(obj);
-		
 	}).value();
 	return elem_arr;
 }
@@ -47,7 +46,6 @@ app.extractElementsFromJSON = function(jsonObj) {
 
 app.createBackboneElements = function(element_array){
 	_.each(element_array, function(elem) {
-		console.log(elem.x);
 		var bb_elem = new app.DiagramElement(elem);
 		app.MainDiagram.add_element(bb_elem);
 	});

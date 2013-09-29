@@ -44,7 +44,7 @@ $(function( $ ) {
 	consts.MENU_TIMEOUT = 2000;
 	consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH = 150;
 	consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT = 100;
-	consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH = 90
+	consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH = 90;
 	consts.DIAGRAM_ELEMENT_SMALL_SCALE_HEIGHT = 60;
 	consts.DIAGRAM_CONTAINER_DEFAULT_WIDTH = 300;
 	consts.DIAGRAM_CONTAINER_DEFAULT_HEIGHT = 400;
@@ -112,6 +112,13 @@ $(function( $ ) {
 		
 		addCodeView: function() {
 			var context = this;
+			var plot_diag_func = function(dialog_obj) {
+				var xml_str = $(dialog_obj).find('textarea').val();
+				app.MainDiagram.clear();
+				context.transformXMLToDiagram(xml_str);
+				$(dialog_obj).dialog('close');
+			}
+			
 			$('#paste_code_dialog').dialog({
 				title:'Diagram from RosettaScript',
 				width:800,
@@ -120,9 +127,25 @@ $(function( $ ) {
 				modal:true,
 				buttons: {
 					OK: function(){
-						var xml_str = $(this).find('textarea').val();
-						context.transformXMLToDiagram(xml_str);
-						$(this).dialog('close');
+						var xml_diag = this;
+						if (app.MainDiagram.get_elements().size() > 0) {
+							$( "#dialog-confirm" ).dialog({
+							      resizable: false,
+							      modal: true,
+							      width:400,
+							      buttons: {
+							        "Do it!": function() {
+							          $( this ).dialog( "close" );
+							          plot_diag_func(xml_diag);
+							        },
+							        "Just a sec...": function() {
+							          $( this ).dialog( "close" );
+							        }
+							      }
+							});
+						}else {
+							plot_diag_func(this)
+						}
 					},
 					Cancel: function() {
 						$(this).dialog('close');

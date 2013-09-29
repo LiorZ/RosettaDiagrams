@@ -64,6 +64,7 @@ $(function() {
 		},
 		
 		destroyElement:function() {
+			console.log("DESTROYING ELEMENT");
 			var jointObj = this.model.get('jointObj');
 			for (var i=0; i<jointObj.inner.length; ++i) {
 				jointObj.inner[i].remove();
