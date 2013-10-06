@@ -1,0 +1,13 @@
+.main-features {
+  margin-top: 10px;      
+}
+.title-bg {
+  background-image:url('/website_images/only_scaffold.png');
+  background-repeat:no-repeat;
+  background-color:white;
+  background-position: -140px -10px;
+}
+
+.box_limit_height {
+	height:250px;
+}

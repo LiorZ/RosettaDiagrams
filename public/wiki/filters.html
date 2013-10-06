@@ -1,0 +1,596 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0070)http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Filters (RosettaScripts) - RosettaWiki</title>
+<meta name="KEYWORDS" content="Filters (RosettaScripts),Movers (RosettaScripts)">
+
+<meta name="robots" content="index,follow">
+<link rel="shortcut icon" href="https://wiki.rosettacommons.org/favicon.ico">
+<link rel="stylesheet" type="text/css" media="print" href="./Filters (RosettaScripts) - RosettaWiki_files/wikiprintable.css">
+<script type="text/javascript" src="./Filters (RosettaScripts) - RosettaWiki_files/wikibits.js"></script>
+<style type="text/css">
+/*/*/
+@import "/stylesheets/wikistandard.css";
+a.new, #quickbar a.new { color: #CC2200; }
+#quickbar { position: absolute; top: 4px; left: 4px; border-right: 1px solid gray; }
+#article { margin-left: 152px; margin-right: 4px; }
+
+/* */
+</style>
+</head>
+
+<body bgcolor="#FFFFFF" onload="">
+
+<div id="content">
+
+<div id="article">
+<h1 class="pagetitle">Filters (RosettaScripts)</h1>
+<p>Each filter definition has the following format:
+</p>
+<pre style="white-space:pre-wrap">&lt;"filter_name" name="&amp;string" ... confidence=(1 &amp;Real)/&gt;</pre>
+<p>where "filter_name" belongs to a predefined set of possible filters that the parser recognizes and are listed below, name is a unique identifier for this mover definition and then any number of parameters that the filter needs to be defined.
+</p><p>If confidence is 1.0, then the filter is evaluated as in predicate logic (T/F). If the value is less than 0.999, then the filter is evaluated as fuzzy, so that it will return True in (1.0 - confidence) fraction of times it is probed. This should be useful for cases in which experimental data are ambiguous or uncertain.
+</p>
+<table border="0" id="toc"><tbody><tr id="toctitle"><td align="center">
+<b>Table of contents</b> </td></tr><tr id="tocinside"><td>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Predefined_Filters">1 Predefined Filters</a><br></div>
+<div class="tocindent">
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#TrueFilter">1.1 TrueFilter</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#FalseFilter">1.2 FalseFilter</a><br>
+</p>
+</div>
+</div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Special_Filters">2 Special Filters</a><br></div>
+<div class="tocindent">
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#CompoundStatement_filter">2.1 CompoundStatement filter</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#CombinedValue_filter">2.2 CombinedValue filter</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#MoveBeforeFilter">2.3 MoveBeforeFilter</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#ContingentFilter">2.4 ContingentFilter</a><br>
+</p>
+</div>
+</div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#General_Filters">3 General Filters</a><br></div>
+<div class="tocindent">
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Torsion">3.1 Torsion</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Energy.2FScore">3.1 Energy/Score</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#BindingStrain">3.1.1 BindingStrain</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Delta">3.1.2 Delta</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#EnergyPerResidue">3.1.3 EnergyPerResidue</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#ScoreType">3.1.4 ScoreType</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Distance">3.2 Distance</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#ResidueDistance">3.2.1 ResidueDistance</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#AtomicContact">3.2.2 AtomicContact</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#AtomicDistance">3.2.3 AtomicDistance</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#TerminusDistance">3.2.4 TerminusDistance</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Packing.2FConnectivity">3.3 Packing/Connectivity</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#AverageDegree">3.3.1 AverageDegree</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#InterfaceHoles">3.3.2 InterfaceHoles</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#ResInInterface">3.3.3 ResInInterface</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#NeighborType">3.3.4 NeighborType</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#SpecificResiduesNearInterface">3.4 SpecificResiduesNearInterface</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Burial">3.5 Burial</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Sasa">3.5.1 Sasa</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#ResidueBurial">3.5.2 ResidueBurial</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Comparison">3.6 Comparison</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#RelativePose">3.6.1 RelativePose</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Rmsd">3.6.2 Rmsd</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#SequenceRecovery">3.6.3 SequenceRecovery</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Bonding">3.7 Bonding</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#HbondsToResidue">3.7.1 HbondsToResidue</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#BuriedUnsatHbonds">3.7.2 BuriedUnsatHbonds</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#DisulfideFilter">3.7.3 DisulfideFilter</a><br>
+</p>
+</div>
+</div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Report_Filters">4 Report Filters</a><br></div>
+<div class="tocindent">
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Boltzmann">4.1 Boltzmann</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#DesignableResidues">4.2 DesignableResidues</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#RelativeSegmentFilter">4.3 RelativeSegmentFilter</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#RotamerBoltzmannWeight">4.4 RotamerBoltzmannWeight</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#AlaScan">4.5 AlaScan</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#FilterScan">4.6 FilterScan</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Time">4.7 Time</a><br>
+</p>
+</div>
+</div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Special_Application_Filters">5 Special Application Filters</a><br></div>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Binding">5.1 Binding</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Ddg">5.1.1 Ddg</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Ligand_docking_and_enzyme_design">5.2 Ligand docking and enzyme design</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#DSasa">5.2.1 DSasa</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#DiffAtomBurial">5.2.2 DiffAtomBurial</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#LigInterfaceEnergy">5.2.3 LigInterfaceEnergy</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#EnzScore">5.2.4 EnzScore</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#RepackWithoutLigand">5.2.5 RepackWithoutLigand</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Ligand_design">5.3 Ligand design</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#HeavyAtom">5.3.1 HeavyAtom</a><br>
+<a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#CompleteConnections">5.3.2 CompleteConnections</a><br>
+</p>
+</div>
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Hotspot_Design">5.4 Hotspot Design</a><br>
+</p>
+<div class="tocindent">
+<p><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#StubScore">5.4.1 StubScore</a><br>
+</p>
+</div>
+</div>
+<div class="tocline"><a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Filters_%28RosettaScripts%29#Currently_Undocumented">6 Currently Undocumented</a><br></div>
+</td></tr></tbody></table>
+<a name="Predefined_Filters"></a><h2>Predefined Filters</h2>
+<a name="TrueFilter"></a><h4>TrueFilter</h4>
+<p>Returns true. Useful for defining a mover without using a filter. Can be explicitly specified with the name "true_filter". 
+</p>
+<a name="FalseFilter"></a><h4>FalseFilter</h4>
+<p>Always returns false. Can be explicitly specified with the name "false_filter".
+</p>
+<a name="Special_Filters"></a><h2>Special Filters</h2>
+<p>Filters which are useful for combining, modifying or working with other filters and movers.
+</p>
+<a name="CompoundStatement_filter"></a><h4>CompoundStatement filter</h4>
+<p>This is a special filter that uses previously defined filters to construct a compound logical statement with AND, OR, XOR, NAND and NOR operations. By making compound statements of compound statements, esssentially all logical statements can be defined.
+</p>
+<pre style="white-space:pre-wrap">&lt;CompoundStatement name=(&amp;string)&gt;
+	&lt;OPERATION filter_name=(true_filter &amp;string)/&gt;
+	&lt;....
+&lt;/CompoundStatement&gt;
+</pre>
+<p>where OPERATION is any of the operations defined in CAPS above.Note that the operations are performed in the order that they are defined. No precedence rules are enforced, so that any precedence has to be explicitly written by making compound statements of compound statements.Also note that the first OPERATION is ignored, and the value of the first filter is simply assigned to the filter's results.
+</p>
+<a name="CombinedValue_filter"></a><h4>CombinedValue filter</h4>
+<p>This is a special filter that calculates a weighted sum based on previously defined filters.
+</p>
+<pre style="white-space:pre-wrap">&lt;CombinedValue name=(&amp;string) threshold=(0.0 &amp;Real)&gt;
+	&lt;Add filter_name=(&amp;string) factor=(1.0 &amp;Real) temp=(&amp;Real)/&gt;
+	&lt;....
+&lt;/CombinedValue&gt;
+</pre>
+<p>By default, the value is a straight sum of the calculated values (not the logical results) of the listed filters. A multiplicative weighting factor for each filter can be specified with the <tt>factor</tt> parameter. (As a convenience, <tt>temp</tt> can be given instead of <tt>factor</tt>, which will divide the filter value, rather than multiply it.)
+</p><p>For truth value contexts, the filter evaluates to true if the weighted sum if less than or equal to the given <tt>threshold</tt>.
+</p>
+<a name="MoveBeforeFilter"></a><h4>MoveBeforeFilter</h4>
+<p>Apply a given mover to the pose before calculating the results from another filter 
+</p>
+<pre style="white-space:pre-wrap">&lt;MoveBeforeFilter name=(&amp;string) mover=(&amp;string) filter=(&amp;string)/&gt;
+</pre>
+<p>Note that, like all filters, MoveBeforeFilter cannot change the input pose - the results of the submover will only be used for the subfilter calculation and then discarded.
+</p><p>Also note that caution must be exercised when using a computationally expensive mover or a mover/filter pair which yields stochastic results. The result of the mover is not cached, and will be recomputed for each call to apply(), report() or report_sm().
+</p>
+<a name="ContingentFilter"></a><h4>ContingentFilter</h4>
+<p>A special filter that allows movers to set its value (pass/fail). This value can then be used in the protocol together with IfMover to control the flow of execution depending on the success of the mover. Currently, none of the movers uses this filter.
+</p>
+<pre style="white-space:pre-wrap">&lt;ContingentFilter name=(&amp;string)/&gt;
+</pre>
+<a name="General_Filters"></a><h2>General Filters</h2>
+<a name="Torsion"></a><h4>Torsion</h4>
+<pre style="white-space:pre-wrap">&lt;Torsion name=(&amp;string) lower=(0&amp;Real) upper=(0&amp;Real) resnum=(0&amp;residue number) torsion=("" &amp;string) task_operations=(&amp;comma-delimited list of taskoperations)/&gt;</pre>
+<ul>
+<li> lower: lower cutoff
+</li><li> upper: upper cutoff
+</li><li> resnum: pdb/rosetta numbering
+</li><li> torsion: phi/psi/""
+</li><li> task_operations: The residues to be output can also be defined through a task factory. All residues that are designable according to the taskfactory will be output. resnum and task_operations are mutually exclusive, so don't set both at the same time.
+</li></ul>
+<p>not setting torsion, will cause the report of both phi and psi. Not specifying resnum will cause a report of all residues. If you want to filter on a given torsion, you have to specify both resnum the torsion and the higher/upper values.
+</p>
+<a name="Energy.2FScore"></a><h3>Energy/Score</h3>
+<a name="BindingStrain"></a><h4>BindingStrain</h4>
+<p>Computes the energetic strain in a bound monomer. Automatically respects symmetry
+</p>
+<pre style="white-space:pre-wrap">&lt;BindingStrain name=(&amp;string) threshold=(3.0 &amp;Real) task_operations=(comma-delimited list of operations &amp;string) scorefxn=(score12 &amp;string) relax_mover=(null &amp;string) jump=(1 &amp;Int)/&gt;</pre>
+<ul>
+<li> threshold: how much strain to allow.
+</li><li> task_operations: define the repacked region. Whatever you choose, the filter will make sure you don't design and that the packer task is initialized from the commandline.
+</li><li> scorefxn: what scorefxn to use for repacking and total-score evaluations.
+</li><li> relax_mover: after repacking in the unbound state, what mover (if at all) to use to further relax the structure (MinMover?)
+</li><li> jump: along which jump to dissociate the complex?
+</li></ul>
+<p>Dissociates the complex and takes the unbound energy. Then, repacks and calls the relax mover, and measures the unbound relaxed energy. Reports the strain as unbound - unbound_relaxed. Potentially useful to relieve strain in binding.
+</p>
+<a name="Delta"></a><h4>Delta</h4>
+<p>Computes the difference in a filter's value compared to the input structure
+</p>
+<pre style="white-space:pre-wrap">&lt;Delta name=(&amp;string) upper=(1 &amp;bool) lower=(0 &amp;bool) range=(0 &amp;Real) filter=(&amp;string) unbound=(0 &amp;bool) jump=(see below &amp;Int) relax_mover=(null &amp;string)/&gt;</pre>
+<ul>
+<li> upper/lower: the threshold is upper/lower? Use both if the threshold is a range within these numbers.
+</li><li> range: how much above/below the baseline to allow?
+</li><li> filter: the name of a predefined filter for evaluation.
+</li><li> unbound: translates the partners by 10000A before evaluating the baseline and the filters. Allows evaluation of the unbound pose.
+</li><li> jump: if unbound is set, this can be used to set the jump along which to translate.
+</li><li> relax_mover: called at parse-time before setting the baseline. Useful to get the energies as low as possible (repack/min?)
+</li></ul>
+<p>The filter is evaluated at parsetime and its internal value (through report_sm) is saved. At apply time, the filter's report_sm is called again, and the delta is evaluated.
+</p>
+<a name="EnergyPerResidue"></a><h4>EnergyPerResidue</h4>
+<p>Tests the energy of a particular residue.
+If whole_interface is set to 1, it computes all the energies for the interface residues defined by the jump_number and the interface_distance_cutoff. Helpful for post-design analyses. bb_bb needs to be turn to 1, if one wants to evaluate backbone - backbone hydrogen bonding energies (short and long range).
+</p>
+<pre style="white-space:pre-wrap">&lt;EnergyPerResidue name=(energy_per_res_filter &amp;string) scorefxn=(score12 &amp;string) 
+score_type=(total_score &amp;string) pdb_num/res_num(see above) energy_cutoff=(0.0 &amp;float)
+whole_interface=(0 &amp;bool) jump_number=(1 &amp;int) interface_distance_cutoff=(8.0 &amp;float) bb_bb=(0, bool)/&gt;</pre>
+<a name="ScoreType"></a><h4>ScoreType</h4>
+<p>Computes the energy of a particular score type for the entire pose and if that energy is lower than threshold, returns true.
+</p>
+<pre style="white-space:pre-wrap">&lt;ScoreType name=(score_type_filter &amp;string) scorefxn=(score12 &amp;string) score_type=(total_score &amp;string) threshold=(&amp;float)/&gt;</pre>
+<a name="Distance"></a><h3>Distance</h3>
+<a name="ResidueDistance"></a><h4>ResidueDistance</h4>
+<p>What is the distance between two residues? Based on each residue's neighbor atom (usually Cbeta)
+</p>
+<pre style="white-space:pre-wrap">&lt;ResidueDistance name=(&amp;string) res1_"res_num/pdb_num see above" res2_"resnum/pdb_num" distance=(8.0 &amp;Real)/&gt;</pre>
+<a name="AtomicContact"></a><h4>AtomicContact</h4>
+<p>Do two residues have any pair of atoms within a cutoff distance? Somewhat more subtle than ResidueDistance (which works by neighbour atoms). Iterates over all atom types of a residue, according to the user specified restrictions (sidechain, backbone, protons)
+</p>
+<pre style="white-space:pre-wrap">&lt;AtomicContact name=(&amp;string) residue1=(&amp;integer) residue2=(&amp;integer) sidechain=1 backbone=0 protons=0 distance=(4.0 &amp;integer)/&gt;
+</pre>
+<p>Some movers (e.g., PlaceSimultaneously) can set a filter's internal residue on-the-fly during protocol operation. To get this behaviour, do not specify residue2.
+</p>
+<ul>
+</ul>
+<a name="AtomicDistance"></a><h4>AtomicDistance</h4>
+<p>Are two specified atoms within a cutoff distance? More specific than AtomicContact (which reports if <em>any</em> atom is within the cutoff) or ResidueDistance (which works by neighbor atoms only). Residues can be specified either with pose numbering, or with PDB numbering, with the chain designation (e.g. 34B). One of atomname or atomtype (but not both) needs to be specified for each partner. If atomtype is specified for one or both atoms, the closest distance of all relevant combinations is used.
+</p>
+<pre style="white-space:pre-wrap">&lt;AtomicDistance name=(&amp;string) residue1=(&amp;string) atomname1=(&amp;string) atomtype1=(&amp;string) residue2=(&amp;sring) atomname2=(&amp;string) atomtype2=(&amp;string) distance=(4.0 &amp;integer)/&gt;
+</pre>
+<a name="TerminusDistance"></a><h4>TerminusDistance</h4>
+<p>True if all residues in the interface are more than &lt;distance&gt; residues from the N or C terminus. If fails, reports how far failing residue was from the terminus. If passes, returns "1000"
+</p>
+<pre style="white-space:pre-wrap">&lt;TerminusDistance name=(&amp;string) jump_number=(1 &amp;integer) distance=(5 &amp;integer)/&gt;</pre>
+<ul>
+<li>jump_number: Which jump to use for calculating the interface?
+</li><li>distance: how many residues must each interface residue be from a terminus? (sequence distance)
+</li></ul>
+<a name="Packing.2FConnectivity"></a><h3>Packing/Connectivity</h3>
+<a name="AverageDegree"></a><h4>AverageDegree</h4>
+<p>What is the average degree connectivity of a subset of residues? Found to be useful for discriminating non-interacting designs from natural complexes. Apparently, many non-interacting designs use surfaces that are poorly embedded in the designed monomer, a feature that can be easily captured by this simple metric. See Fleishman et al. J. Mol. Biol. 414:289
+</p>
+<pre style="white-space:pre-wrap">&lt;AverageDegree name=(&amp;string) threshold=(0&amp;Real) distance_threshold=(&amp;10.0) task_operations=(comma-delimited list)/&gt;
+</pre>
+<ul>
+<li> threshold: how many residues need to be on average in the sphere of each of the residues under scrutiny.
+</li><li> distance_threshold: Size of sphere around each residue under scrutiny.
+</li><li> task_operations: define residues under scrutiny (all repackable residues).
+</li></ul>
+<a name="InterfaceHoles"></a><h4>InterfaceHoles</h4>
+<p>Looks for voids at protein/protein interfaces using Will Sheffler's packstat. The number reported is the difference in the holes score between bound/unbound conformations. Be sure to set the -holes:dalphaball option!
+</p>
+<pre style="white-space:pre-wrap">&lt;InterfaceHoles name=(&amp;string) jump=(1 &amp;integer) threshold=(200 &amp;integer)/&gt;
+</pre>
+<ul>
+<li>jump: Which jump to calculate InterfaceHoles across?
+</li><li>threshold: return false if above this number
+</li></ul>
+<a name="ResInInterface"></a><h4>ResInInterface</h4>
+<p>Computes the number of residues in the interface specific by jump_number and if it is above threshold returns true. o/w false. Useful as a quick and ugly filter after docking for making sure that the partners make contact.
+</p>
+<pre style="white-space:pre-wrap">&lt;ResInInterface name=(riif &amp;string) residues=(20 &amp;integer) jump_number=(1 &amp;integer)/&gt;</pre>
+<a name="NeighborType"></a><h4>NeighborType</h4>
+<p>Filter for poses that place a neighbour of the types specified around a target residue in the partner protein.
+</p>
+<pre style="white-space:pre-wrap">&lt;NeighborType name=(neighbor_filter &amp;string) "res_num/pdb_num see above" distance=(8.0 &amp;Real)&gt;
+        &lt;Neighbor type=(&amp;3-letter aa code)/&gt;
+&lt;/NeighborType&gt;</pre>
+<a name="SpecificResiduesNearInterface"></a><h3>SpecificResiduesNearInterface</h3>
+<p>Filter for poses that have a specific set of residues near the interface. For example, this can be useful for designs that depend on say the N-terminus being close to the interface
+</p>
+<pre style="white-space:pre-wrap">&lt;SpecificResiduesNearInterface name=(&amp;string) task_operation=(&amp;string)/&gt;
+</pre>
+<a name="Burial"></a><h3>Burial</h3>
+<a name="Sasa"></a><h4>Sasa</h4>
+<p>Computes the interface sasa. If it is **higher** than threshold, it passes. However, it also has the option for an upper_threshold, where it fails if it is above the upper_threshold.
+</p>
+<pre style="white-space:pre-wrap">&lt;Sasa name=(sasa_filter &amp;string) threshold=(800 &amp;float) upper_threshold=(1000000000000000 &amp;float) hydrophobic=(0&amp;bool) polar=(0&amp;bool) jump=(1 &amp;integer)/&gt;</pre>
+<ul>
+<li>upper_threshold: maximum size allowed
+</li><li>hydrophobic: compute hydrophobic-only SASA?
+</li><li>polar: compute polar_only SASA?
+</li><li>jump: across which jump to compute total SASA?
+</li></ul>
+<p>hydrophobic/polar are computed by discriminating each atom into polar (acceptor/donor or polar hydrogen) or hydrophobic (all else) and summing the delta SASA over each category. Notice that at this point only total sasa can be computed across jumps other than 1. Trying to compute hydrophobic or polar sasa across any other jump will cause an exit during parsing.
+</p>
+<a name="ResidueBurial"></a><h4>ResidueBurial</h4>
+<p>How many residues are within an interaction distance of target_residue across the interface. When used with neighbors=1 this degenerates to just checking whether or not a residue is at the interface.
+</p>
+<pre style="white-space:pre-wrap">&lt;ResidueBurial name=(&amp;string) "res_num/pdb_num see above" distance=(8.0 &amp;Real) neighbors=(1 &amp;Integer) task_operations=(&amp;comma-delimited list of taskoperations)/&gt;</pre>
+<ul>
+<li> task_operations: the task factory will be used to determine what residues are designable. If any of these residues pass the burial threshold, the filter will return true; o/w false. Allows setting the burial filter dynamically at runtime.
+</li></ul>
+<a name="Comparison"></a><h3>Comparison</h3>
+<a name="RelativePose"></a><h4>RelativePose</h4>
+<p>Compute a filter's value relative to a different pose's structure. This is useful for cases in which you want to know the effects of a mutation on different poses. An alignment of the pose being read from disk is made to the currently active pose (through the user defined alignment), and applies any sequence changes to the pose read from disk, while repacking a shell around each mutation. It can then apply a relax mover, report a filter's evaluation and dump a scored pose to disk. Works with symmetric poses as well.
+</p>
+<pre style="white-space:pre-wrap">&lt;RelativePose name=(&amp;string) pdb_name=(&amp;string) filter=(&amp;string) relax_mover=(null &amp;string) dump_pose=("" &amp;string) alignment=(&amp;string; see below) scorefxn=(score12 &amp;string) packing_shell=(8.0 &amp;Real) thread=(1 &amp;bool) baseline=(1 &amp;bool) unbound=(0 &amp;bool) copy_stretch=(1&amp;bool)&gt;</pre>
+<ul>
+<li> pdb_name: which is the reference pose to read from disk.
+</li><li> filter: which filter to apply.
+</li><li> relax_mover: which relax mover to apply after threading.
+</li><li> dump_pose: optional- should we dump the pose after threading?
+</li><li> alignment: what segments to align between the disk-pose and the current pose. defaults to aligning from 1-&gt;nres. To specify something different use the following format: 3A:1B,4A:2B,5A:6B, meaning align disk pose's 3A-5A to 1B,2B, and 6B on the current pose. Only the aligned segments are searched for mutations between the disk and current pose for threading. All else is ignored. If no residue number is specified, the method aligns chains. For instance: A:D,B:B, means align A with D and B with B. No checks are made to guarantee length compatibility etc.
+</li><li> scorefxn: used for packing during threading and for scoring the dumped pose.
+</li><li> packing_shell: radius of shell around each residue to repack after threading. The more use use the longer the simulation.
+</li><li> thread: Normally you'd want this to be true. This is not the case only if you're estimating baselines for the disk pose before doing an actual run.
+</li><li> baseline: shall we use the pose which is read from disk as a reference? (means that the filter's return value will equal the filter's value at run time minus the reference value.
+</li><li> unbound: before threading, should we dissociate the complex?
+</li><li> copy_stretch: rather than threading the residue identities on the pose read from disk, copy the aligned segment from the current pose onto the pose read from disk (residue identities + conformations). No repacking is done, and then goes straight to relax. Obviously the segment should be prealigned for this to make any sense, and should probably only be used on entire chains rather than stretches within chains. Any way, take care in using. No guarantees.
+</li></ul>
+<a name="Rmsd"></a><h4>Rmsd</h4>
+<p>Calculates the Calpha RMSD over a user-specified set of residues. Superimposition is optional. Selections are additive, so choosing a chain, and individual residue, and span will result in RMSD calculation over all residues selected. If no residues are selected, the filter uses all residues in the pose. Use -in:file:native &lt;filename&gt; to choose an alternate reference pose.
+</p>
+<pre style="white-space:pre-wrap">&lt;Rmsd name=(&amp;string) chains=("" &amp;string) threshold=(5 &amp;integer) superimpose=(1 &amp;bool)&gt;
+    &lt;residue res/pdb_num=(see above) /&gt;
+    &lt;span begin_(res/pdb_num)=("" &amp;integer) end_(res/pdb_num)=(""&amp;integer)/&gt;
+&lt;/Rmsd&gt;
+</pre>
+<ul>
+<li>chains: list of chains (eg - "AC") to use for RMSD calculation
+</li><li>residue: add a new leaf for each residue to include (can use rosetta index or pdb number)
+</li><li>span: contiguous span of residues to include (rosetta index or pdb number)
+</li><li>threshold: accept at this rmsd or lower
+</li><li>superimpose: perform superimposition before rmsd calculation?
+</li></ul>
+<a name="SequenceRecovery"></a><h4>SequenceRecovery</h4>
+<p>Calculates the fraction sequence recovery of a pose compared to a reference pose. This is similar to the <a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Movers_%28RosettaScripts%29#InterfaceRecapitulation" title="Movers (RosettaScripts)">InterfaceRecapitulation</a> mover, but does not require a design mover. Instead, the user can provide a list of task operations that describe which residues are designable in the pose.
+</p>
+<pre style="white-space:pre-wrap">&lt;SequenceRecovery name=(&amp;string) rate_threshold=(0.0 &amp;Real) task_operations=(comma-delimited list of task_operations) /&gt;
+</pre>
+<ul>
+<li> rate_threshold: what is an acceptable recovery rate?
+</li></ul>
+<p>The reference pose against which the recovery rate will be computed can be defined using the -in:file:native command-line flag. If that flag is not defined, the starting pose will be used as a reference.
+</p>
+<a name="Bonding"></a><h3>Bonding</h3>
+<a name="HbondsToResidue"></a><h4>HbondsToResidue</h4>
+<p>This filter checks whether residues defined by res_num/pdb_num are hbonded with as many hbonds as defined by partners, where each hbond needs to have at most energy_cutoff energy. For backbone-backone hydrogen bonds, turn flag on (bb_bb=1).
+</p>
+<pre style="white-space:pre-wrap">&lt;HbondsToResidue name=(hbonds_filter &amp;string) partners="how many hbonding partners are expected &amp;integer" energy_cutoff=(-0.5 &amp;float) backbone=(0 &amp;bool) bb_bb=(0 &amp;bool) sidechain=(1 &amp;bool) res_num/pdb_num=(&amp;string - see above)&gt;</pre>
+<ul>
+<li>backbone: should we count backbone-backbone hbonds?
+</li><li>sidechain: should we count backbone-sidechain and sidechain-sidechain hbonds?
+</li></ul>
+<a name="BuriedUnsatHbonds"></a><h4>BuriedUnsatHbonds</h4>
+<p>Maximum number of buried unsatisfied H-bonds allowed.
+If a jump number is specified (default=1), then this number is calculated across the interface of that jump.
+If jump_num=0, then the filter is calculated for a monomer.
+Note that #unsat for monomers is often much higher than 20. Notice that water is not assumed in these calculations.
+</p>
+<pre style="white-space:pre-wrap">&lt;BuriedUnsatHbonds name=(&amp;string) jump_number=(1 &amp;Size) cutoff=(20 &amp;Size)/&gt;</pre>
+<a name="DisulfideFilter"></a><h4>DisulfideFilter</h4>
+<p>Require a disulfide bond between the interfaces to be possible. 'Possible' is taken fairly loosely; a reasonable centroid disulfide score is required (fairly close CB atoms without too much angle strain).
+</p><p>Residues from <code>targets</code> are considered when searching for a disulfide bond. As for <a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Movers_%28RosettaScripts%29#DisulfideMover" title="Movers (RosettaScripts)">DisulfideMover</a>, if no residues are specified from one interface partner all residues on that partner will be considered.
+</p>
+<pre style="white-space:pre-wrap">&lt;DisulfideFilter name="&amp;string" targets=(&amp;string)/&gt;</pre>
+<ul><li> targets: A comma-seperated list of residue numbers. These can be either with rosetta numbering (raw integer) or pdb numbering (integer followed by the chain letter, eg '123A'). Targets are required to be located in the interface. Default: All residues in the interface. <em>Optional</em>
+</li></ul>
+<a name="Report_Filters"></a><h2>Report Filters</h2>
+<p>These filters are used primarily for the reports they generate in the log and/or score and silent files, more so than their ability to end a run.
+</p><p><br>
+</p>
+<a name="Boltzmann"></a><h4>Boltzmann</h4>
+<p>Returns the Boltzmann weighted sum of a set of positive and negative filters. The fitness is actually defined as -F with [-1-0] range (-1 most optimal, 0 least).
+</p>
+<pre style="white-space:pre-wrap">&lt;Boltzmann name=(&amp;string) fitness_threshold=(0&amp;real) temperature=(0.6 &amp;real) positive_filters=(&amp;comma delimited list) negative_filters=(&amp;comma delimited list) anchors=(&amp;comma delimited list of floats)/&gt;</pre>
+<ul>
+<li> fitness_threshold: below which fitness threshold to allow?
+</li><li> temperature: the Boltzmann weighting factor (in fact, kT rather than T).
+</li><li> positive_filters: a list of predefined filters to use as the positive states. The filters' report_sm methods will be invoked, so there's no need to fret about their thresholds.
+</li><li> negative_filters: as above, only negative.
+</li><li> anchors: an anchor per positive state to cap the drift in its energy. Specifying no anchors is fine. A very high value for the anchor means, in practice, no anchor.
+</li></ul>
+<p>Useful for balancing counteracting objectives.
+</p>
+<a name="DesignableResidues"></a><h4>DesignableResidues</h4>
+<p>Reports to tracers which residues are repackable/designable according to use-defined task_operations. Useful for automatic interface detection (use the ProteinInterfaceDesign task operation for that). The residue number that are reported are pdb numbering.
+</p>
+<pre style="white-space:pre-wrap">&lt;DesignableResidues name=(&amp;string) task_operations=(comma-separated list) designable=(1 &amp;bool) packable=(0 &amp;bool)/&gt;
+</pre>
+<ul>
+</ul>
+<a name="RelativeSegmentFilter"></a><h4>RelativeSegmentFilter</h4>
+<p>Reports the numbers of residues that align with a segment on source pose.
+</p>
+<pre style="white-space:pre-wrap">&lt;RelativeSegment name=(&amp;string) source_pose=(&amp;string) start_res=(&amp;string) stop_res=(&amp;string)/&gt;</pre>
+<ul>
+<li> source_pose: The pose to which to align. The two poses should be superimposed prior to running. This filter will not superimpose.
+</li><li> start_res: start res for alignment. Refers to residues on the source pose. Rosetta numbering only.
+</li><li> stop_res: stop res for alignment. ditto.
+</li></ul>
+<p>Taskoperation RestrictToAlignedSegments supersedes this filter as it allows more than one segment to be defined. Use that taskoperation and feed it to DesignableResidues filter to find aligned residues in the input pose.
+</p>
+<a name="RotamerBoltzmannWeight"></a><h4>RotamerBoltzmannWeight</h4>
+<p>Approximates the Boltzmann probability for the occurrence of a rotamer. The method, usage examples, and analysis scripts are published in Fleishman et al. (2011) Protein Sci. 20:753.
+</p><p>Residues to be tested are defined using a task_factory (set all inert residues to no repack). A first-pass alanine scan looks at which residues contribute substantially to binding affinity. Then, the rotamer set for each of these residues is taken, each rotamer is imposed on the pose, the surrounding shell is repacked and minimized and the energy is summed to produce a Boltzmann probability. Can be computed in both the bound and unbound state.
+</p><p>This is apparently a good discriminator between designs and natives, with many designs showing high probabilities for their highly contributing rotamers in both the bound and unbound states.
+</p><p>The filter also reports a modified value for the complex ddG. It computes the starting ddG and then reduces from this energy a fraction of the interaction energy of each residue the rotamer probability of which is below a certain threshold. The interaction energy is computed only for the residue under study and its contacts with residues on another chain.
+</p>
+<pre style="white-space:pre-wrap">&lt;RotamerBoltzmannWeight name=(&amp;string) task_operations=(comma-delimited list) radius=(6.0 &amp;Real) jump=(1 &amp;Integer) unbound=(1 &amp;bool) ddG_threshold=(1.5 &amp;Real) scorefxn=(score12 &amp;string) temperature=(0.8 &amp;Real) energy_reduction_factor=(0.5 &amp;Real) repack=(1&amp;bool) skip_ala_scan=(0 &amp;bool)&gt;
+   &lt;??? threshold_probability=(&amp;Real)/&gt;
+   .
+   .
+   .
+&lt;/RotamerBoltzmannWeight&gt;
+</pre>
+<ul>
+<li>task_operations: define what residues to work on. Set all residues not to be tested to no repack.
+</li><li>radius: repacking radius around the rotamer under consideration. These residues will be repacked and minimized for each rotamer tested
+</li><li>jump: what jump to look at
+</li><li>unbound: test the bound or unbound state?
+</li><li>ddG_threshold: a further filter on which designs to test. Only residues that contribute more than the stated amount to binding will be tested.
+</li><li>temperature: the scaling factor for the Boltzmann calculations. This is actually kT rather than just T.
+</li><li>energy_reduction_factor: by what factor of the interaction energy to reduce the ddG.
+</li><li>repack: repack in the bound and unbound states before reporting binding energy values (ddG). If false, don't repack (dG).
+</li><li>skip_ala_scan: do not conduct first-pass ala scan. Instead compute only for residues that are allowed to repack in the task factory.
+</li><li>??? any of the three-letter codes for residues (TRP, PHE, etc.)
+</li></ul>
+<a name="AlaScan"></a><h4>AlaScan</h4>
+<p>Substitutes Ala for each interface position separately and measures the difference in ddg compared to the starting structure. The filter always returns true. The output is only placed in the .report file. Repeats causes multiple ddg calculations to be averaged, giving better converged values.
+</p>
+<pre style="white-space:pre-wrap">&lt;AlaScan name=(&amp;string) scorefxn=(score12 &amp;string) jump=(1 &amp;Integer) interface_distance_cutoff=(8.0 &amp;Real) partner1=(0 &amp;bool) partner2=(1 &amp;bool) repeats=(1 &amp;Integer) repack=(1 &amp;bool)/&gt;</pre>
+<ul>
+<li>scorefxn: scorefxn to use for ddg calculations
+</li><li>jump: which jump to use for ddg calculations. If jump=0 the complex is not taken apart and only the dG of the mutation is computed.
+</li><li>interface_distance_cutoff: how far apart counts as an interface (in angstroms)
+</li><li>partner1: report ddGs for everything upstream of the jump
+</li><li>partner2: report ddGs for everything downstream of the jump
+</li><li>repack: repack in the bound and unbound states before reporting the energy (ddG). When false, don't repack (dG).
+</li></ul>
+<a name="FilterScan"></a><h4>FilterScan</h4>
+<p>Scan all mutations allowed by <tt>task_operations</tt> and test against a filter. Produces a report on the filter's values for each mutation as well as a resfile that says which mutations are allowed. The filter can work with symmetry poses; simply use SetupForSymmetry and run. It will figure out that it needs to do symmetric packing for itself.
+</p>
+<pre style="white-space:pre-wrap">&lt;FilterScan name=(&amp;string) scorefxn=(score12 &amp;string) task_operations=(comma separated list) triage_filter=(true_filter &amp;string) dump_pdb=(0 &amp;bool) filter=(&amp;string) report_all=(0 &amp;bool) relax_mover=(null &amp;string) resfile_name=(&lt;PDB&gt;.resfile &amp;string) resfile_general_property=("nataa" &amp;string) delta=(0 &amp;bool) unbound=(0 &amp;bool) jump=(1 &amp;int) rtmin=(0&amp;bool)/&gt;</pre>
+<ul>
+<li> triage_filter: If this filter evaluates to false, don't include the mutation in the resulting resfile
+</li><li> dump_pdb: dump models for each of the single mutants that pass triage filter. The pdb is scored and dumped after running the relax mover. The naming is: &lt;input file name&gt;RESxxxRES where the suffix for the Ala278-&gt;Arg mutant will look like ALA278ARG.
+</li><li> filter: Used only for reporting the value for the pose in the tracer report
+</li><li> report_all: By default, only attempted mutations which pass <tt>triage_filter</tt> will be evaluated by <tt>filter</tt> and reported in the tracer report. If <tt>report_all</tt> is true, report the value of <tt>filter</tt> for all evaluated mutations. (Note this will increase the number of calls to <tt>filter</tt>/the computational cost.)
+</li><li> relax_mover: After mutation, what mover to use for relax (minimization may be a good idea) This mover is in addition to repacking done as part of the mutation. (Repacking is done according to <tt>task_operations</tt>, but is limited to an 8 Angstrom shell around each mutated residue.)
+</li><li> scorefxn: The scorefunction to use with the mutation repacking
+</li><li> resfile_name: the output resfile name. Defaults to what's the -s on the commandline +".resfile"
+</li><li> resfile_general_property: What to do with all other residues in the resfile
+</li><li> delta: Test the filter against a baseline which is the filter's value at the start of the run?
+</li><li> unbound: Test the filter in the unbound state?
+</li><li> jump: If unbound, which jump?
+</li><li> rtmin: carry out an rtmin repack step before the relax steps? Improves the fit of the mutated residue but can lead to noisy energies.
+</li></ul>
+<p>To compute a baseline, the entire pose is first repacked (with include current, no design, initialized from the comandline, but ignoring the taskoperations), and relax_mover is called. This can be useful to get the pose's energy down.
+</p><p>Filter and triage_filter are potentially confusing. You can use the same filter for both. Triage_filter can be more involved, including compound filter statements, whereas the filter option is reserved to filters that have meaningful report_sm methods (ddG, energy...).
+</p><p>The reported values from filter will appear in a Tracer called ResidueScan, so -mute all -unmute ResidueScan will only output the necessary information
+</p><p>Use the unbound option only on a Prepacked structure with jump_number=1, o/w the reference energy (baseline) won't make any sense.
+</p>
+<a name="Time"></a><h4>Time</h4>
+<p>Simple filter for reporting the time a sequence of movers/filters takes.
+</p>
+<pre style="white-space:pre-wrap">&lt;Time name=(&amp;string)/&gt;</pre>
+<p>Within the protocol, you need to call time at least twice, once, when you want to start the timer, and then, when you want to stop. The reported time is that between the first and last calls.
+</p>
+<a name="Special_Application_Filters"></a><h2>Special Application Filters</h2>
+<a name="Binding"></a><h3>Binding</h3>
+<a name="Ddg"></a><h4>Ddg</h4>
+<p>Computes the binding energy for the complex and if it is below the threshold returns true. o/w false. Useful for identifying complexes that have poor binding energy and killing their trajectory.
+</p>
+<pre style="white-space:pre-wrap">&lt;Ddg name=(ddg &amp;string) scorefxn=(score12 &amp;string) threshold=(-15 &amp;float) jump=(1 &amp;Integer) repeats=(1 &amp;Integer) repack=(true &amp;bool) relax_mover=(&amp;string)/&gt;</pre>
+<ul>
+<li> jump specifies which chains to separate. Jump=1 would separate the chains interacting across the first chain termination, jump=2, second etc.
+</li><li> repeats: averages the calculation over the number of repeats. Note that ddg calculations show noise of about 1-1.5 energy units, so averaging over 3-5 repeats is recommended for many applications.
+</li><li> repack: Should the complex be repacked in the bound and unbound states prior to taking the energy difference? If false, the filter turns to a dG evaluator. If repack=false repeats should be turned to 1, b/c the energy evaluations converge very well with repack=false
+</li><li> relax_mover: optionally define a mover which will be applied prior to computing the system energy in the unbound state.
+</li></ul>
+<a name="Ligand_docking_and_enzyme_design"></a><h3>Ligand docking and enzyme design</h3>
+<a name="DSasa"></a><h4>DSasa</h4>
+<p><em>(Formerly known as LigDSasa)</em>
+</p><p>Computes the fractional interface delta_sasa for a ligand on a ligand-protein interface and checks to see if it is *between* the lower and upper threshold. A DSasa of 1 means ligand is totally buried (loses all it's accessible surface area), 0 means totally accessible (loses none upon interface formation). 
+</p>
+<pre style="white-space:pre-wrap">&lt;DSasa name=(&amp;string) lower_threshold=(0.0 &amp;float) upper_threshold=(1.0 &amp;float)/&gt;</pre>
+<a name="DiffAtomBurial"></a><h4>DiffAtomBurial</h4>
+<p>Compares the DSasa of two specified atoms and checks to see if one is greater or less than other. This is useful for figuring out whether a ligand is oritented in the correct way (i.e. whether in the designed interface one atom
+is more/less exposed than another)   
+</p>
+<pre style="white-space:pre-wrap">&lt;DiffAtomBurial name=(&amp;string)  res1_res_num/res1_pdb_num=(0, see res_num/pdb_num convention) res2_res_num/res2_pdb_num=(0, see convention) atomname1=(&amp;string) atomname2=(&amp;string) sample_type=(&amp;string)/&gt;</pre>
+<ul>
+<li>res1_res_num/res2_res_num: conventional pose numbering of rosetta, res_num=0 will mean ligand (Assuming there is only one ligand)
+</li><li>res1_pdb_num/res2_pdb_num: conventional pdb_numbering such as 100A (residue 100 chain A), 1X (residue 1 chain X e.g. of ligand) 
+</li><li>atomname1/atomname2: atomnames of the respective atoms
+</li><li>sample_type: "more" or "less". "more" means Dsasa1&gt;Dsasa2 (atom1 is more buried than atom2); "less" means Dsasa1&lt;Dsasa2 (atom1 is less buried than atom2)
+</li></ul>
+<p><br>
+</p>
+<a name="LigInterfaceEnergy"></a><h4>LigInterfaceEnergy</h4>
+<p>Calculates interface energy across a ligand-protein interface taking into account (or not) enzdes style cst_energy.   
+</p>
+<pre style="white-space:pre-wrap">&lt;LigInterfaceEnergy name=(&amp;string)  scorefxn=(&amp;string) include_cstE=(0 &amp;bool) jump_number=(last_jump &amp;integer) energy_cutoff=(0.0 &amp;float)/&gt;</pre>
+<p>include_cstE=1 will *not* subtract out the cst energy from interface energy. jump_number defaults to last jump in the pose (assumed to be associated with ligand). energy should be less than energy_cutoff to pass.
+</p><p><br>
+</p>
+<a name="EnzScore"></a><h4>EnzScore</h4>
+<p>Calculates scores of a pose e.g. a ligand-protein interface taking into account (or not) enzdes style cst_energy. Residues can be accessed by res_num/pdb_num or their constraint id. One and only one of res/pdb_num, cstid, and whole_pose tags can be specified.   energy should be less than cutoff to pass.
+</p>
+<pre style="white-space:pre-wrap">&lt;EnzScore name=(&amp;string)  scorefxn=(&amp;string, score12) whole_pose= (&amp;bool,0) score_type = (&amp;string) res_num/pdb_num = (see convetion) cstid =  (&amp;string) energy_cutoff=(0.0 &amp;float)/&gt;</pre>
+<ul>
+<li>cstid: string corresponding to cst_number+template (A or B, as in remarks and cstfile blocks). each enzdes cst is between two residues; A or B allows access to the corresponding residue in a given constraint e.g. cstid=1A means cst #1 template A (i.e. for the 1st constraint, the residue corresponding to the block that is described first in the cstfile and its corresponding REMARK line in header), cstid=4B (for the 4th constraint, the residue that is described second in the cstfile block and its REMARK line in header).  
+</li><li>score_type: usual rosetta score_types; cstE will calculate enzdes style constraint energy
+</li><li>whole_pose: calculate total scores for whole pose
+ </li></ul>
+<p><br>
+</p>
+<a name="RepackWithoutLigand"></a><h4>RepackWithoutLigand</h4>
+<p>Calculates delta_energy or RMSD of protein residues in a protein-ligand interface when the ligand is removed and the interface repacked. RMSD of a subset of these repacked residues (such as catalytic residues) can be accessed by setting the appropriate tags.
+</p>
+<pre style="white-space:pre-wrap">&lt;RepackWithoutLigand name=(&amp;string)  scorefxn=(&amp;string, score12) target_res = (&amp;string) target_cstids =  (&amp;string) energy_threshold=(0.0 &amp;float) rms_threshold=(0.5 &amp;float)/&gt;</pre>
+<ul>
+<li>target_cstids: comma-separated list corresponding to cstids (see EnzScore for cstid format)
+</li><li>target_res: comma-separated list corresponding to res_nums/pdb_nums (following usual convention) OR "all_repacked" which will include all repacked neighbors of the ligand (the repack shell).
+</li><li>rms_threshold: maximum allowed RMS of repacked region; (i.e. RMSD&lt;rms_threshold filter passes, else fails)
+</li><li>energy_threshold: delta_Energy allowed (i.e. if E(with_ligand)-E(no_ligand) &lt; threshold, filter passes else fails)
+ </li></ul>
+<a name="Ligand_design"></a><h3>Ligand design</h3>
+<a name="HeavyAtom"></a><h4>HeavyAtom</h4>
+<pre style="white-space:pre-wrap">&lt;HeavyAtom name="&amp;string" chain="&amp;string" heavy_atom_limit=(&amp;int)/&gt;</pre>
+<p>Stop growing this designed ligand once we reach this heavy atom limit
+</p>
+<a name="CompleteConnections"></a><h4>CompleteConnections</h4>
+<pre style="white-space:pre-wrap">&lt;CompleteConnections name="&amp;string" chain="&amp;string"/&gt;</pre>
+<p>Are there any connections left to fulfill?  If not, stop growing ligand
+</p>
+<a name="Hotspot_Design"></a><h3>Hotspot Design</h3>
+<a name="StubScore"></a><h4>StubScore</h4>
+<p>See <a href="http://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/Movers_%28RosettaScripts%29#StubScore" title="Movers (RosettaScripts)">Movers (RosettaScripts)#StubScore</a>
+</p>
+<a name="Currently_Undocumented"></a><h2>Currently Undocumented</h2>
+<p>The following Filters are available through RosettaScripts, but are not currently documented. See the code (particularly the respective parse_my_tag() and apply() functions) for details. (Some may be undocumented as they are experimental/not fully functional.) 
+</p>
+<ul><li> ConservedPosMutationFilter
+</li><li> CoreDunbrackFilter
+</li><li> EnzdesScorefileFilter
+</li><li> FragQualFilter
+</li><li> HelixPairingFilter
+</li><li> Holes
+</li><li> LigBurial
+</li><li> NcontactsFilter
+</li><li> PackStat
+</li><li> ScoreCutoffFilter
+</li><li> SecondaryStructureFilter
+</li><li> SheetTopologyFilter
+</li><li> Stochastic
+</li></ul>
+
+
+<br></div>
+<!-- Served by plug in 0.20 secs. -->
+</body></html>

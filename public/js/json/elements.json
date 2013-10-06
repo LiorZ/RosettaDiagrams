@@ -1,0 +1,7749 @@
+[
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnum"
+            },
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "find_automatically"
+            },
+            {
+                "value": "",
+                "key": "change_foldtree"
+            }
+        ],
+        "type": "container",
+        "name": "SampleContainer"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnum"
+            },
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "find_automatically"
+            },
+            {
+                "value": "",
+                "key": "change_foldtree"
+            }
+        ],
+        "type": "mover",
+        "name": "AddChainBreak"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "use_distance_cst"
+            },
+            {
+                "value": "",
+                "key": "max_distance"
+            },
+            {
+                "value": "",
+                "key": "coord_dev"
+            },
+            {
+                "value": "",
+                "key": "bound_width"
+            },
+            {
+                "value": "",
+                "key": "min_seq_sep"
+            },
+            {
+                "value": "",
+                "key": "cst_weight"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "AddConstraintsToCurrentConformationMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "gap"
+            }
+        ],
+        "type": "mover",
+        "name": "AddEncounterConstraintMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain"
+            }
+        ],
+        "type": "mover",
+        "name": "AddHydrogens"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "cstfile"
+            },
+            {
+                "value": "",
+                "key": "cst_instruction"
+            }
+        ],
+        "type": "mover",
+        "name": "AddOrRemoveMatchCsts"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain"
+            },
+            {
+                "value": "",
+                "key": "coord_sdev"
+            },
+            {
+                "value": "",
+                "key": "resnums"
+            }
+        ],
+        "type": "mover",
+        "name": "AddSidechainConstraintsToHotspots"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "docking_ft"
+            },
+            {
+                "value": "",
+                "key": "simple_ft"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "resnum"
+            },
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "anchor_res"
+            },
+            {
+                "value": "",
+                "key": "host_chain"
+            },
+            {
+                "value": "",
+                "key": "two_parts_chain1"
+            }
+        ],
+        "type": "mover",
+        "name": "AtomTree"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain_to_design"
+            },
+            {
+                "value": "",
+                "key": "max_cb_dist"
+            },
+            {
+                "value": "",
+                "key": "cb_force"
+            }
+        ],
+        "type": "mover",
+        "name": "Auction"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "moves"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            }
+        ],
+        "type": "mover",
+        "name": "BackboneSampler"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "pivot_residues"
+            },
+            {
+                "value": "",
+                "key": "pivot_atoms"
+            },
+            {
+                "value": "",
+                "key": "min_atoms"
+            },
+            {
+                "value": "",
+                "key": "max_atoms"
+            },
+            {
+                "value": "",
+                "key": "max_angle_disp_4"
+            },
+            {
+                "value": "",
+                "key": "max_angle_disp_7"
+            },
+            {
+                "value": "",
+                "key": "max_angle_disp_slope"
+            },
+            {
+                "value": "",
+                "key": "preserve_detailed_balance"
+            },
+            {
+                "value": "",
+                "key": "require_mm_bend"
+            }
+        ],
+        "type": "mover",
+        "name": "BackrubMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "partner1"
+            },
+            {
+                "value": "",
+                "key": "partner2"
+            },
+            {
+                "value": "",
+                "key": "interface_distance_cutoff"
+            },
+            {
+                "value": "",
+                "key": "moves"
+            },
+            {
+                "value": "",
+                "key": "sc_move_probability"
+            },
+            {
+                "value": "",
+                "key": "small_move_probability"
+            },
+            {
+                "value": "",
+                "key": "bbg_move_probability"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            }
+        ],
+        "type": "mover",
+        "name": "BackrubDD"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "pivot_residues"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "prob_uniform"
+            },
+            {
+                "value": "",
+                "key": "prob_withinrot"
+            },
+            {
+                "value": "",
+                "key": "prob_random_pert_current"
+            },
+            {
+                "value": "",
+                "key": "preserve_detailed_balance"
+            },
+            {
+                "value": "",
+                "key": "require_mm_bend"
+            },
+            {
+                "value": "",
+                "key": "record_statistics"
+            },
+            {
+                "value": "",
+                "key": "statistics_filename"
+            }
+        ],
+        "type": "mover",
+        "name": "BackrubSidechainMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "blueprint"
+            }
+        ],
+        "type": "mover",
+        "name": "BluePrintBDR"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "stddev"
+            },
+            {
+                "value": "",
+                "key": "template_pdb"
+            },
+            {
+                "value": "",
+                "key": "add_cst_seed"
+            },
+            {
+                "value": "",
+                "key": "replace"
+            },
+            {
+                "value": "",
+                "key": "seq_separation"
+            },
+            {
+                "value": "",
+                "key": "distance"
+            },
+            {
+                "value": "",
+                "key": "add_seed_residues"
+            },
+            {
+                "value": "",
+                "key": "from_chain"
+            },
+            {
+                "value": "",
+                "key": "to_chain"
+            }
+        ],
+        "type": "mover",
+        "name": "CAcstGenerator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "prevent_nonloop_modifications"
+            },
+            {
+                "value": "",
+                "key": "max_ccd_moves_per_closure_attempt"
+            },
+            {
+                "value": "",
+                "key": "max_closure_attempts"
+            }
+        ],
+        "type": "mover",
+        "name": "CCDLoopCloser"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "overlap"
+            },
+            {
+                "value": "",
+                "key": "ncycles"
+            },
+            {
+                "value": "",
+                "key": "strategy"
+            },
+            {
+                "value": "",
+                "key": "residues"
+            },
+            {
+                "value": "",
+                "key": "nfrags"
+            },
+            {
+                "value": "",
+                "key": "fraglens"
+            }
+        ],
+        "type": "mover",
+        "name": "CartesianSampler"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "pos"
+            },
+            {
+                "value": "",
+                "key": "ignore_chain"
+            },
+            {
+                "value": "",
+                "key": "split_chain"
+            }
+        ],
+        "type": "mover",
+        "name": "CircularPermutation"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "ClearConstraintsMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "fragments"
+            }
+        ],
+        "type": "mover",
+        "name": "CloseFold"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "CompoundTranslate"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "ConformerSwitchMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "invert_task"
+            },
+            {
+                "value": "",
+                "key": "use_seqprof_constraints"
+            },
+            {
+                "value": "",
+                "key": "sasa_cutoff"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "ignore_pose_profile_length_mismatch"
+            }
+        ],
+        "type": "mover",
+        "name": "ConsensusDesignMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "name"
+            },
+            {
+                "value": "",
+                "key": "filename"
+            }
+        ],
+        "type": "mover",
+        "name": "ConstraintFileCstGenerator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "cst_file"
+            },
+            {
+                "value": "",
+                "key": "cst_fa_file"
+            }
+        ],
+        "type": "mover",
+        "name": "ConstraintSetMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "distance_cutoff"
+            },
+            {
+                "value": "",
+                "key": "prefix"
+            },
+            {
+                "value": "",
+                "key": "reset_count"
+            },
+            {
+                "value": "",
+                "key": "models_per_file"
+            },
+            {
+                "value": "",
+                "key": "row_format"
+            },
+            {
+                "value": "",
+                "key": "region1"
+            },
+            {
+                "value": "",
+                "key": "region2"
+            },
+            {
+                "value": "",
+                "key": "ligand"
+            }
+        ],
+        "type": "mover",
+        "name": "ContactMap"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "stddev"
+            },
+            {
+                "value": "",
+                "key": "atom"
+            },
+            {
+                "value": "",
+                "key": "anchor_atom"
+            },
+            {
+                "value": "",
+                "key": "anchor_res"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            }
+        ],
+        "type": "mover",
+        "name": "CoordinateCst"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "add_chainbreakterm"
+            },
+            {
+                "value": "",
+                "key": "cutpoint_based"
+            },
+            {
+                "value": "",
+                "key": "secstrct"
+            },
+            {
+                "value": "",
+                "key": "template_pdb"
+            },
+            {
+                "value": "",
+                "key": "chain_num"
+            }
+        ],
+        "type": "mover",
+        "name": "DefineMovableLoops"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "hbond_weight"
+            },
+            {
+                "value": "",
+                "key": "donors"
+            }
+        ],
+        "type": "mover",
+        "name": "DesignMinimizeHbonds"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "gapspan"
+            },
+            {
+                "value": "",
+                "key": "spread"
+            },
+            {
+                "value": "",
+                "key": "cycles_outer"
+            },
+            {
+                "value": "",
+                "key": "cycles_inner"
+            },
+            {
+                "value": "",
+                "key": "repack_rate"
+            },
+            {
+                "value": "",
+                "key": "temp_initial"
+            },
+            {
+                "value": "",
+                "key": "temp_final"
+            },
+            {
+                "value": "",
+                "key": "designable_second_shell"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "DesignProteinBackboneAroundDNA"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "subunit_tolerance"
+            },
+            {
+                "value": "",
+                "key": "plane_tolerance"
+            }
+        ],
+        "type": "mover",
+        "name": "DetectSymmetry"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "targets"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_repack"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_minimize"
+            }
+        ],
+        "type": "mover",
+        "name": "DisulfideMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "DnaInterfaceMinMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "generations"
+            },
+            {
+                "value": "",
+                "key": "pop_size"
+            },
+            {
+                "value": "",
+                "key": "num_packs"
+            },
+            {
+                "value": "",
+                "key": "pop_from_ss"
+            },
+            {
+                "value": "",
+                "key": "numresults"
+            },
+            {
+                "value": "",
+                "key": "fraction_by_recombination"
+            },
+            {
+                "value": "",
+                "key": "mutate_rate"
+            },
+            {
+                "value": "",
+                "key": "boltz_temp"
+            },
+            {
+                "value": "",
+                "key": "anchor_offset"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_prefix"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_interval"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_gz"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_rename"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "DnaInterfaceMultiStateDesign"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "binding"
+            },
+            {
+                "value": "",
+                "key": "base_only"
+            },
+            {
+                "value": "",
+                "key": "minimize"
+            },
+            {
+                "value": "",
+                "key": "reversion_scan"
+            },
+            {
+                "value": "",
+                "key": "probe_specificity"
+            },
+            {
+                "value": "",
+                "key": "pdb_output"
+            },
+            {
+                "value": "",
+                "key": "protein_scan"
+            },
+            {
+                "value": "",
+                "key": "allowed_types"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "DnaInterfacePacker"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "partners"
+            },
+            {
+                "value": "",
+                "key": "rb_mover"
+            }
+        ],
+        "type": "mover",
+        "name": "DockSetupMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "score_low"
+            },
+            {
+                "value": "",
+                "key": "score_high"
+            },
+            {
+                "value": "",
+                "key": "fullatom"
+            },
+            {
+                "value": "",
+                "key": "conserve_foldtree"
+            },
+            {
+                "value": "",
+                "key": "local_refine"
+            },
+            {
+                "value": "",
+                "key": "view"
+            },
+            {
+                "value": "",
+                "key": "design"
+            },
+            {
+                "value": "",
+                "key": "symmetry"
+            },
+            {
+                "value": "",
+                "key": "ignore_default_docking_task"
+            },
+            {
+                "value": "",
+                "key": "jumps"
+            },
+            {
+                "value": "",
+                "key": "optimize_fold_tree"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "Docking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "randomize1"
+            },
+            {
+                "value": "",
+                "key": "randomize2"
+            },
+            {
+                "value": "",
+                "key": "dock_pert"
+            },
+            {
+                "value": "",
+                "key": "uniform_trans"
+            },
+            {
+                "value": "",
+                "key": "spin"
+            },
+            {
+                "value": "",
+                "key": "center_at_interface"
+            },
+            {
+                "value": "",
+                "key": "slide"
+            }
+        ],
+        "type": "mover",
+        "name": "DockingInitialPerturbation"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "docking_score_low"
+            },
+            {
+                "value": "",
+                "key": "docking_score_high"
+            },
+            {
+                "value": "",
+                "key": "partners"
+            },
+            {
+                "value": "",
+                "key": "low_res_protocol_only"
+            },
+            {
+                "value": "",
+                "key": "docking_local_refine"
+            },
+            {
+                "value": "",
+                "key": "dock_min"
+            },
+            {
+                "value": "",
+                "key": "ignore_default_docking_task"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "DockingProtocol"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "linker_start_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "linker_start_res_num"
+            }
+        ],
+        "type": "mover",
+        "name": "DomainAssembly"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "Dssp"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "fname"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            }
+        ],
+        "type": "mover",
+        "name": "DumpPdb"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "cycles"
+            },
+            {
+                "value": "",
+                "key": "min_in_stages"
+            },
+            {
+                "value": "",
+                "key": "design"
+            },
+            {
+                "value": "",
+                "key": "repack_only"
+            },
+            {
+                "value": "",
+                "key": "fix_catalytic"
+            },
+            {
+                "value": "",
+                "key": "cst_opt"
+            },
+            {
+                "value": "",
+                "key": "backrub"
+            },
+            {
+                "value": "",
+                "key": "minimize_rb"
+            },
+            {
+                "value": "",
+                "key": "minimize_bb"
+            },
+            {
+                "value": "",
+                "key": "minimize_sc"
+            },
+            {
+                "value": "",
+                "key": "minimize_lig"
+            },
+            {
+                "value": "",
+                "key": "minimize_prot_jumps"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_repack"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_minimize"
+            }
+        ],
+        "type": "mover",
+        "name": "EnzRepackMinimize"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "EnzdesRemodelMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "sequence"
+            }
+        ],
+        "type": "mover",
+        "name": "ExtendedPoseMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "ExtractAsymmetricPose"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "ExtractAsymmetricUnit"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            },
+            {
+                "value": "",
+                "key": "prefix"
+            },
+            {
+                "value": "",
+                "key": "suffix"
+            },
+            {
+                "value": "",
+                "key": "contact_dist"
+            },
+            {
+                "value": "",
+                "key": "extras"
+            }
+        ],
+        "type": "mover",
+        "name": "ExtractSubpose"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "repeats"
+            },
+            {
+                "value": "",
+                "key": "relaxscript"
+            },
+            {
+                "value": "",
+                "key": "batch"
+            },
+            {
+                "value": "",
+                "key": "cartesian"
+            }
+        ],
+        "type": "mover",
+        "name": "FastRelax"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "bonus"
+            }
+        ],
+        "type": "mover",
+        "name": "FavorNativeResidue"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "bonus"
+            }
+        ],
+        "type": "mover",
+        "name": "FavorNonNativeResiduePreCycle"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "weight"
+            },
+            {
+                "value": "",
+                "key": "scorefxns"
+            },
+            {
+                "value": "",
+                "key": "use_native"
+            },
+            {
+                "value": "",
+                "key": "use_fasta"
+            },
+            {
+                "value": "",
+                "key": "use_starting"
+            },
+            {
+                "value": "",
+                "key": "use_current"
+            },
+            {
+                "value": "",
+                "key": "pdbname"
+            },
+            {
+                "value": "",
+                "key": "pssm"
+            }
+        ],
+        "type": "mover",
+        "name": "FavorSequenceProfile"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "FinalMinimizer"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_lowres"
+            },
+            {
+                "value": "",
+                "key": "lowres_abinitio"
+            },
+            {
+                "value": "",
+                "key": "lowres_preoptimize"
+            },
+            {
+                "value": "",
+                "key": "min_only"
+            },
+            {
+                "value": "",
+                "key": "random_phi_psi_pert"
+            },
+            {
+                "value": "",
+                "key": "random_phi_psi_pert_size"
+            },
+            {
+                "value": "",
+                "key": "rb_trans_size"
+            },
+            {
+                "value": "",
+                "key": "rb_rot_size"
+            },
+            {
+                "value": "",
+                "key": "pep_refine"
+            },
+            {
+                "value": "",
+                "key": "peptide_loop_model"
+            },
+            {
+                "value": "",
+                "key": "smove_angle_range"
+            },
+            {
+                "value": "",
+                "key": "design_peptide"
+            },
+            {
+                "value": "",
+                "key": "backrub_opt"
+            },
+            {
+                "value": "",
+                "key": "boost_fa_atr"
+            },
+            {
+                "value": "",
+                "key": "ramp_fa_rep"
+            },
+            {
+                "value": "",
+                "key": "ramp_rama"
+            },
+            {
+                "value": "",
+                "key": "rep_ramp_cycles"
+            },
+            {
+                "value": "",
+                "key": "mcm_cycles"
+            },
+            {
+                "value": "",
+                "key": "extra_scoring"
+            },
+            {
+                "value": "",
+                "key": "use_cen_score"
+            },
+            {
+                "value": "",
+                "key": "min_receptor_bb"
+            },
+            {
+                "value": "",
+                "key": "ppk_only"
+            },
+            {
+                "value": "",
+                "key": "no_prepack1"
+            },
+            {
+                "value": "",
+                "key": "no_prepack2"
+            },
+            {
+                "value": "",
+                "key": "score_filter"
+            },
+            {
+                "value": "",
+                "key": "hb_filter"
+            },
+            {
+                "value": "",
+                "key": "hotspot_filter"
+            },
+            {
+                "value": "",
+                "key": "frag3_weight"
+            },
+            {
+                "value": "",
+                "key": "frag5_weight"
+            },
+            {
+                "value": "",
+                "key": "frag9_weight"
+            },
+            {
+                "value": "",
+                "key": "pSer2Asp_centroid"
+            },
+            {
+                "value": "",
+                "key": "pSer2Glu_centroid"
+            },
+            {
+                "value": "",
+                "key": "receptor_chain"
+            },
+            {
+                "value": "",
+                "key": "peptide_chain"
+            },
+            {
+                "value": "",
+                "key": "native"
+            }
+        ],
+        "type": "mover",
+        "name": "FlexPepDockingProtocol"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "sfxn_design"
+            },
+            {
+                "value": "",
+                "key": "sfxn_relax"
+            },
+            {
+                "value": "",
+                "key": "blueprint"
+            },
+            {
+                "value": "",
+                "key": "ncycles"
+            },
+            {
+                "value": "",
+                "key": "layer_mode"
+            },
+            {
+                "value": "",
+                "key": "use_original_seq"
+            },
+            {
+                "value": "",
+                "key": "filter_trial"
+            },
+            {
+                "value": "",
+                "key": "filter_type"
+            },
+            {
+                "value": "",
+                "key": "no_relax"
+            },
+            {
+                "value": "",
+                "key": "no_design"
+            },
+            {
+                "value": "",
+                "key": "clear_all_residues"
+            },
+            {
+                "value": "",
+                "key": "resfile"
+            },
+            {
+                "value": "",
+                "key": "constraints_NtoC"
+            },
+            {
+                "value": "",
+                "key": "constraints_sheet"
+            },
+            {
+                "value": "",
+                "key": "constraints_to_backbone"
+            },
+            {
+                "value": "",
+                "key": "movemap_from_blueprint"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "fast_relax"
+            },
+            {
+                "value": "",
+                "key": "limit_aroma_chi2"
+            }
+        ],
+        "type": "mover",
+        "name": "FlxbbDesign"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "loops"
+            }
+        ],
+        "type": "mover",
+        "name": "FoldTreeFromLoops"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "disulfides"
+            }
+        ],
+        "type": "mover",
+        "name": "ForceDisulfidesMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "trials"
+            },
+            {
+                "value": "",
+                "key": "temperature"
+            },
+            {
+                "value": "",
+                "key": "task_scaling"
+            },
+            {
+                "value": "",
+                "key": "adaptive_movers"
+            },
+            {
+                "value": "",
+                "key": "mover_name"
+            },
+            {
+                "value": "",
+                "key": "filter_name"
+            }
+        ],
+        "type": "mover",
+        "name": "GenericMonteCarlo"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "dof_id"
+            },
+            {
+                "value": "",
+                "key": "angle_min"
+            },
+            {
+                "value": "",
+                "key": "angle_max"
+            },
+            {
+                "value": "",
+                "key": "angle_step"
+            },
+            {
+                "value": "",
+                "key": "radial_disp_min"
+            },
+            {
+                "value": "",
+                "key": "radial_disp_max"
+            },
+            {
+                "value": "",
+                "key": "radial_disp_step"
+            },
+            {
+                "value": "",
+                "key": "select_max"
+            },
+            {
+                "value": "",
+                "key": "mover_name"
+            }
+        ],
+        "type": "mover",
+        "name": "GenericSymmetricSampler"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "filter"
+            }
+        ],
+        "type": "mover",
+        "name": "GreedyOptMutationMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "GridInitMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "GrowLigand"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "SeedFoldTree"
+            },
+            {
+                "value": "",
+                "key": "ddg_based"
+            },
+            {
+                "value": "",
+                "key": "extend_nterm"
+            },
+            {
+                "value": "",
+                "key": "extend_cterm"
+            },
+            {
+                "value": "",
+                "key": "all_ala_N"
+            },
+            {
+                "value": "",
+                "key": "all_ala_C"
+            },
+            {
+                "value": "",
+                "key": "nseq"
+            },
+            {
+                "value": "",
+                "key": "cseq"
+            },
+            {
+                "value": "",
+                "key": "output_centroid"
+            },
+            {
+                "value": "",
+                "key": "template_pdb"
+            },
+            {
+                "value": "",
+                "key": "sequence"
+            }
+        ],
+        "type": "mover",
+        "name": "GrowPeptides"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "HighResDocker"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "ddG_threshold"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "chain"
+            },
+            {
+                "value": "",
+                "key": "radius"
+            },
+            {
+                "value": "",
+                "key": "resnums"
+            }
+        ],
+        "type": "mover",
+        "name": "HotspotDisjointedFoldTree"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "nstubs"
+            },
+            {
+                "value": "",
+                "key": "target_residue_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "target_residue_res_num"
+            },
+            {
+                "value": "",
+                "key": "target_distance"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "in"
+            },
+            {
+                "value": "",
+                "key": "out"
+            },
+            {
+                "value": "",
+                "key": "hotspot_filter"
+            }
+        ],
+        "type": "mover",
+        "name": "HotspotHasher"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "config_file"
+            },
+            {
+                "value": "",
+                "key": "stage1_increase_cycles"
+            },
+            {
+                "value": "",
+                "key": "stage2_increase_cycles"
+            },
+            {
+                "value": "",
+                "key": "fa_cst_file"
+            },
+            {
+                "value": "",
+                "key": "batch"
+            },
+            {
+                "value": "",
+                "key": "starting_template"
+            },
+            {
+                "value": "",
+                "key": "stage1_1_cycles"
+            },
+            {
+                "value": "",
+                "key": "stage1_2_cycles"
+            },
+            {
+                "value": "",
+                "key": "stage1_3_cycles"
+            },
+            {
+                "value": "",
+                "key": "stage1_4_cycles"
+            },
+            {
+                "value": "",
+                "key": "stage1_probability"
+            },
+            {
+                "value": "",
+                "key": "add_hetatm"
+            },
+            {
+                "value": "",
+                "key": "hetatm_cst_weight"
+            },
+            {
+                "value": "",
+                "key": "domain_assembly"
+            },
+            {
+                "value": "",
+                "key": "realign_domains"
+            },
+            {
+                "value": "",
+                "key": "realign_domains_stage2"
+            },
+            {
+                "value": "",
+                "key": "add_non_init_chunks"
+            },
+            {
+                "value": "",
+                "key": "frag_1mer_insertion_weight"
+            },
+            {
+                "value": "",
+                "key": "small_frag_insertion_weight"
+            },
+            {
+                "value": "",
+                "key": "big_frag_insertion_weight"
+            },
+            {
+                "value": "",
+                "key": "frag_weight_aligned"
+            },
+            {
+                "value": "",
+                "key": "auto_frag_insertion_weight"
+            },
+            {
+                "value": "",
+                "key": "max_registry_shift"
+            },
+            {
+                "value": "",
+                "key": "no_global_frame"
+            },
+            {
+                "value": "",
+                "key": "linmin_only"
+            },
+            {
+                "value": "",
+                "key": "repeats"
+            },
+            {
+                "value": "",
+                "key": "cartfrag_overlap"
+            },
+            {
+                "value": "",
+                "key": "disulf_file"
+            },
+            {
+                "value": "",
+                "key": "stage1_scorefxn"
+            },
+            {
+                "value": "",
+                "key": "stage2_scorefxn"
+            },
+            {
+                "value": "",
+                "key": "fa_scorefxn"
+            },
+            {
+                "value": "",
+                "key": "domain_hcut"
+            },
+            {
+                "value": "",
+                "key": "domain_pcut"
+            },
+            {
+                "value": "",
+                "key": "domain_length"
+            }
+        ],
+        "type": "mover",
+        "name": "HybridizeProtocol"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "atom_pair_constraint_weight"
+            },
+            {
+                "value": "",
+                "key": "coordinate_constraint_weight"
+            },
+            {
+                "value": "",
+                "key": "fast"
+            },
+            {
+                "value": "",
+                "key": "chainbreaks"
+            },
+            {
+                "value": "",
+                "key": "report_CA_rmsd"
+            },
+            {
+                "value": "",
+                "key": "ignore_residues_in_csts"
+            },
+            {
+                "value": "",
+                "key": "impose_constraints"
+            },
+            {
+                "value": "",
+                "key": "constraints_only"
+            }
+        ],
+        "type": "mover",
+        "name": "IdealizeMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "true_mover_name"
+            }
+        ],
+        "type": "logic",
+        "name": "If"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "InsertZincCoordinationRemarkLines"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "pack_separated"
+            },
+            {
+                "value": "",
+                "key": "resfile"
+            },
+            {
+                "value": "",
+                "key": "packstat"
+            },
+            {
+                "value": "",
+                "key": "interface_sc"
+            },
+            {
+                "value": "",
+                "key": "pack_input"
+            },
+            {
+                "value": "",
+                "key": "tracer"
+            },
+            {
+                "value": "",
+                "key": "use_jobname"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "fixedchains"
+            }
+        ],
+        "type": "mover",
+        "name": "InterfaceAnalyzerMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "mover_name"
+            }
+        ],
+        "type": "mover",
+        "name": "InterfaceRecapitulation"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "InterfaceScoreCalculator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "max_repulsion_energy"
+            },
+            {
+                "value": "",
+                "key": "min_env_energy"
+            },
+            {
+                "value": "",
+                "key": "blueprint"
+            },
+            {
+                "value": "",
+                "key": "limit_aroma_chi2"
+            },
+            {
+                "value": "",
+                "key": "output_pdbs"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            }
+        ],
+        "type": "mover",
+        "name": "InterlockAroma"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "name"
+            }
+        ],
+        "type": "mover",
+        "name": "InverseRotamersCstGenerator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "name"
+            },
+            {
+                "value": "",
+                "key": "cstfile"
+            }
+        ],
+        "type": "mover",
+        "name": "InvrotTreeCstGenerator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "delta"
+            },
+            {
+                "value": "",
+                "key": "cycles"
+            },
+            {
+                "value": "",
+                "key": "maxcycles"
+            },
+            {
+                "value": "",
+                "key": "mover"
+            },
+            {
+                "value": "",
+                "key": "mover_name"
+            },
+            {
+                "value": "",
+                "key": "filter"
+            },
+            {
+                "value": "",
+                "key": "filter_name"
+            }
+        ],
+        "type": "mover",
+        "name": "IteratedConvergence"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "JumpRotamerSidechainMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LigandDesign"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "filename"
+            }
+        ],
+        "type": "mover",
+        "name": "LoadPDB"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoadVarSolDistSasaCalculatorMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoadZnCoordNumHbondCalculatorMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "loop_inserter"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopCreationMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "interface"
+            },
+            {
+                "value": "",
+                "key": "ch1"
+            },
+            {
+                "value": "",
+                "key": "ch2"
+            },
+            {
+                "value": "",
+                "key": "min_length"
+            },
+            {
+                "value": "",
+                "key": "max_length"
+            },
+            {
+                "value": "",
+                "key": "iface_cutoff"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopFinder"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "min_bbrms"
+            },
+            {
+                "value": "",
+                "key": "max_bbrms"
+            },
+            {
+                "value": "",
+                "key": "min_rms"
+            },
+            {
+                "value": "",
+                "key": "max_rms"
+            },
+            {
+                "value": "",
+                "key": "max_nstruct"
+            },
+            {
+                "value": "",
+                "key": "ideal"
+            },
+            {
+                "value": "",
+                "key": "max_radius"
+            },
+            {
+                "value": "",
+                "key": "max_struct"
+            },
+            {
+                "value": "",
+                "key": "max_struct_per_radius"
+            },
+            {
+                "value": "",
+                "key": "filter_by_phipsi"
+            },
+            {
+                "value": "",
+                "key": "sample_weight_const"
+            },
+            {
+                "value": "",
+                "key": "start_res_num"
+            },
+            {
+                "value": "",
+                "key": "start_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "stop_res_num"
+            },
+            {
+                "value": "",
+                "key": "stop_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "loop_sizes"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopHash"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "loop_start"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopLengthChange"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "protocol"
+            },
+            {
+                "value": "",
+                "key": "perturb"
+            },
+            {
+                "value": "",
+                "key": "refine"
+            },
+            {
+                "value": "",
+                "key": "intermedrelax"
+            },
+            {
+                "value": "",
+                "key": "remodel"
+            },
+            {
+                "value": "",
+                "key": "relax"
+            },
+            {
+                "value": "",
+                "key": "refine_score"
+            },
+            {
+                "value": "",
+                "key": "perturb_score"
+            },
+            {
+                "value": "",
+                "key": "loop_file"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopMoverFromCommandLine"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopMover_Perturb_CCD"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopMover_Perturb_KIC"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopMover_Perturb_QuickCCD"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopMover_Perturb_QuickCCD_Moves"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopMover_Refine_Backrub"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "set_fold_tree_from_loops"
+            },
+            {
+                "value": "",
+                "key": "loops"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "loops_from_cache"
+            },
+            {
+                "value": "",
+                "key": "outer_cycles"
+            },
+            {
+                "value": "",
+                "key": "max_inner_cycles"
+            },
+            {
+                "value": "",
+                "key": "temp_initial"
+            },
+            {
+                "value": "",
+                "key": "temp_final"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopMover_Refine_CCD"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopMover_Refine_KIC"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopMover_SlidingWindow"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "drift"
+            },
+            {
+                "value": "",
+                "key": "mover_name"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopOver"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "LoopRefineInnerCycleContainer"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "cmd_line_csts"
+            },
+            {
+                "value": "",
+                "key": "copy_sidechains"
+            },
+            {
+                "value": "",
+                "key": "rebuild_filter"
+            },
+            {
+                "value": "",
+                "key": "compute_rmsd"
+            },
+            {
+                "value": "",
+                "key": "n_rebuild_tries"
+            },
+            {
+                "value": "",
+                "key": "remodel"
+            },
+            {
+                "value": "",
+                "key": "intermedrelax"
+            },
+            {
+                "value": "",
+                "key": "refine"
+            },
+            {
+                "value": "",
+                "key": "relax"
+            },
+            {
+                "value": "",
+                "key": "read_fragments"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "loops"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopRelaxMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "protocol"
+            },
+            {
+                "value": "",
+                "key": "perturb"
+            },
+            {
+                "value": "",
+                "key": "refine"
+            },
+            {
+                "value": "",
+                "key": "refine_score"
+            },
+            {
+                "value": "",
+                "key": "perturb_score"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "auto_loops"
+            },
+            {
+                "value": "",
+                "key": "design"
+            },
+            {
+                "value": "",
+                "key": "hurry"
+            },
+            {
+                "value": "",
+                "key": "cycles"
+            },
+            {
+                "value": "",
+                "key": "loop_start_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "loop_start_res_num"
+            }
+        ],
+        "type": "mover",
+        "name": "LoopRemodel"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "aa"
+            },
+            {
+                "value": "",
+                "key": "keep_pro"
+            },
+            {
+                "value": "",
+                "key": "keep_gly"
+            },
+            {
+                "value": "",
+                "key": "keep_disulufide_cys"
+            }
+        ],
+        "type": "mover",
+        "name": "MakePolyX"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "clash_check"
+            },
+            {
+                "value": "",
+                "key": "file_name_prefix"
+            }
+        ],
+        "type": "mover",
+        "name": "MapHotspot"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "reference"
+            }
+        ],
+        "type": "mover",
+        "name": "MatchResiduesMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "incorporate_matches_into_pose"
+            }
+        ],
+        "type": "mover",
+        "name": "MatcherMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "span_file"
+            }
+        ],
+        "type": "mover",
+        "name": "MembraneTopology"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "stride"
+            },
+            {
+                "value": "",
+                "key": "cumulate_jobs"
+            },
+            {
+                "value": "",
+                "key": "cumulate_replicas"
+            },
+            {
+                "value": "",
+                "key": "prepend_output_name"
+            },
+            {
+                "value": "",
+                "key": "filename"
+            }
+        ],
+        "type": "mover",
+        "name": "MetricRecorder"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "trials"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "temperature"
+            }
+        ],
+        "type": "mover",
+        "name": "MetropolisHastingsMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "tolerance"
+            },
+            {
+                "value": "",
+                "key": "cartesian"
+            },
+            {
+                "value": "",
+                "key": "chi"
+            }
+        ],
+        "type": "mover",
+        "name": "MinMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "MinPackMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "MinimizeBackbone"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "add_type"
+            },
+            {
+                "value": "",
+                "key": "remove_type"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "ModifyVariantType"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "tempering"
+            }
+        ],
+        "type": "mover",
+        "name": "ModulatedMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "MC_name"
+            }
+        ],
+        "type": "mover",
+        "name": "MonteCarloRecover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "MC_name"
+            }
+        ],
+        "type": "mover",
+        "name": "MonteCarloTest"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "MotifDnaPacker"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "target"
+            }
+        ],
+        "type": "mover",
+        "name": "MutateResidue"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "name"
+            },
+            {
+                "value": "",
+                "key": "weight"
+            },
+            {
+                "value": "",
+                "key": "dist"
+            }
+        ],
+        "type": "mover",
+        "name": "NtoCCstGenerator"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "PDBReloadMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "stride"
+            },
+            {
+                "value": "",
+                "key": "filename"
+            },
+            {
+                "value": "",
+                "key": "cumulate_jobs"
+            },
+            {
+                "value": "",
+                "key": "cumulate_replicas"
+            }
+        ],
+        "type": "mover",
+        "name": "PDBTrajectoryRecorder"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "nloop"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "PackRotamersMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_repack"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_repack_greedy"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_minimize"
+            },
+            {
+                "value": "",
+                "key": "target_residues"
+            },
+            {
+                "value": "",
+                "key": "target_cstids"
+            },
+            {
+                "value": "",
+                "key": "distance_threshold"
+            },
+            {
+                "value": "",
+                "key": "choose_best_n"
+            }
+        ],
+        "type": "mover",
+        "name": "PackRotamersMoverPartGreedy"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "relax_mover"
+            }
+        ],
+        "type": "mover",
+        "name": "ParetoOptMutationMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "mode"
+            },
+            {
+                "value": "",
+                "key": "report_call_order"
+            }
+        ],
+        "type": "mover",
+        "name": "ParsedProtocol"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "magnitude"
+            },
+            {
+                "value": "",
+                "key": "gaussian"
+            }
+        ],
+        "type": "mover",
+        "name": "PerturbChiSidechainMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "PerturbRotamerSidechainMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "host_chain"
+            },
+            {
+                "value": "",
+                "key": "loop_begin"
+            }
+        ],
+        "type": "mover",
+        "name": "PlaceOnLoop"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain_to_design"
+            },
+            {
+                "value": "",
+                "key": "max_cb_dist"
+            },
+            {
+                "value": "",
+                "key": "cb_force"
+            }
+        ],
+        "type": "mover",
+        "name": "PlaceSimultaneously"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "name"
+            },
+            {
+                "value": "",
+                "key": "residue_numbers_setter"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "chain_to_design"
+            },
+            {
+                "value": "",
+                "key": "score_threshold"
+            },
+            {
+                "value": "",
+                "key": "hurry"
+            },
+            {
+                "value": "",
+                "key": "triage_positions"
+            },
+            {
+                "value": "",
+                "key": "stub_energy_threshold"
+            },
+            {
+                "value": "",
+                "key": "stubfile"
+            }
+        ],
+        "type": "mover",
+        "name": "PlaceStub"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "residue_name"
+            }
+        ],
+        "type": "mover",
+        "name": "PlaceSurfaceProbe"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "host_chain"
+            },
+            {
+                "value": "",
+                "key": "cb_force"
+            },
+            {
+                "value": "",
+                "key": "optimize_foldtree"
+            },
+            {
+                "value": "",
+                "key": "minimize_rb"
+            }
+        ],
+        "type": "mover",
+        "name": "PlacementMinimization"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "trans_magnitude"
+            },
+            {
+                "value": "",
+                "key": "rot_magnitude"
+            },
+            {
+                "value": "",
+                "key": "dock_trials"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "PredesignPerturbMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "jump_number"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "min_bb"
+            }
+        ],
+        "type": "mover",
+        "name": "Prepack"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "generations"
+            },
+            {
+                "value": "",
+                "key": "pop_size"
+            },
+            {
+                "value": "",
+                "key": "num_packs"
+            },
+            {
+                "value": "",
+                "key": "pop_from_ss"
+            },
+            {
+                "value": "",
+                "key": "numresults"
+            },
+            {
+                "value": "",
+                "key": "fraction_by_recombination"
+            },
+            {
+                "value": "",
+                "key": "mutate_rate"
+            },
+            {
+                "value": "",
+                "key": "boltz_temp"
+            },
+            {
+                "value": "",
+                "key": "anchor_offset"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_prefix"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_interval"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_gz"
+            },
+            {
+                "value": "",
+                "key": "checkpoint_rename"
+            },
+            {
+                "value": "",
+                "key": "output_fname_prefix"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "rb_jump"
+            },
+            {
+                "value": "",
+                "key": "unfolded"
+            },
+            {
+                "value": "",
+                "key": "unbound"
+            },
+            {
+                "value": "",
+                "key": "input_is_positive"
+            },
+            {
+                "value": "",
+                "key": "unbound_for_sequence_profile"
+            },
+            {
+                "value": "",
+                "key": "profile_bump_threshold"
+            },
+            {
+                "value": "",
+                "key": "compare_to_ground_state"
+            }
+        ],
+        "type": "mover",
+        "name": "ProteinInterfaceMS"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "outer_cycles"
+            }
+        ],
+        "type": "mover",
+        "name": "RampingMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "RandomConformers"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "movers"
+            }
+        ],
+        "type": "mover",
+        "name": "RandomMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "cache_task"
+            }
+        ],
+        "type": "mover",
+        "name": "RandomMutation"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "loops"
+            }
+        ],
+        "type": "mover",
+        "name": "RemodelLoopMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "blueprint"
+            }
+        ],
+        "type": "mover",
+        "name": "RemodelMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "generator"
+            }
+        ],
+        "type": "mover",
+        "name": "RemoveCsts"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "grid_name"
+            }
+        ],
+        "type": "mover",
+        "name": "RenderGridsToKinemage"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_repack"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_minimize"
+            },
+            {
+                "value": "",
+                "key": "repack_partner1"
+            },
+            {
+                "value": "",
+                "key": "repack_partner2"
+            },
+            {
+                "value": "",
+                "key": "repack"
+            },
+            {
+                "value": "",
+                "key": "design_partner1"
+            },
+            {
+                "value": "",
+                "key": "design_partner2"
+            },
+            {
+                "value": "",
+                "key": "design"
+            },
+            {
+                "value": "",
+                "key": "optimize_fold_tree"
+            },
+            {
+                "value": "",
+                "key": "minimize_rb"
+            },
+            {
+                "value": "",
+                "key": "minimize_bb"
+            },
+            {
+                "value": "",
+                "key": "minimize_bb_ch1"
+            },
+            {
+                "value": "",
+                "key": "minimize_bb_ch2"
+            },
+            {
+                "value": "",
+                "key": "minimize_sc"
+            },
+            {
+                "value": "",
+                "key": "interface_cutoff_distance"
+            },
+            {
+                "value": "",
+                "key": "repack_non_ala"
+            },
+            {
+                "value": "",
+                "key": "symmetry"
+            },
+            {
+                "value": "",
+                "key": "automatic_repacking_definition"
+            }
+        ],
+        "type": "mover",
+        "name": "RepackMinimize"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "RepackTrial"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "name"
+            },
+            {
+                "value": "",
+                "key": "lstart"
+            }
+        ],
+        "type": "mover",
+        "name": "ResidueVicinityCstCreator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "rot_mag"
+            },
+            {
+                "value": "",
+                "key": "trans_mag"
+            }
+        ],
+        "type": "mover",
+        "name": "RigidBodyPerturbNoCenterMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "start_res"
+            },
+            {
+                "value": "",
+                "key": "stop_res"
+            },
+            {
+                "value": "",
+                "key": "min_angle"
+            }
+        ],
+        "type": "mover",
+        "name": "RollMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "protocol"
+            },
+            {
+                "value": "",
+                "key": "mover"
+            },
+            {
+                "value": "",
+                "key": "mover_name"
+            },
+            {
+                "value": "",
+                "key": "comparer"
+            },
+            {
+                "value": "",
+                "key": "reporter"
+            }
+        ],
+        "type": "mover",
+        "name": "RotamerRecoveryMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "nonideal"
+            },
+            {
+                "value": "",
+                "key": "cartesian"
+            }
+        ],
+        "type": "mover",
+        "name": "RotamerTrialsMinMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "show_packer_task"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "RotamerTrialsMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "Rotate"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "Rotates"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "SaneMinMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "allsc"
+            }
+        ],
+        "type": "mover",
+        "name": "SaveAndRetrieveSidechains"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "reference_name"
+            }
+        ],
+        "type": "mover",
+        "name": "SavePoseMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            }
+        ],
+        "type": "mover",
+        "name": "ScoreMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "ddG_based"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "template_pdb"
+            }
+        ],
+        "type": "mover",
+        "name": "SeedFoldTree"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chi_chain2"
+            },
+            {
+                "value": "",
+                "key": "chi_chain1"
+            },
+            {
+                "value": "",
+                "key": "interface_chi1"
+            },
+            {
+                "value": "",
+                "key": "interface_chi2"
+            },
+            {
+                "value": "",
+                "key": "interface_distance_cutoff"
+            },
+            {
+                "value": "",
+                "key": "repack_target"
+            },
+            {
+                "value": "",
+                "key": "repack_foldpose"
+            },
+            {
+                "value": "",
+                "key": "design_target"
+            },
+            {
+                "value": "",
+                "key": "design_foldpose"
+            },
+            {
+                "value": "",
+                "key": "allow_all_aas"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_repack"
+            },
+            {
+                "value": "",
+                "key": "scorefxn_minimize"
+            },
+            {
+                "value": "",
+                "key": "design"
+            },
+            {
+                "value": "",
+                "key": "allow_design"
+            },
+            {
+                "value": "",
+                "key": "norepack_res"
+            },
+            {
+                "value": "",
+                "key": "packtask"
+            }
+        ],
+        "type": "mover",
+        "name": "SeedSetupMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "fa_scorefxn"
+            },
+            {
+                "value": "",
+                "key": "frag_big"
+            },
+            {
+                "value": "",
+                "key": "frag_smal"
+            },
+            {
+                "value": "",
+                "key": "nfrags"
+            },
+            {
+                "value": "",
+                "key": "cartfrag_overlap"
+            },
+            {
+                "value": "",
+                "key": "use_seq"
+            },
+            {
+                "value": "",
+                "key": "rms_frags"
+            },
+            {
+                "value": "",
+                "key": "auto_mm"
+            },
+            {
+                "value": "",
+                "key": "frag_tries"
+            },
+            {
+                "value": "",
+                "key": "mc_cycles"
+            },
+            {
+                "value": "",
+                "key": "temp"
+            },
+            {
+                "value": "",
+                "key": "use_frags"
+            },
+            {
+                "value": "",
+                "key": "min_cycles"
+            },
+            {
+                "value": "",
+                "key": "all_movable"
+            },
+            {
+                "value": "",
+                "key": "extra_min"
+            }
+        ],
+        "type": "mover",
+        "name": "SegmentHybridizer"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "SeparateDnaFromNonDna"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "file"
+            }
+        ],
+        "type": "mover",
+        "name": "SetAACompositionPotential"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "angle"
+            }
+        ],
+        "type": "mover",
+        "name": "SetChiMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "blueprint"
+            }
+        ],
+        "type": "mover",
+        "name": "SetSecStructEnergies"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "filter"
+            }
+        ],
+        "type": "mover",
+        "name": "SetTemperatureFactor"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "angle"
+            }
+        ],
+        "type": "mover",
+        "name": "SetTorsion"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "realign"
+            }
+        ],
+        "type": "mover",
+        "name": "SetupForDensityScoring"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "definition"
+            },
+            {
+                "value": "",
+                "key": "resource_description"
+            }
+        ],
+        "type": "mover",
+        "name": "SetupForSymmetry"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "redesign_chain"
+            },
+            {
+                "value": "",
+                "key": "cb_force"
+            },
+            {
+                "value": "",
+                "key": "worst_allowed_stub_bonus"
+            },
+            {
+                "value": "",
+                "key": "apply_stub_self_energies"
+            },
+            {
+                "value": "",
+                "key": "apply_stub_bump_cutoff"
+            },
+            {
+                "value": "",
+                "key": "pick_best_energy_constraint"
+            },
+            {
+                "value": "",
+                "key": "backbone_stub_constraint_weight"
+            },
+            {
+                "value": "",
+                "key": "colonyE"
+            },
+            {
+                "value": "",
+                "key": "stubfile"
+            }
+        ],
+        "type": "mover",
+        "name": "SetupHotspotConstraintsMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "redesign_chain"
+            },
+            {
+                "value": "",
+                "key": "resfile"
+            },
+            {
+                "value": "",
+                "key": "cb_force"
+            },
+            {
+                "value": "",
+                "key": "worst_allowed_stub_bonus"
+            },
+            {
+                "value": "",
+                "key": "apply_stub_self_energies"
+            },
+            {
+                "value": "",
+                "key": "apply_stub_bump_cutoff"
+            },
+            {
+                "value": "",
+                "key": "pick_best_energy_constraint"
+            },
+            {
+                "value": "",
+                "key": "colonyE"
+            },
+            {
+                "value": "",
+                "key": "stubfile"
+            }
+        ],
+        "type": "mover",
+        "name": "SetupHotspotConstraintsLoopsMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "bb"
+            },
+            {
+                "value": "",
+                "key": "chi"
+            },
+            {
+                "value": "",
+                "key": "wt"
+            },
+            {
+                "value": "",
+                "key": "limit"
+            },
+            {
+                "value": "",
+                "key": "symmetric_sequence"
+            },
+            {
+                "value": "",
+                "key": "sd"
+            },
+            {
+                "value": "",
+                "key": "distance_pair"
+            }
+        ],
+        "type": "mover",
+        "name": "SetupNCS"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "apbs_path"
+            }
+        ],
+        "type": "mover",
+        "name": "SetupPoissonBoltzmannPotential"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "temperature"
+            },
+            {
+                "value": "",
+                "key": "nmoves"
+            },
+            {
+                "value": "",
+                "key": "angle_max"
+            },
+            {
+                "value": "",
+                "key": "preserve_detailed_balance"
+            }
+        ],
+        "type": "mover",
+        "name": "Shear"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "ShearMinCCDTrial"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "name"
+            },
+            {
+                "value": "",
+                "key": "blueprint"
+            }
+        ],
+        "type": "mover",
+        "name": "SheetCstGenerator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res_num"
+            }
+        ],
+        "type": "mover",
+        "name": "ShoveResidueMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "preserve_detailed_balance"
+            },
+            {
+                "value": "",
+                "key": "prob_uniform"
+            },
+            {
+                "value": "",
+                "key": "prob_withinrot"
+            },
+            {
+                "value": "",
+                "key": "prob_random_pert_current"
+            },
+            {
+                "value": "",
+                "key": "change_chi_without_replacing_residue"
+            }
+        ],
+        "type": "mover",
+        "name": "SidechainMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "ntrials"
+            },
+            {
+                "value": "",
+                "key": "preserve_detailed_balance"
+            },
+            {
+                "value": "",
+                "key": "temperature"
+            },
+            {
+                "value": "",
+                "key": "inherit_scorefxn_temperature"
+            },
+            {
+                "value": "",
+                "key": "prob_uniform"
+            },
+            {
+                "value": "",
+                "key": "prob_withinrot"
+            },
+            {
+                "value": "",
+                "key": "prob_random_pert_current"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            }
+        ],
+        "type": "mover",
+        "name": "SidechainMCMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "stride"
+            },
+            {
+                "value": "",
+                "key": "filename"
+            },
+            {
+                "value": "",
+                "key": "cumulate_jobs"
+            },
+            {
+                "value": "",
+                "key": "cumulate_replicas"
+            },
+            {
+                "value": "",
+                "key": "score_stride"
+            }
+        ],
+        "type": "mover",
+        "name": "SilentTrajectoryRecorder"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "temp_file"
+            },
+            {
+                "value": "",
+                "key": "temp_low"
+            },
+            {
+                "value": "",
+                "key": "temp_high"
+            },
+            {
+                "value": "",
+                "key": "temp_levels"
+            },
+            {
+                "value": "",
+                "key": "temp_interpolation"
+            },
+            {
+                "value": "",
+                "key": "temp_stride"
+            },
+            {
+                "value": "",
+                "key": "trust_crurrent_temp"
+            },
+            {
+                "value": "",
+                "key": "stats_line_output"
+            },
+            {
+                "value": "",
+                "key": "stats_silent_output"
+            },
+            {
+                "value": "",
+                "key": "stats_file"
+            },
+            {
+                "value": "",
+                "key": "score_offset"
+            },
+            {
+                "value": "",
+                "key": "temperature_jumps"
+            },
+            {
+                "value": "",
+                "key": "reweight_stride"
+            }
+        ],
+        "type": "mover",
+        "name": "SimulatedTempering"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "fragments"
+            }
+        ],
+        "type": "mover",
+        "name": "SingleFragmentMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "SlideTogether"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "temperature"
+            },
+            {
+                "value": "",
+                "key": "nmoves"
+            },
+            {
+                "value": "",
+                "key": "angle_max"
+            },
+            {
+                "value": "",
+                "key": "preserve_detailed_balance"
+            }
+        ],
+        "type": "mover",
+        "name": "Small"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "SmallMinCCDTrial"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "jump_num"
+            }
+        ],
+        "type": "mover",
+        "name": "SpinMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "from_res"
+            },
+            {
+                "value": "",
+                "key": "to_res"
+            },
+            {
+                "value": "",
+                "key": "torsion_database"
+            }
+        ],
+        "type": "mover",
+        "name": "Splice"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res_num"
+            }
+        ],
+        "type": "mover",
+        "name": "StapleMover"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "StartFrom"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task1"
+            }
+        ],
+        "type": "mover",
+        "name": "StoreCombinedStoredTasksMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "task_name"
+            }
+        ],
+        "type": "mover",
+        "name": "StoreTaskMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "xml_fname"
+            }
+        ],
+        "type": "mover",
+        "name": "Subroutine"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "ref_start"
+            },
+            {
+                "value": "",
+                "key": "ref_end"
+            },
+            {
+                "value": "",
+                "key": "target_start"
+            },
+            {
+                "value": "",
+                "key": "target_end"
+            },
+            {
+                "value": "",
+                "key": "ref_pose"
+            }
+        ],
+        "type": "mover",
+        "name": "SuperimposeMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "copy_sidechains"
+            },
+            {
+                "value": "",
+                "key": "swap_segment"
+            },
+            {
+                "value": "",
+                "key": "swap_chain"
+            },
+            {
+                "value": "",
+                "key": "from_chain"
+            },
+            {
+                "value": "",
+                "key": "to_chain"
+            },
+            {
+                "value": "",
+                "key": "seeds_pdb"
+            },
+            {
+                "value": "",
+                "key": "template_pdb"
+            }
+        ],
+        "type": "mover",
+        "name": "SwapSegment"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain_order"
+            }
+        ],
+        "type": "mover",
+        "name": "SwitchChainOrder"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "set"
+            }
+        ],
+        "type": "mover",
+        "name": "SwitchResidueTypeSetMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "axis"
+            },
+            {
+                "value": "",
+                "key": "flip_about_axis"
+            },
+            {
+                "value": "",
+                "key": "align_axis"
+            },
+            {
+                "value": "",
+                "key": "auto_range"
+            },
+            {
+                "value": "",
+                "key": "symm_file"
+            }
+        ],
+        "type": "mover",
+        "name": "SymDofMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "tolerance"
+            },
+            {
+                "value": "",
+                "key": "cartesian"
+            },
+            {
+                "value": "",
+                "key": "chi"
+            }
+        ],
+        "type": "mover",
+        "name": "SymMinMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "nloop"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "SymPackRotamersMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "show_packer_task"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "SymRotamerTrialsMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "symm_file"
+            }
+        ],
+        "type": "mover",
+        "name": "Symmetrizer"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "cst_type"
+            }
+        ],
+        "type": "mover",
+        "name": "TaskAwareCsts"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chi"
+            },
+            {
+                "value": "",
+                "key": "bb"
+            },
+            {
+                "value": "",
+                "key": "rb"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "tolerance"
+            }
+        ],
+        "type": "mover",
+        "name": "TaskAwareMinMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "chi"
+            },
+            {
+                "value": "",
+                "key": "bb"
+            },
+            {
+                "value": "",
+                "key": "rb"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "tolerance"
+            }
+        ],
+        "type": "mover",
+        "name": "TaskAwareSymMinMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "trials"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "temperature"
+            }
+        ],
+        "type": "mover",
+        "name": "TempWeightedMetropolisHastingsMover"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "rot_mag"
+            },
+            {
+                "value": "",
+                "key": "trans_mag"
+            }
+        ],
+        "type": "mover",
+        "name": "ThermodynamicRigidBodyPerturbNoCenter"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "Transform"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "Translate"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "file"
+            }
+        ],
+        "type": "mover",
+        "name": "TrialCounterObserver"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res_num"
+            }
+        ],
+        "type": "mover",
+        "name": "TryRotamers"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "partner1"
+            },
+            {
+                "value": "",
+                "key": "partner2"
+            },
+            {
+                "value": "",
+                "key": "interface_cutoff_distance"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "mover",
+        "name": "build_Ala_pose"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "symmetry"
+            },
+            {
+                "value": "",
+                "key": "per_residue_ddg"
+            },
+            {
+                "value": "",
+                "key": "repack"
+            },
+            {
+                "value": "",
+                "key": "repeats"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "repack_bound"
+            },
+            {
+                "value": "",
+                "key": "relax_bound"
+            },
+            {
+                "value": "",
+                "key": "chains"
+            },
+            {
+                "value": "",
+                "key": "chain_num"
+            },
+            {
+                "value": "",
+                "key": "chain_name"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            }
+        ],
+        "type": "mover",
+        "name": "ddG"
+    },
+    {
+        "attributes": [],
+        "type": "mover",
+        "name": "load_unbound_rot"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "file_name"
+            },
+            {
+                "value": "",
+                "key": "weight"
+            }
+        ],
+        "type": "mover",
+        "name": "profile"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "interface_distance_cutoff"
+            },
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "partner1"
+            },
+            {
+                "value": "",
+                "key": "partner2"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "repeats"
+            },
+            {
+                "value": "",
+                "key": "symmetry"
+            },
+            {
+                "value": "",
+                "key": "repack"
+            }
+        ],
+        "type": "filter",
+        "name": "AlaScan"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "AtomCount"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "distance"
+            },
+            {
+                "value": "",
+                "key": "range1"
+            },
+            {
+                "value": "",
+                "key": "residue1"
+            },
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "AtomicContact"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "distance"
+            },
+            {
+                "value": "",
+                "key": "partition"
+            },
+            {
+                "value": "",
+                "key": "normalize_by_sasa"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "AtomicContactCount"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "distance"
+            },
+            {
+                "value": "",
+                "key": "residue1"
+            }
+        ],
+        "type": "filter",
+        "name": "AtomicDistance"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "distance_threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "AverageDegree"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "score_type"
+            },
+            {
+                "value": "",
+                "key": "cutoff"
+            },
+            {
+                "value": "",
+                "key": "bb_bb"
+            }
+        ],
+        "type": "filter",
+        "name": "AverageInterfaceEnergy"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "relax_mover"
+            }
+        ],
+        "type": "filter",
+        "name": "BindingStrain"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "anchors"
+            },
+            {
+                "value": "",
+                "key": "negative_filters"
+            }
+        ],
+        "type": "filter",
+        "name": "Boltzmann"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "jump_number"
+            },
+            {
+                "value": "",
+                "key": "cutoff"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "filter",
+        "name": "BuriedUnsatHbonds"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "equation"
+            }
+        ],
+        "type": "filter",
+        "name": "CalculatorFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "filename"
+            },
+            {
+                "value": "",
+                "key": "min_aa_probability"
+            },
+            {
+                "value": "",
+                "key": "probability_larger_than_current"
+            },
+            {
+                "value": "",
+                "key": "ignore_pose_profile_length_mismatch"
+            },
+            {
+                "value": "",
+                "key": "ddG_filename"
+            },
+            {
+                "value": "",
+                "key": "conservation_cutoff"
+            },
+            {
+                "value": "",
+                "key": "ddG_cutoff"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            },
+            {
+                "value": "",
+                "key": "max_conserved_pos_mutations"
+            }
+        ],
+        "type": "filter",
+        "name": "ConservedPosMutationFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "ContingentFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "CoreDunbrack"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "lower_threshold"
+            },
+            {
+                "value": "",
+                "key": "upper_threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "DSasa"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "repeats"
+            },
+            {
+                "value": "",
+                "key": "repack"
+            },
+            {
+                "value": "",
+                "key": "symmetry"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "repack_bound"
+            },
+            {
+                "value": "",
+                "key": "relax_bound"
+            },
+            {
+                "value": "",
+                "key": "relax_mover"
+            },
+            {
+                "value": "",
+                "key": "chain_num"
+            }
+        ],
+        "type": "filter",
+        "name": "Ddg"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "range"
+            },
+            {
+                "value": "",
+                "key": "lower"
+            },
+            {
+                "value": "",
+                "key": "upper"
+            },
+            {
+                "value": "",
+                "key": "filter"
+            }
+        ],
+        "type": "filter",
+        "name": "Delta"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "lower_cutoff"
+            },
+            {
+                "value": "",
+                "key": "upper_cutoff"
+            },
+            {
+                "value": "",
+                "key": "packable"
+            },
+            {
+                "value": "",
+                "key": "designable"
+            }
+        ],
+        "type": "filter",
+        "name": "DesignableResidues"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "res1_res_num"
+            },
+            {
+                "value": "",
+                "key": "res2_res_num"
+            },
+            {
+                "value": "",
+                "key": "res1_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res2_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "atomname1"
+            },
+            {
+                "value": "",
+                "key": "atomname2"
+            },
+            {
+                "value": "",
+                "key": "sample_type"
+            }
+        ],
+        "type": "filter",
+        "name": "DiffAtomBurial"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "targets"
+            }
+        ],
+        "type": "filter",
+        "name": "DisulfideFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "score_type"
+            },
+            {
+                "value": "",
+                "key": "energy_cutoff"
+            },
+            {
+                "value": "",
+                "key": "whole_interface"
+            },
+            {
+                "value": "",
+                "key": "jump_number"
+            },
+            {
+                "value": "",
+                "key": "interface_distance_cutoff"
+            },
+            {
+                "value": "",
+                "key": "bb_bb"
+            },
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res_num"
+            }
+        ],
+        "type": "filter",
+        "name": "EnergyPerResidue"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res_num"
+            },
+            {
+                "value": "",
+                "key": "cstid"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "score_type"
+            },
+            {
+                "value": "",
+                "key": "energy_cutoff"
+            },
+            {
+                "value": "",
+                "key": "whole_pose"
+            }
+        ],
+        "type": "filter",
+        "name": "EnzScore"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "requirements"
+            }
+        ],
+        "type": "filter",
+        "name": "EnzdesScorefileFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "seconds"
+            }
+        ],
+        "type": "filter",
+        "name": "Expiry"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "FalseFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "filename"
+            }
+        ],
+        "type": "filter",
+        "name": "FileExist"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "filenames"
+            }
+        ],
+        "type": "filter",
+        "name": "FileRemove"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "filter"
+            },
+            {
+                "value": "",
+                "key": "delta_filters"
+            }
+        ],
+        "type": "filter",
+        "name": "FilterScan"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "rmsd_cutoff"
+            },
+            {
+                "value": "",
+                "key": "ratio_cutoff"
+            },
+            {
+                "value": "",
+                "key": "begin"
+            },
+            {
+                "value": "",
+                "key": "end"
+            },
+            {
+                "value": "",
+                "key": "frag"
+            }
+        ],
+        "type": "filter",
+        "name": "FragQual"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_name"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            },
+            {
+                "value": "",
+                "key": "axis"
+            },
+            {
+                "value": "",
+                "key": "get_disp"
+            },
+            {
+                "value": "",
+                "key": "get_angle"
+            },
+            {
+                "value": "",
+                "key": "init_angle"
+            },
+            {
+                "value": "",
+                "key": "init_disp"
+            },
+            {
+                "value": "",
+                "key": "get_init_value"
+            }
+        ],
+        "type": "filter",
+        "name": "GetRBDOFValues"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "HBondAcceptor"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "HBondDonor"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "hsstriplets"
+            }
+        ],
+        "type": "filter",
+        "name": "HSSTriplet"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "partners"
+            }
+        ],
+        "type": "filter",
+        "name": "HbondsToResidue"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "HeavyAtom"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "bend"
+            },
+            {
+                "value": "",
+                "key": "blueprint"
+            }
+        ],
+        "type": "filter",
+        "name": "HelixKink"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "cmd"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "Holes"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "lower_threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "IfThenFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "sasa_filter"
+            }
+        ],
+        "type": "filter",
+        "name": "InterfaceBindingEnergyDensityFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            }
+        ],
+        "type": "filter",
+        "name": "InterfaceHoles"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "distance_cutoff"
+            },
+            {
+                "value": "",
+                "key": "contact_dist"
+            },
+            {
+                "value": "",
+                "key": "lower_cutoff"
+            },
+            {
+                "value": "",
+                "key": "upper_cutoff"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            }
+        ],
+        "type": "filter",
+        "name": "InterfacePacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "blueprint"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "dist"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            }
+        ],
+        "type": "filter",
+        "name": "InterlockingAroma"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "lig_id"
+            },
+            {
+                "value": "",
+                "key": "distance"
+            },
+            {
+                "value": "",
+                "key": "neighbors"
+            }
+        ],
+        "type": "filter",
+        "name": "LigBurial"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "energy_cutoff"
+            },
+            {
+                "value": "",
+                "key": "include_cstE"
+            },
+            {
+                "value": "",
+                "key": "jump_number"
+            },
+            {
+                "value": "",
+                "key": "interface_distance_cutoff"
+            }
+        ],
+        "type": "filter",
+        "name": "LigInterfaceEnergy"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "MolarMass"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "MolecularMass"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "mover"
+            },
+            {
+                "value": "",
+                "key": "mover_name"
+            },
+            {
+                "value": "",
+                "key": "filter"
+            },
+            {
+                "value": "",
+                "key": "filter_name"
+            }
+        ],
+        "type": "filter",
+        "name": "MoveBeforeFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "rate_threshold"
+            },
+            {
+                "value": "",
+                "key": "mutation_threshold"
+            },
+            {
+                "value": "",
+                "key": "report_mutations"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            },
+            {
+                "value": "",
+                "key": "packable"
+            },
+            {
+                "value": "",
+                "key": "write2pdb"
+            }
+        ],
+        "type": "filter",
+        "name": "Mutations"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "NMerPSSMEnergy"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "value"
+            }
+        ],
+        "type": "filter",
+        "name": "Ncontacts"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res_num"
+            }
+        ],
+        "type": "filter",
+        "name": "NeighborType"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "distance_threshold"
+            },
+            {
+                "value": "",
+                "key": "neighbor_cutoff"
+            },
+            {
+                "value": "",
+                "key": "bound"
+            },
+            {
+                "value": "",
+                "key": "resnum"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            }
+        ],
+        "type": "filter",
+        "name": "NonSequentialNeighbors"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "distance_threshold"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            },
+            {
+                "value": "",
+                "key": "write2pdb"
+            },
+            {
+                "value": "",
+                "key": "multicomp"
+            }
+        ],
+        "type": "filter",
+        "name": "OligomericAverageDegree"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "operation"
+            }
+        ],
+        "type": "filter",
+        "name": "Operator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "chain"
+            },
+            {
+                "value": "",
+                "key": "repeats"
+            }
+        ],
+        "type": "filter",
+        "name": "PackStat"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "PoseInfo"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "filter"
+            }
+        ],
+        "type": "filter",
+        "name": "Range"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "use_native_pdb"
+            },
+            {
+                "value": "",
+                "key": "pdb_name"
+            },
+            {
+                "value": "",
+                "key": "symmetry_definition"
+            },
+            {
+                "value": "",
+                "key": "relax_mover"
+            }
+        ],
+        "type": "filter",
+        "name": "RelativePose"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "source_pose"
+            }
+        ],
+        "type": "filter",
+        "name": "RelativeSegment"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "energy_threshold"
+            },
+            {
+                "value": "",
+                "key": "rms_threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "RepackWithoutLigand"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "filter_name"
+            }
+        ],
+        "type": "filter",
+        "name": "ReplicateFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "name"
+            }
+        ],
+        "type": "filter",
+        "name": "Report"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "residues"
+            },
+            {
+                "value": "",
+                "key": "jump_number"
+            }
+        ],
+        "type": "filter",
+        "name": "ResInInterface"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "res_num"
+            },
+            {
+                "value": "",
+                "key": "pdb_num"
+            },
+            {
+                "value": "",
+                "key": "distance"
+            },
+            {
+                "value": "",
+                "key": "neighbors"
+            },
+            {
+                "value": "",
+                "key": "residue_fraction_buried"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "filter",
+        "name": "ResidueBurial"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "max_residue_count"
+            },
+            {
+                "value": "",
+                "key": "min_residue_count"
+            }
+        ],
+        "type": "filter",
+        "name": "ResidueCount"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "res1_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res1_res_num"
+            }
+        ],
+        "type": "filter",
+        "name": "ResidueDistance"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "score_type"
+            },
+            {
+                "value": "",
+                "key": "energy_cutoff"
+            },
+            {
+                "value": "",
+                "key": "whole_pose"
+            },
+            {
+                "value": "",
+                "key": "interface"
+            },
+            {
+                "value": "",
+                "key": "jump_number"
+            },
+            {
+                "value": "",
+                "key": "interface_distance_cutoff"
+            },
+            {
+                "value": "",
+                "key": "restype3"
+            },
+            {
+                "value": "",
+                "key": "penalty_factor"
+            },
+            {
+                "value": "",
+                "key": "max_penalty"
+            },
+            {
+                "value": "",
+                "key": "residues"
+            }
+        ],
+        "type": "filter",
+        "name": "ResidueIE"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "score_type"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "ResidueSetChainEnergy"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "reference_name"
+            },
+            {
+                "value": "",
+                "key": "symmetry"
+            },
+            {
+                "value": "",
+                "key": "chains"
+            },
+            {
+                "value": "",
+                "key": "superimpose_on_all"
+            },
+            {
+                "value": "",
+                "key": "superimpose"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "rms_residues_from_pose_cache"
+            }
+        ],
+        "type": "filter",
+        "name": "Rmsd"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "radius"
+            },
+            {
+                "value": "",
+                "key": "type"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            },
+            {
+                "value": "",
+                "key": "unbound"
+            },
+            {
+                "value": "",
+                "key": "ddG_threshold"
+            },
+            {
+                "value": "",
+                "key": "temperature"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "energy_reduction_factor"
+            },
+            {
+                "value": "",
+                "key": "compute_entropy_reduction"
+            },
+            {
+                "value": "",
+                "key": "repack"
+            },
+            {
+                "value": "",
+                "key": "target_residues"
+            },
+            {
+                "value": "",
+                "key": "fast_calc"
+            },
+            {
+                "value": "",
+                "key": "no_modified_ddG"
+            },
+            {
+                "value": "",
+                "key": "skip_ala_scan"
+            },
+            {
+                "value": "",
+                "key": "write2pdb"
+            }
+        ],
+        "type": "filter",
+        "name": "RotamerBoltzmannWeight"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "upper_threshold"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            },
+            {
+                "value": "",
+                "key": "hydrophobic"
+            },
+            {
+                "value": "",
+                "key": "polar"
+            }
+        ],
+        "type": "filter",
+        "name": "Sasa"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "designable_only"
+            },
+            {
+                "value": "",
+                "key": "resfile_suffix"
+            },
+            {
+                "value": "",
+                "key": "resfile_prefix"
+            },
+            {
+                "value": "",
+                "key": "resfile_name"
+            },
+            {
+                "value": "",
+                "key": "resfile_general_property"
+            },
+            {
+                "value": "",
+                "key": "selected_resis_property"
+            }
+        ],
+        "type": "filter",
+        "name": "SaveResfileToDisk"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "report_residue_pair_energies"
+            },
+            {
+                "value": "",
+                "key": "cutoff"
+            }
+        ],
+        "type": "filter",
+        "name": "ScoreCutoffFilter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "score_type"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            }
+        ],
+        "type": "filter",
+        "name": "ScoreType"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "ss"
+            },
+            {
+                "value": "",
+                "key": "abego"
+            },
+            {
+                "value": "",
+                "key": "blueprint"
+            }
+        ],
+        "type": "filter",
+        "name": "SecondaryStructure"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "rate_threshold"
+            },
+            {
+                "value": "",
+                "key": "mutation_threshold"
+            },
+            {
+                "value": "",
+                "key": "report_mutations"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            },
+            {
+                "value": "",
+                "key": "write2pdb"
+            }
+        ],
+        "type": "filter",
+        "name": "SequenceRecovery"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "min_sc"
+            },
+            {
+                "value": "",
+                "key": "min_interface"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            },
+            {
+                "value": "",
+                "key": "quick"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "write_int_area"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_name"
+            },
+            {
+                "value": "",
+                "key": "residues1"
+            },
+            {
+                "value": "",
+                "key": "residues2"
+            }
+        ],
+        "type": "filter",
+        "name": "ShapeComplementarity"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "topology"
+            }
+        ],
+        "type": "filter",
+        "name": "SheetTopology"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "res1_pdb_num"
+            },
+            {
+                "value": "",
+                "key": "res1_res_num"
+            }
+        ],
+        "type": "filter",
+        "name": "SidechainRmsd"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "steepness"
+            },
+            {
+                "value": "",
+                "key": "offset"
+            },
+            {
+                "value": "",
+                "key": "negate"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "filter"
+            }
+        ],
+        "type": "filter",
+        "name": "Sigmoid"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            }
+        ],
+        "type": "filter",
+        "name": "SpecificResiduesNearInterface"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "Stochastic"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "chain_to_design"
+            },
+            {
+                "value": "",
+                "key": "cb_force"
+            }
+        ],
+        "type": "filter",
+        "name": "StubScore"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "cb_force"
+            },
+            {
+                "value": "",
+                "key": "stubfile"
+            }
+        ],
+        "type": "filter",
+        "name": "StubScoreLoops"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "cutoff"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            },
+            {
+                "value": "",
+                "key": "write2pdb"
+            }
+        ],
+        "type": "filter",
+        "name": "SymUnsatHbonds"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "symm_type"
+            },
+            {
+                "value": "",
+                "key": "motifs"
+            }
+        ],
+        "type": "filter",
+        "name": "SymmetricMotif"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_name"
+            },
+            {
+                "value": "",
+                "key": "repeats"
+            },
+            {
+                "value": "",
+                "key": "scorefxn"
+            },
+            {
+                "value": "",
+                "key": "repack"
+            },
+            {
+                "value": "",
+                "key": "report_diffs"
+            },
+            {
+                "value": "",
+                "key": "write2pdb"
+            },
+            {
+                "value": "",
+                "key": "exempt_identities"
+            },
+            {
+                "value": "",
+                "key": "ddG_task_operations"
+            }
+        ],
+        "type": "filter",
+        "name": "TaskAwareAlaScan"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "threshold"
+            },
+            {
+                "value": "",
+                "key": "designable_only"
+            },
+            {
+                "value": "",
+                "key": "sc_only"
+            },
+            {
+                "value": "",
+                "key": "probe_radius"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            }
+        ],
+        "type": "filter",
+        "name": "TaskAwareSASA"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "jump_number"
+            },
+            {
+                "value": "",
+                "key": "distance"
+            }
+        ],
+        "type": "filter",
+        "name": "TerminusDistance"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            }
+        ],
+        "type": "filter",
+        "name": "Time"
+    },
+    {
+        "attributes": [
+            {
+                "value": "1.0",
+                "key": "confidence"
+            },
+            {
+                "value": "",
+                "key": "task_operations"
+            },
+            {
+                "value": "",
+                "key": "resnum"
+            }
+        ],
+        "type": "filter",
+        "name": "Torsion"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "AddLigandMotifRotamers"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "AddRigidBodyLigandConfs"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "AppendRotamer"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "AppendRotamerSet"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "nsub_bblock"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            },
+            {
+                "value": "",
+                "key": "contact_dist"
+            },
+            {
+                "value": "",
+                "key": "bblock_dist"
+            },
+            {
+                "value": "",
+                "key": "fa_rep_cut"
+            },
+            {
+                "value": "",
+                "key": "filter_intrabb"
+            },
+            {
+                "value": "",
+                "key": "intrabb_only"
+            }
+        ],
+        "type": "task_operation",
+        "name": "BuildingBlockInterface"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnums"
+            }
+        ],
+        "type": "task_operation",
+        "name": "DesignAround"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "repack_only"
+            },
+            {
+                "value": "",
+                "key": "cut1"
+            },
+            {
+                "value": "",
+                "key": "cut2"
+            },
+            {
+                "value": "",
+                "key": "cut3"
+            },
+            {
+                "value": "",
+                "key": "cut4"
+            },
+            {
+                "value": "",
+                "key": "arg_sweep_cutoff"
+            },
+            {
+                "value": "",
+                "key": "design"
+            },
+            {
+                "value": "",
+                "key": "resfile"
+            },
+            {
+                "value": "",
+                "key": "design_to_cys"
+            },
+            {
+                "value": "",
+                "key": "segment_interface"
+            },
+            {
+                "value": "",
+                "key": "catres_interface"
+            },
+            {
+                "value": "",
+                "key": "arg_sweep_interface"
+            },
+            {
+                "value": "",
+                "key": "catres_only_interface"
+            },
+            {
+                "value": "",
+                "key": "target_cstids"
+            }
+        ],
+        "type": "task_operation",
+        "name": "DetectProteinLigandInterface"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "DisableZnCoordinationResiduesTaskOp"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnum"
+            },
+            {
+                "value": "",
+                "key": "disallow_aas"
+            }
+        ],
+        "type": "task_operation",
+        "name": "DisallowIfNonnative"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resid"
+            },
+            {
+                "value": "",
+                "key": "extrachi_cutoff"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ExtraChiCutoff"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resid"
+            },
+            {
+                "value": "",
+                "key": "chi"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ExtraRotamers"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "ex1"
+            },
+            {
+                "value": "",
+                "key": "ex2"
+            },
+            {
+                "value": "",
+                "key": "ex3"
+            },
+            {
+                "value": "",
+                "key": "ex4"
+            },
+            {
+                "value": "",
+                "key": "ex1aro"
+            },
+            {
+                "value": "",
+                "key": "ex2aro"
+            },
+            {
+                "value": "",
+                "key": "ex1aro_exposed"
+            },
+            {
+                "value": "",
+                "key": "ex2aro_exposed"
+            },
+            {
+                "value": "",
+                "key": "ex1_sample_level"
+            },
+            {
+                "value": "",
+                "key": "ex2_sample_level"
+            },
+            {
+                "value": "",
+                "key": "ex3_sample_level"
+            },
+            {
+                "value": "",
+                "key": "ex4_sample_level"
+            },
+            {
+                "value": "",
+                "key": "ex1aro_sample_level"
+            },
+            {
+                "value": "",
+                "key": "ex2aro_sample_level"
+            },
+            {
+                "value": "",
+                "key": "ex1aro_exposed_sample_level"
+            },
+            {
+                "value": "",
+                "key": "ex2aro_exposed_sample_level"
+            },
+            {
+                "value": "",
+                "key": "exdna_sample_level"
+            },
+            {
+                "value": "",
+                "key": "extrachi_cutoff"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ExtraRotamersGeneric"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "IncludeCurrent"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "InitializeExtraRotsFromCommandline"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "InitializeFromCommandline"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "use_current"
+            },
+            {
+                "value": "",
+                "key": "use_natro"
+            },
+            {
+                "value": "",
+                "key": "chain"
+            },
+            {
+                "value": "",
+                "key": "use_native"
+            },
+            {
+                "value": "",
+                "key": "use_starting_as_native"
+            },
+            {
+                "value": "",
+                "key": "filename"
+            },
+            {
+                "value": "",
+                "key": "native"
+            },
+            {
+                "value": "",
+                "key": "use_fasta"
+            }
+        ],
+        "type": "task_operation",
+        "name": "JointSequence"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "use_original_non_designed_layer"
+            },
+            {
+                "value": "",
+                "key": "layer"
+            },
+            {
+                "value": "",
+                "key": "repack_non_design"
+            },
+            {
+                "value": "",
+                "key": "pore_radius"
+            },
+            {
+                "value": "",
+                "key": "core"
+            },
+            {
+                "value": "",
+                "key": "surface"
+            },
+            {
+                "value": "",
+                "key": "core_E"
+            },
+            {
+                "value": "",
+                "key": "core_L"
+            },
+            {
+                "value": "",
+                "key": "core_H"
+            },
+            {
+                "value": "",
+                "key": "surface_E"
+            },
+            {
+                "value": "",
+                "key": "surface_L"
+            },
+            {
+                "value": "",
+                "key": "surface_H"
+            },
+            {
+                "value": "",
+                "key": "make_rasmol_script"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            },
+            {
+                "value": "",
+                "key": "restrict_restypes"
+            },
+            {
+                "value": "",
+                "key": "make_pymol_script"
+            }
+        ],
+        "type": "task_operation",
+        "name": "LayerDesign"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chi2max"
+            },
+            {
+                "value": "",
+                "key": "chi2min"
+            },
+            {
+                "value": "",
+                "key": "include_trp"
+            }
+        ],
+        "type": "task_operation",
+        "name": "LimitAromaChi2"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "disallow_quench"
+            },
+            {
+                "value": "",
+                "key": "high_temp"
+            },
+            {
+                "value": "",
+                "key": "low_temp"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ModifyAnnealer"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "NoRepackDisulfides"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "OperateOnCertainResidues"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "OptCysHG"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "OptH"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "PreserveCBeta"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain"
+            }
+        ],
+        "type": "task_operation",
+        "name": "PreventChainFromRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnum"
+            }
+        ],
+        "type": "task_operation",
+        "name": "PreventRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "residues"
+            }
+        ],
+        "type": "task_operation",
+        "name": "PreventResiduesFromRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "repack_chain1"
+            },
+            {
+                "value": "",
+                "key": "repack_chain2"
+            },
+            {
+                "value": "",
+                "key": "design_chain1"
+            },
+            {
+                "value": "",
+                "key": "design_chain2"
+            },
+            {
+                "value": "",
+                "key": "allow_all_aas"
+            },
+            {
+                "value": "",
+                "key": "design_all_aas"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "interface_distance_cutoff"
+            },
+            {
+                "value": "",
+                "key": "modify_before_jump"
+            },
+            {
+                "value": "",
+                "key": "modify_after_jump"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ProteinInterfaceDesign"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "interface_weight"
+            },
+            {
+                "value": "",
+                "key": "catres_interface_weight"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ProteinLigandInterfaceUpweighter"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "filename"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ReadResfile"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "filename"
+            },
+            {
+                "value": "",
+                "key": "default_commands_for_inserts"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ReadResfileAndObeyLengthEvents"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RemodelRotamerLinks"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "ReplicateTask"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnum"
+            },
+            {
+                "value": "",
+                "key": "keep_aas"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictAbsentCanonicalAAS"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictByCalculators"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictChainToRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "filename"
+            },
+            {
+                "value": "",
+                "key": "min_aa_probability"
+            },
+            {
+                "value": "",
+                "key": "probability_larger_than_current"
+            },
+            {
+                "value": "",
+                "key": "ignore_pose_profile_length_mismatch"
+            },
+            {
+                "value": "",
+                "key": "ddG_filename"
+            },
+            {
+                "value": "",
+                "key": "conservation_cutoff"
+            },
+            {
+                "value": "",
+                "key": "ddG_cutoff"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictConservedLowDdg"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "dna_defs"
+            },
+            {
+                "value": "",
+                "key": "base_only"
+            },
+            {
+                "value": "",
+                "key": "z_cutoff"
+            },
+            {
+                "value": "",
+                "key": "close_threshold"
+            },
+            {
+                "value": "",
+                "key": "contact_threshold"
+            },
+            {
+                "value": "",
+                "key": "forget_chains_and_interface"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictDesignToProteinDNAInterface"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "identities"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictIdentities"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "source_pdb"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictIdentitiesAtAlignedPositions"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictInterGroupVectorOperation"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "surface_exposed_nb_count_cutoff"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictNonSurfaceToRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnum"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictResidueToRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "residues"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictResiduesToRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "source_pdb"
+            },
+            {
+                "value": "",
+                "key": "start_res"
+            },
+            {
+                "value": "",
+                "key": "stop_res"
+            },
+            {
+                "value": "",
+                "key": "chain"
+            },
+            {
+                "value": "",
+                "key": "repack_shell"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictToAlignedSegments"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictToCDRH3Loop"
+    },
+    {
+        "type": "task_operation",
+        "name": "ResidueIndexIs",
+        "attributes": [
+            {
+                "key": "indices",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ResidueType",
+        "attributes": [
+            {
+                "key": "aromatic",
+                "value": ""
+            },
+            {
+                "key": "apolar",
+                "value": ""
+            },
+            {
+                "key": "polar",
+                "value": ""
+            },
+            {
+                "key": "charged",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ResidueHasProperty",
+        "attributes": [
+            {
+                "key": "property",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ResidueHasProperty",
+        "attributes": [
+            {
+                "key": "property",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ChainIs",
+        "attributes": [
+            {
+                "key": "chain",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ChainIsnt",
+        "attributes": [
+            {
+                "key": "chain",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ResidueIndexIsnt",
+        "attributes": [
+            {
+                "key": "indices",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ResidueName3Is",
+        "attributes": [
+            {
+                "key": "name3",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "type": "task_operation",
+        "name": "ResidueName3Isnt",
+        "attributes": [
+            {
+                "key": "name3",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "jump"
+            },
+            {
+                "value": "",
+                "key": "distance"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictToInterface"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictToInterfaceOperation"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain1_num"
+            },
+            {
+                "value": "",
+                "key": "chain2_num"
+            },
+            {
+                "value": "",
+                "key": "jump"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictToInterfaceVector"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictToLoopsAndNeighbors"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictToNeighborhood"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "probe_radius"
+            },
+            {
+                "value": "",
+                "key": "ncomp"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictToNonzeroSASA"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictToRepacking"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "chain"
+            },
+            {
+                "value": "",
+                "key": "repack_n_terminus"
+            },
+            {
+                "value": "",
+                "key": "repack_c_terminus"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RestrictToTermini"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "RestrictYSDesign"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "task_name"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RetrieveStoredTask"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "resnum"
+            }
+        ],
+        "type": "task_operation",
+        "name": "RotamerExplosionCreator"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "mode"
+            },
+            {
+                "value": "",
+                "key": "state"
+            },
+            {
+                "value": "",
+                "key": "probe_radius"
+            },
+            {
+                "value": "",
+                "key": "core_asa"
+            },
+            {
+                "value": "",
+                "key": "surface_asa"
+            },
+            {
+                "value": "",
+                "key": "jumps"
+            },
+            {
+                "value": "",
+                "key": "sym_dof_names"
+            },
+            {
+                "value": "",
+                "key": "core"
+            },
+            {
+                "value": "",
+                "key": "boundary"
+            },
+            {
+                "value": "",
+                "key": "surface"
+            },
+            {
+                "value": "",
+                "key": "verbose"
+            }
+        ],
+        "type": "task_operation",
+        "name": "SelectBySASA"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "filename"
+            },
+            {
+                "value": "",
+                "key": "min_aa_probability"
+            },
+            {
+                "value": "",
+                "key": "probability_larger_than_current"
+            },
+            {
+                "value": "",
+                "key": "ignore_pose_profile_length_mismatch"
+            }
+        ],
+        "type": "task_operation",
+        "name": "SeqprofConsensus"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "fix_catalytic_aa"
+            },
+            {
+                "value": "",
+                "key": "behavior_non_catalytic"
+            }
+        ],
+        "type": "task_operation",
+        "name": "SetCatalyticResPackBehavior"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "lin_mem_ig"
+            },
+            {
+                "value": "",
+                "key": "lazy_ig"
+            },
+            {
+                "value": "",
+                "key": "double_lazy_ig"
+            }
+        ],
+        "type": "task_operation",
+        "name": "SetIGType"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "SetRotamerCouplings"
+    },
+    {
+        "attributes": [],
+        "type": "task_operation",
+        "name": "SetRotamerLinks"
+    },
+    {
+        "attributes": [
+            {
+                "value": "",
+                "key": "target_sequence"
+            }
+        ],
+        "type": "task_operation",
+        "name": "ThreadSequence"
+    }
+]
