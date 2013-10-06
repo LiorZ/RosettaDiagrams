@@ -1,16 +1,22 @@
 define(['Backbone','BackboneRelational'],function(Backbone,BackboneRelational,DiagramElement) {
-	var Diagram = Backbone.RelationalModel.extend({
+	var DiagramConnection = Backbone.RelationalModel.extend({
 		relations: [
 					{
 						type: Backbone.HasOne,
 						key: 'source',
 						relatedModel: 'DiagramElement',
-						
+						includeInJSON:'id'
+					},
+					{
+						type: Backbone.HasOne,
+						key: 'target',
+						relatedModel: 'DiagramElement',
+						includeInJSON:'id'
 					}
 				]
 	});
 	
-	return Diagram;
+	return DiagramConnection;
 });
 
 //(function() {

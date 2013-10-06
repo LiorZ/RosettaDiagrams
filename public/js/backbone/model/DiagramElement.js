@@ -1,5 +1,5 @@
-define(['Backbone','BackboneRelational','Link'],function(Backbone,BackboneRelational,DiagramElement) {
-	var Diagram = Backbone.RelationalModel.extend({
+define(['Backbone','BackboneRelational','Link','Attribute','AttributeList'],function(Backbone,BackboneRelational,DiagramElement,Attribute,AttributeList) {
+	var DiagramElement = Backbone.RelationalModel.extend({
 		relations: [
 					{
 						type: Backbone.HasMany,
@@ -9,11 +9,22 @@ define(['Backbone','BackboneRelational','Link'],function(Backbone,BackboneRelati
 							key: 'element',
 							includeInJSON: 'id'
 						}
+					},
+					
+					{
+						type:Backbone.HasMany,
+						key:'attributes',
+						relatedModel:Attribute,
+						collectionType:AttributeList,
+						reverseRelation: {
+							key: 'element',
+							includeInJSON: 'id'
+						}
 					}
 				]
 	});
 	
-	return Diagram;
+	return DiagramElement;
 });
 
 //(function() {
