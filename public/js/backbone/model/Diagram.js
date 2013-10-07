@@ -21,7 +21,6 @@ define(['Backbone','BackboneRelational','models/DiagramElement','models/DiagramE
 	return Diagram;
 });
 
-//
 //var app = app || {};
 //(function() {
 //	

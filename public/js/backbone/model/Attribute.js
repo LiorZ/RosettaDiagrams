@@ -1,5 +1,6 @@
 define(['Backbone','BackboneRelational','models/globals'],function(Backbone,BackboneRelational,globals) {
 	var Attribute = Backbone.RelationalModel.extend({
+		idAttribute: "_id",
 		defaults: { 
 			key: 'key',
 			value:'val'

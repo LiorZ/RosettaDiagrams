@@ -1,57 +1,55 @@
-var app = app || {};
-var consts = consts || {};
-var ENTER_KEY = 13;
-
-$(function( $ ) {
-	app.elementCounter = 0;
-	app.Attributes = {
-			'mover':{
-				jointObjColor: "90-#000-green:1-#fff",
-				codeTemplate: '#xml_movers',
-				add_protocol: 'mover_name',
-				palette_div:'#movers_menu',
-				wiki_address:'wiki/movers.html#'
-			},
-			'logic':{
-				jointObjColor: "90-#000-red:1-#fff",
-				codeTemplate: '#xml_movers',
-				add_protocol: 'mover_name',
-				palette_div:'#logic_menu',
-				wiki_address:'wiki/movers.html#'
-			},
-			'filter':{
-				jointObjColor: "90-#000-orange:1-#fff",
-				codeTemplate: '#xml_filters',
-				add_protocol: 'filter_name',
-				palette_div:'#filters_menu',
-				wiki_address:'wiki/filters.html#'
-			},
-			'task_operation': {
-				jointObjColor: "90-#000-blue:1-#fff",
-				codeTemplate: '#xml_task_operations',
-				palette_div: '#task_operations_menu',
-				wiki_address:'wiki/task_operations.html#'
-			
-			},
-			'container':{
-				jointObjColor: "90-#000-yellow:1-#fff",
-				codeTemplate: '#xml_movers',
-				palette_div: '#containers_menu'
-			}
-	};
-	consts.ATTR_IN_DIAGRAM_VIEW = 5;
-	consts.LENGTH_DIAGRAM_TITLE = 20;
-	consts.MENU_TIMEOUT = 2000;
-	consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH = 150;
-	consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT = 100;
-	consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH = 90;
-	consts.DIAGRAM_ELEMENT_SMALL_SCALE_HEIGHT = 60;
-	consts.DIAGRAM_CONTAINER_DEFAULT_WIDTH = 300;
-	consts.DIAGRAM_CONTAINER_DEFAULT_HEIGHT = 400;
-	app.EventAgg = _.extend({}, Backbone.Events);
-	app.MainDiagram = new app.Diagram();
-	app.ActiveDiagram = app.MainDiagram;
-	app.AppView = Backbone.View.extend({
+//	app.elementCounter = 0;
+//	app.Attributes = {
+//			'mover':{
+//				jointObjColor: "90-#000-green:1-#fff",
+//				codeTemplate: '#xml_movers',
+//				add_protocol: 'mover_name',
+//				palette_div:'#movers_menu',
+//				wiki_address:'wiki/movers.html#'
+//			},
+//			'logic':{
+//				jointObjColor: "90-#000-red:1-#fff",
+//				codeTemplate: '#xml_movers',
+//				add_protocol: 'mover_name',
+//				palette_div:'#logic_menu',
+//				wiki_address:'wiki/movers.html#'
+//			},
+//			'filter':{
+//				jointObjColor: "90-#000-orange:1-#fff",
+//				codeTemplate: '#xml_filters',
+//				add_protocol: 'filter_name',
+//				palette_div:'#filters_menu',
+//				wiki_address:'wiki/filters.html#'
+//			},
+//			'task_operation': {
+//				jointObjColor: "90-#000-blue:1-#fff",
+//				codeTemplate: '#xml_task_operations',
+//				palette_div: '#task_operations_menu',
+//				wiki_address:'wiki/task_operations.html#'
+//			
+//			},
+//			'container':{
+//				jointObjColor: "90-#000-yellow:1-#fff",
+//				codeTemplate: '#xml_movers',
+//				palette_div: '#containers_menu'
+//			}
+//	};
+//	consts.ATTR_IN_DIAGRAM_VIEW = 5;
+//	consts.LENGTH_DIAGRAM_TITLE = 20;
+//	consts.MENU_TIMEOUT = 2000;
+//	consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH = 150;
+//	consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT = 100;
+//	consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH = 90;
+//	consts.DIAGRAM_ELEMENT_SMALL_SCALE_HEIGHT = 60;
+//	consts.DIAGRAM_CONTAINER_DEFAULT_WIDTH = 300;
+//	consts.DIAGRAM_CONTAINER_DEFAULT_HEIGHT = 400;
+//	app.EventAgg = _.extend({}, Backbone.Events);
+//	app.MainDiagram = new app.Diagram();
+//	app.ActiveDiagram = app.MainDiagram;
+	
+define(['Backbone','views/globals','views/CodeView','models/globals','models/PaletteElements','views/DiagramElementView','views/DiagramConnectionView','views/InformationMessageView'],
+		function(Backbone,view_globals,model_globals,PaletteElements,DiagramElementView,DiagramConnectionView,InformationMessageView) {
+	var AppView = Backbone.View.extend({
 		main_joint: undefined,
 		el: '#container',
 		events:{
@@ -60,13 +58,13 @@ $(function( $ ) {
 		
 		connectionReady: false,
 		toggleDeleteMode: function() { 
-			app.EventAgg.trigger('toggleDeleteMode');
+			view_globals.event_agg.trigger('toggleDeleteMode');
 		},
 		
 		handle_key_press: function(e) {
 			if ( e.keyCode == 27 && app.pendingConnection != undefined) { //ESC char
-				app.pendingConnection = undefined;
-				app.EventAgg.trigger('connection_mode_ended');
+				model_globals.pendingConnection = undefined;
+				view_globals.event_agg.trigger('connection_mode_ended');
 			}
 		},
 		initialize: function() {
@@ -78,13 +76,13 @@ $(function( $ ) {
 			this.addPaletteView();
 			this.addInformationMessageContainer();
 			_.bindAll(this.show_main_canvas);
-			this.listenTo(app.EventAgg,'show_main_canvas',this.show_main_canvas);
-			this.listenTo(app.EventAgg,'switch_diagram',this.switch_diagram);
+			this.listenTo(view_globals.event_agg,'show_main_canvas',this.show_main_canvas);
+			this.listenTo(view_globals.event_agg,'switch_diagram',this.switch_diagram);
 		},
 		
 		add_element_listeners: function() {
-			this.listenTo(app.ActiveDiagram,'add:element',this.addElementView);
-			this.listenTo(app.ActiveDiagram,'add:connection', this.addConnectionView);
+			this.listenTo(model_globals.ActiveDiagram,'add:element',this.addElementView);
+			this.listenTo(model_globals.ActiveDiagram,'add:connection', this.addConnectionView);
 		},
 		
 		paste_code: function(){
@@ -92,18 +90,18 @@ $(function( $ ) {
 		},
 		
 		switch_diagram: function(diagram) {
-			this.stopListening(app.ActiveDiagram);
-			app.ActiveDiagram = diagram;
+			this.stopListening(model_globals.ActiveDiagram);
+			model_globals.ActiveDiagram = diagram;
 			Joint.paper(diagram.get('jointObj'));
 			this.add_element_listeners();
 		},
 		
 		addPaletteView:function() {
-			app.paletteView = new app.PaletteView({model: app.PaletteElements});
-			app.paletteView.render();
+			var paletteView = new PaletteView({model: new PaletteElements()});
+			paletteView.render();
 		},
 		addPropertiesView: function() {
-			app.propertiesView = new app.DiagramElementPropertiesView({eventagg: app.EventAgg});
+			var propertiesView = new app.DiagramElementPropertiesView({eventagg: view_globals.event_agg});
 		},
 		
 		transformXMLToDiagram: function(xml_str) {
@@ -114,7 +112,7 @@ $(function( $ ) {
 			var context = this;
 			var plot_diag_func = function(dialog_obj) {
 				var xml_str = $(dialog_obj).find('textarea').val();
-				app.MainDiagram.clear();
+				model_globals.MainDiagram.clear();
 				context.transformXMLToDiagram(xml_str);
 				$(dialog_obj).dialog('close');
 			}
@@ -128,7 +126,7 @@ $(function( $ ) {
 				buttons: {
 					OK: function(){
 						var xml_diag = this;
-						if (app.MainDiagram.get_elements().size() > 0) {
+						if (model_globals.MainDiagram.get_elements().size() > 0) {
 							$( "#dialog-confirm" ).dialog({
 							      resizable: false,
 							      modal: true,
@@ -153,17 +151,17 @@ $(function( $ ) {
 				}
 			});
 			
-			app.codeView = new app.CodeView({eventagg: app.EventAgg});
+			view_globals.codeView = new CodeView({eventagg: view_globals.event_agg});
 		},
 		
 		addMenuView: function() {
-			app.menuView = new app.MenuView({eventagg: app.EventAgg});
+			var menuView = new app.MenuView({eventagg: view_globals.event_agg});
 		},
 		/*
 		 * Returns a position for the new page , in the middle of the editor, takes into account translate and zoom..
 		 */
 		getPosForNewPage: function() {
-			var jointObj = app.ActiveDiagram.get('jointObj');
+			var jointObj = model_globals.ActiveDiagram.get('jointObj');
 			if ( jointObj == undefined ){
 				return undefined;
 			}
@@ -180,17 +178,17 @@ $(function( $ ) {
 				var new_pos = this.getPosForNewPage();
 				element.set(new_pos);
 			}
-			var view = new app.DiagramElementView({model: element, eventagg: app.EventAgg});
+			var view = new DiagramElementView({model: element, eventagg: view_globals.event_agg});
 			view.render();
 		},
 		
 		addConnectionView: function(connection) {
-			var view = new app.DiagramConnectionView({model:connection});
+			var view = new DiagramConnectionView({model:connection});
 			view.render();
 		},
 
 		addInformationMessageContainer:function() {
-			app.InformationMessageContainer = new app.InformationMessageView();
+			view_globals.InformationMessageContainer = new InformationMessageView();
 		},
 		
 		render: function() {
@@ -203,14 +201,14 @@ $(function( $ ) {
 //			this.viewBox.X = oX;
 //			this.viewBox.Y = oY;
 //			
-			app.MainDiagram.set('jointObj',this.main_joint);
+			model_globals.MainDiagram.set('jointObj',this.main_joint);
 			this.$("#attribute_list").tablesorter();
 			this.$("button").button();
 			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
 			this.$("#menu").accordion('refresh');
-		},
+		}
 		
 	});
 	
-	
+	return AppView;
 });
