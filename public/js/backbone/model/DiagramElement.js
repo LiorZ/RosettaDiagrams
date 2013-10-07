@@ -1,5 +1,6 @@
-define(['Backbone','BackboneRelational','Link','Attribute','AttributeList'],function(Backbone,BackboneRelational,DiagramElement,Attribute,AttributeList) {
+define(['Backbone','BackboneRelational','models/DiagramConnection','models/Attribute','models/AttributeList','models/globals'],function(Backbone,BackboneRelational,DiagramConnection,Attribute,AttributeList,globals) {
 	var DiagramElement = Backbone.RelationalModel.extend({
+		idAttribute: "_id",
 		relations: [
 					{
 						type: Backbone.HasMany,
@@ -23,6 +24,8 @@ define(['Backbone','BackboneRelational','Link','Attribute','AttributeList'],func
 					}
 				]
 	});
+	
+	globals.DiagramElement = DiagramElement;
 	
 	return DiagramElement;
 });

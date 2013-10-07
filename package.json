@@ -23,6 +23,8 @@
         "mocha": ">=1.9",
         "should": "=1.2.2",
         "superagent": "0.15.4",
-        "pow-mongoose-fixtures": "=0.3"
+        "pow-mongoose-fixtures": "=0.3",
+        "mocha-phantomjs":"latest",
+        "phantomjs":"latest"
     }
 }

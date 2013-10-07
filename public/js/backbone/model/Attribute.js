@@ -1,10 +1,13 @@
-define(['Backbone','BackboneRelational'],function(Backbone,BackboneRelational) {
+define(['Backbone','BackboneRelational','models/globals'],function(Backbone,BackboneRelational,globals) {
 	var Attribute = Backbone.RelationalModel.extend({
 		defaults: { 
 			key: 'key',
 			value:'val'
 		}
 	});
+	
+	
+	globals.Attribute = Attribute;
 	
 	return Attribute;
 });

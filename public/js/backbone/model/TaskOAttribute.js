@@ -1,4 +1,4 @@
-define(['Backbone','BackboneRelational','Attribute'],function(Backbone,BackboneRelational,Attribute) {
+define(['Backbone','BackboneRelational','models/Attribute','models/globals'],function(Backbone,BackboneRelational,Attribute) {
 	var TaskOAttribute = Attribute.extend({
 		
 		initialize: function(options) {
@@ -36,6 +36,8 @@ define(['Backbone','BackboneRelational','Attribute'],function(Backbone,BackboneR
 		}
 		
 	});
+	
+	globals.TaskOAttribute = TaskOAttribute;
 	
 	return TaskOAttribute;
 });

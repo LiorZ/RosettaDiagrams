@@ -1,4 +1,4 @@
-define(['Backbone','BackboneRelational','DiagramConnection'],function(Backbone,BackboneRelational,DiagramConnection) {
+define(['Backbone','BackboneRelational','models/DiagramConnection','models/globals'],function(Backbone,BackboneRelational,DiagramConnection,globals) {
 	var DiagramContainment = DiagramConnection.extend({
 		initialize: function(options) {
 		      this.constructor.__super__.initialize.apply(this, [options])
@@ -102,6 +102,8 @@ define(['Backbone','BackboneRelational','DiagramConnection'],function(Backbone,B
 
 		}
 	});
+	
+	globals.DiagramContainment = DiagramContainment;
 	
 	return DiagramContainment;
 });

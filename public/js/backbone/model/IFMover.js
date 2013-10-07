@@ -1,4 +1,4 @@
-define(['Backbone','BackboneRelational','DiagramElement'],function(Backbone,BackboneRelational,DiagramElement) {
+define(['Backbone','BackboneRelational','models/DiagramElement','models/globals'],function(Backbone,BackboneRelational,DiagramElement,globals) {
 	var IFMover = DiagramElement.extend({
 		defaults:{
 			true_is_set:false,
@@ -137,6 +137,8 @@ define(['Backbone','BackboneRelational','DiagramElement'],function(Backbone,Back
 		}
 	});
 	_.extend(IFMover.prototype.defaults,DiagramElement.prototype.defaults);
+	
+	globals.IFMover = IFMover;
 	
 	return IFMover;
 
