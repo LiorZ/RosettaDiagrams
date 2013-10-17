@@ -1,13 +1,13 @@
-define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','models/Diagram','models/DiagramConnection','models/DiagramContainment','models/Attribute','models/AttributeList','models/globals','views/globals'],
-		function(Backbone,BackboneRelational,DiagramConnectionCollection,Diagram,DiagramConnection,DiagramContainment,Attribute,AttributeList,model_globals,view_globals) {
+define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','models/Diagram','models/DiagramLink','models/DiagramConnection','models/DiagramContainment','models/BaseAttribute','models/AttributeList','models/globals','views/globals'],
+		function(Backbone,BackboneRelational,DiagramConnectionCollection,Diagram,DiagramLink,DiagramConnection,DiagramContainment,BaseAttribute,AttributeList,model_globals,view_globals) {
 	var DiagramElement = Backbone.RelationalModel.extend({
 		idAttribute: "_id",
 		relations: [
 					{
 						type: Backbone.HasMany,
 						key: 'connections',
-						relatedModel: 'DiagramConnection',
-						collectionType: 'DiagramConnectionCollection',
+						relatedModel: DiagramLink,
+						collectionType: DiagramConnectionCollection,
 						reverseRelation: {
 							key: 'element',
 							includeInJSON: 'id'
@@ -17,7 +17,7 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 					{
 						type:Backbone.HasMany,
 						key:'attributes',
-						relatedModel:'Attribute',
+						relatedModel:'BaseAttribute',
 						collectionType:AttributeList,
 						reverseRelation: {
 							key: 'element',
@@ -101,7 +101,7 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 			
 				if ( type == 'task_operation' ) {
 //					model_globals.pendingConnection = new DiagramContainment({source: this, type: Joint.dia.uml.generalizationArrow});
-					model_globals.pendingConnection = { source: this, type: 'task_operation'};
+					model_globals.pendingConnection = { source: this, type: 'containment'};
 				}
 				else {
 					model_globals.pendingConnection = {source: this, type:'connection'};

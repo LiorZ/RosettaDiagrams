@@ -13,7 +13,10 @@ define(['Backbone','BackboneRelational','models/DiagramElementCollection','model
 							includeInJSON: 'id'
 						}
 					}
-					]
+					],
+		create_element: function(elem_obj) {
+			return this.get('elements').create(elem_obj);
+		}
 	});
 	
 	globals.Diagram = Diagram;

@@ -47,7 +47,9 @@ mocha.setup({
 var runMocha = function(test,Backbone,BackboneRelational,globals) {
 	Backbone.Relational.store.addModelScope(globals);
 	Backbone.sync = function(method, model, options){ }
-	if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+	if (window.mochaPhantomJS) { 
+		mochaPhantomJS.run(); 
+	}
 	else
 		mocha.run();
 };

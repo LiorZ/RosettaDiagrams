@@ -1,7 +1,12 @@
-define(['Backbone','BackboneRelational','models/DiagramConnection','models/globals'],function(Backbone,BackboneRelational,DiagramConnection,globals) {
-	var DiagramContainment = DiagramConnection.extend({
+define(['Backbone','BackboneRelational','models/DiagramConnection','models/globals','models/TaskOAttribute','models/DiagramLink'],
+		function(Backbone,BackboneRelational,DiagramConnection,globals,TaskOAttribute,DiagramLink) {
+	var DiagramContainment = DiagramLink.extend({
+		defaults:{
+			type:'containment'
+		},
 		initialize: function(options) {
-		      this.constructor.__super__.initialize.apply(this, [options])
+		      this.constructor.__super__.initialize.apply(this, [options]);
+		      this.change_target(this, this.get('target'));
 		      this.on('change:source',this.change_source);
 		      this.on('change:target',this.change_target);
 		      this.on('destroy',this.remove_tasks); //Remove all the task operations from the target.
@@ -82,12 +87,12 @@ define(['Backbone','BackboneRelational','models/DiagramConnection','models/globa
 			}	
 			var tasks = new_attributes.byKey('task_operations');
 			if ( tasks == undefined ) {
-				new_attributes.add(new app.TaskOAttribute({key: 'task_operations'}));
+				new_attributes.add(new TaskOAttribute({key: 'task_operations'}));
 				tasks = new_attributes.byKey('task_operations');
 			}
-			if ( !(tasks instanceof app.TaskOAttribute )) {
+			if ( !(tasks instanceof TaskOAttribute )) {
 				new_attributes.remove(tasks,{silent:true});
-				tasks = new app.TaskOAttribute();
+				tasks = new TaskOAttribute();
 				new_attributes.add(tasks,{silent:true});
 			}
 			tasks.add_task(source);	
@@ -99,7 +104,6 @@ define(['Backbone','BackboneRelational','models/DiagramConnection','models/globa
 			if ( old_tasks == undefined )
 				return;
 			old_tasks.remove_task(source);
-
 		}
 	});
 	

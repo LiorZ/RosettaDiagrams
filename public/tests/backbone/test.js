@@ -52,6 +52,21 @@ define(['chai','models/Diagram','models/globals'],function(chai,Diagram,model_gl
     	 done();
       });
       
+      it("Creating a task operation element", function(done) {
+    	  globals.task_operation_element = globals.diagram.create_element({name:'IncludeCurrent', type:'task_operation'});
+    	  globals.task_operation_element.connect_element();
+     	  assert.ok(model_globals.pendingConnection,"Temp connection object exists");
+     	  globals.first_element.connect_element();
+     	  var task_connections = globals.task_operation_element.get('connections');
+     	  expect(task_connections.size()).to.equal(1);
+     	  var con = task_connections.at(0);
+     	  expect(con instanceof model_globals.DiagramContainment).to.equal(true);
+     	  var attributes = globals.first_element.get('attributes');
+     	  var task_attr = attributes.byKey('task_operations');
+     	  assert.ok(task_attr,"Task operation attribute exists");
+     	  done();
+     	  
+      });
    });
    
     });

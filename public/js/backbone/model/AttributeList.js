@@ -1,6 +1,6 @@
-define(['Backbone','BackboneRelational','models/Attribute','models/globals'],function(Backbone,BackboneRelational,Attribute,globals) {
+define(['Backbone','BackboneRelational','models/BaseAttribute','models/globals'],function(Backbone,BackboneRelational,BaseAttribute,globals) {
 	var AttributeList = Backbone.Collection.extend({
-		model: Attribute,
+		model: BaseAttribute,
 		byKey: function(key) {
 		    var filtered = this.filter(function(attr) {
 		      return attr.get("key") == key;

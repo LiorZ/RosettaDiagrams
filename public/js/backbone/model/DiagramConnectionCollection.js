@@ -1,14 +1,8 @@
-define(['models/DiagramConnection','models/DiagramContainment','models/globals'],
-		function(DiagramConnection,DiagramContainment,model_globals) {
+define(['Backbone','models/DiagramConnection','models/DiagramContainment','models/globals','models/DiagramLink'],
+		function(Backbone,DiagramConnection,DiagramContainment,model_globals,DiagramLink) {
 	
 	var DiagramConnectionList = Backbone.Collection.extend({
-		model: function(attrs,options) {
-			if (attrs.type == 'task_operations') {
-				return new DiagramContainment(attrs,options);
-			}else {
-				return new DiagramConnection(attrs,options);
-			}
-		},
+		model: DiagramLink,
 		bySourceRaw:function(elem) {
 			var returned_arr = this.filter(function(dia) {return (dia.get('source') == elem);});
 			if (returned_arr ==0 )

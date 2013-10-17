@@ -1,20 +1,8 @@
-define(['Backbone','BackboneRelational','models/globals'],function(Backbone,BackboneRelational,globals) {
-	var DiagramConnection = Backbone.RelationalModel.extend({
-		idAttribute: "_id",
-		relations: [
-					{
-						type: Backbone.HasOne,
-						key: 'source',
-						relatedModel: 'DiagramElement',
-						includeInJSON:'id'
-					},
-					{
-						type: Backbone.HasOne,
-						key: 'target',
-						relatedModel: 'DiagramElement',
-						includeInJSON:'id'
-					}
-				]
+define(['Backbone','BackboneRelational','models/globals','models/DiagramLink'],function(Backbone,BackboneRelational,globals,DiagramLink) {
+	var DiagramConnection = DiagramLink.extend({
+		defaults:{
+			type:'connection'
+		}
 	});
 	
 	globals.DiagramConnection = DiagramConnection;

@@ -1,6 +1,8 @@
-define(['Backbone','BackboneRelational','models/Attribute','models/globals'],function(Backbone,BackboneRelational,Attribute) {
-	var TaskOAttribute = Attribute.extend({
-		
+define(['Backbone','BackboneRelational','models/BaseAttribute','models/globals'],function(Backbone,BackboneRelational,BaseAttribute,globals) {
+	var TaskOAttribute = BaseAttribute.extend({
+		defaults:{
+			type:'task_operation'
+		},
 		initialize: function(options) {
    	      this.constructor.__super__.initialize.apply(this, [options])
 			this.set('moversList',new app.DiagramElementList());
