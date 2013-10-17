@@ -1,9 +1,14 @@
-var app = app || {};
-
-(function() {
+define(['models/DiagramConnection','models/DiagramContainment','models/globals'],
+		function(DiagramConnection,DiagramContainment,model_globals) {
 	
-	app.DiagramConnectionList = Backbone.Collection.extend({
-		model: app.DiagramConnection,
+	var DiagramConnectionList = Backbone.Collection.extend({
+		model: function(attrs,options) {
+			if (attrs.type == 'task_operations') {
+				return new DiagramContainment(attrs,options);
+			}else {
+				return new DiagramConnection(attrs,options);
+			}
+		},
 		bySourceRaw:function(elem) {
 			var returned_arr = this.filter(function(dia) {return (dia.get('source') == elem);});
 			if (returned_arr ==0 )
@@ -44,8 +49,7 @@ var app = app || {};
 			}else {
 				elements = this.byTargetRaw(elem);
 			}
-//			_.bind(func,this);
-//			var elements = func(elem);
+
 			if ( _.isUndefined(elements) ){
 				return elements;
 			}
@@ -60,6 +64,9 @@ var app = app || {};
 			return this.bySomethingNoTasks(elem,false);
 		}
 		
+		
 	});
+	model_globals.DiagramConnectionCollection = DiagramConnectionList; 
+	return DiagramConnectionList;
+});
 	
-}());

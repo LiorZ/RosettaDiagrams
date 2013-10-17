@@ -1,11 +1,13 @@
-define(['Backbone','BackboneRelational','models/DiagramConnection','models/Attribute','models/AttributeList','models/globals'],function(Backbone,BackboneRelational,DiagramConnection,Attribute,AttributeList,globals) {
+define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','models/Diagram','models/DiagramConnection','models/DiagramContainment','models/Attribute','models/AttributeList','models/globals','views/globals'],
+		function(Backbone,BackboneRelational,DiagramConnectionCollection,Diagram,DiagramConnection,DiagramContainment,Attribute,AttributeList,model_globals,view_globals) {
 	var DiagramElement = Backbone.RelationalModel.extend({
 		idAttribute: "_id",
 		relations: [
 					{
 						type: Backbone.HasMany,
 						key: 'connections',
-						relatedModel: DiagramConnection,
+						relatedModel: 'DiagramConnection',
+						collectionType: 'DiagramConnectionCollection',
 						reverseRelation: {
 							key: 'element',
 							includeInJSON: 'id'
@@ -15,17 +17,110 @@ define(['Backbone','BackboneRelational','models/DiagramConnection','models/Attri
 					{
 						type:Backbone.HasMany,
 						key:'attributes',
-						relatedModel:Attribute,
+						relatedModel:'Attribute',
 						collectionType:AttributeList,
 						reverseRelation: {
 							key: 'element',
 							includeInJSON: 'id'
 						}
+					},
+					{
+						type: Backbone.HasOne,
+						key:'subdiagram',
+						relatedModel:'Diagram',
+						reverseRelation: {
+							key: 'parent_element',
+							includeInJSON: 'id',
+							type: Backbone.HasOne
+						}
 					}
-				]
+				],
+				defaults: {
+					name:"New_Element",
+					connectionReady: false,
+					deleteMode: false,
+					jointObj: undefined,
+					typeObj: undefined,
+					type:undefined,
+					width: 0, // defined in the initialize section, getting an undefined value here .. 
+					height: 0,
+					show_in_protocols:true,
+				},
+			initialize: function(options) {
+				var subdiagram;
+				if ( this.get('subdiagram') ) {
+					subdiagram = this.get('subdiagram');
+				}else {
+					subdiagram = new model_globals.Diagram();
+					this.set('subdiagram',subdiagram);
+				}
+
+				this.set('typeObj',view_globals.Attributes[this.get('type')]);
+				this.set('width',view_globals.DIAGRAM_ELEMENT_DEFAULT_WIDTH);
+				this.set('height',view_globals.DIAGRAM_ELEMENT_DEFAULT_HEIGHT);
+				
+				var attributes = this.get('attributes');
+				
+				this.listenTo(subdiagram,'add:element',this.element_added_subdiagram);
+				this.listenTo(subdiagram,'add:connection',this.connection_added);
+				this.listenTo(attributes,"change",this.attributes_changed);
+				this.listenTo(attributes,"add",this.attributes_changed);
+				this.listenTo(attributes,"remove",this.attributes_changed);
+				this.listenTo(view_globals.event_agg,'connection_mode_activated',this.connection_mode_activated);
+				this.listenTo(view_globals.event_agg,'connection_mode_deactivated',this.connection_mode_deactivated);
+			},
+				
+		url: function() {
+			if ( this.isNew() ) {
+				return "/diagram/" + this.get('diagram').id + "/element/new";
+			}else {
+				return "/diagram/" + this.get('diagram').id + "/element"/ + this.id;
+			}
+		},
+		add_attribute: function(key,value){
+			this.get('attributes').create({key:key,value:value});
+		},
+		element_added_subdiagram:function(element) {
+			this.trigger('add:element',element);
+		},
+		connection_mode_deactivated:function(options) {
+			this.set('connectionReady',false);
+		},
+		connection_mode_activated:function(options) {
+			this.set('connectionReady',true);
+		},
+		connection_added: function(con) {
+			this.trigger('add:connection',con);
+		},
+		attributes_changed: function() {
+			this.trigger("change:attributes");
+		},
+		connect_element: function(){
+			var type = this.get('type');
+			if ( _.isUndefined( model_globals.pendingConnection ) ) {
+			
+				if ( type == 'task_operation' ) {
+//					model_globals.pendingConnection = new DiagramContainment({source: this, type: Joint.dia.uml.generalizationArrow});
+					model_globals.pendingConnection = { source: this, type: 'task_operation'};
+				}
+				else {
+					model_globals.pendingConnection = {source: this, type:'connection'};
+//					model_globals.pendingConnection = new DiagramConnection({source: this, type: Joint.dia.uml.dependencyArrow});
+				}
+			
+				view_globals.event_agg.trigger('connection_mode_activated',{info_msg: {message: "Click on the element you want to connect ... (<b>ESC</b> to cancel) "}});
+			}
+			else {
+				//TODO: check if both elements are from the same diagram ...
+				//TODO: check if target isn't the same as source
+				model_globals.pendingConnection.target = this;
+				model_globals.pendingConnection.source.get('connections').create(model_globals.pendingConnection);
+				model_globals.pendingConnection = undefined;
+
+			}
+		}
 	});
-	
-	globals.DiagramElement = DiagramElement;
+	model_globals.DiagramElement = DiagramElement;
 	
 	return DiagramElement;
 });

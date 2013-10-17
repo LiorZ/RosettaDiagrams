@@ -8,6 +8,7 @@ require.config({
         'mocha'			:'/tests/backbone/mocha',
         BackboneRelational: '/js/lib/backbone-relational/backbone-relational',
         'models'		: '/js/backbone/model/',
+        'views'		: '/js/backbone/view/',
         'chai': '/tests/backbone/chai/chai'
 
     },
@@ -45,11 +46,11 @@ mocha.setup({
 
 var runMocha = function(test,Backbone,BackboneRelational,globals) {
 	Backbone.Relational.store.addModelScope(globals);
-
+	Backbone.sync = function(method, model, options){ }
 	if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
-    mocha.run();
+	else
+		mocha.run();
 };
-
 
 require([
          '/tests/backbone/test.js','Backbone','BackboneRelational','models/globals'

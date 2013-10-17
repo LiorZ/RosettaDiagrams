@@ -4,6 +4,16 @@ define(['Backbone','BackboneRelational','models/globals'],function(Backbone,Back
 		defaults: { 
 			key: 'key',
 			value:'val'
+		},
+		url: function() {
+			var element = this.get('element');
+			var element_id = element.id;
+			var diagram_id = element.get('diagram').id;
+			if ( this.isNew() ) {
+				return "/diagram/" + diagram_id + "/element/" + element_id + "/attribute/new";
+			}else {
+				"/diagram/" + diagram_id + "/element/" + element_id + "/attribute/" + this.id;
+			}
 		}
 	});
 	
@@ -27,20 +37,4 @@ define(['Backbone','BackboneRelational','models/globals'],function(Backbone,Back
 //		
 //	});
 //	
-//	
-//	app.AttributeList = Backbone.Collection.extend({
-//		model: app.Attribute,
-//		byKey: function(key) {
-//		    var filtered = this.filter(function(attr) {
-//		      return attr.get("key") == key;
-//		    });
-//		    return filtered[0];
-//		},
-//		nonEmpty: function() {
-//			return this.filter(function(attr) {
-//				return attr.get('value') !='';
-//			});
-//		}
-//	});
-//}
-//());
+//

@@ -1,30 +1,33 @@
 {
-    "name": "rosetta-diagrams-server",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "express": "~3.0.0",
-        "jade": ">= 0.0.1",
-        "mongoose": ">= 2.6.5",
-        "nodemailer": "0.3.20",
-        "connect": ">=1.9.1",
-        "underscore": ">=1.4.4",
-        "mongoose-schema-extend": ">=0.1",
-        "nconf": "=0.6.7",
-        "requirejs": ">=2.1.5",
-        "almond": "=0.2.5",
-        "async": "=0.2.9",
-        "passport-google":"latest",
-        "passport":"latest",
-        "mongoose-findorcreate":"latest"
-    },
-    "devDependencies": {
-        "chai": ">=1.6",
-        "mocha": ">=1.9",
-        "should": "=1.2.2",
-        "superagent": "0.15.4",
-        "pow-mongoose-fixtures": "=0.3",
-        "mocha-phantomjs":"latest",
-        "phantomjs":"latest"
-    }
+  "name": "rosetta-diagrams-server",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "~3.0.0",
+    "jade": ">= 0.0.1",
+    "mongoose": ">= 2.6.5",
+    "nodemailer": "0.3.20",
+    "connect": ">=1.9.1",
+    "underscore": ">=1.4.4",
+    "mongoose-schema-extend": ">=0.1",
+    "nconf": "=0.6.7",
+    "requirejs": ">=2.1.5",
+    "almond": "=0.2.5",
+    "async": "=0.2.9",
+    "passport-google": "latest",
+    "passport": "latest",
+    "mongoose-findorcreate": "latest"
+  },
+  "devDependencies": {
+    "chai": ">=1.6",
+    "mocha": ">=1.9",
+    "should": "=1.2.2",
+    "superagent": "0.15.4",
+    "pow-mongoose-fixtures": "=0.3",
+    "mocha-phantomjs": "latest",
+    "phantomjs": "latest",
+    "grunt": "~0.4.1",
+    "grunt-mocha-phantomjs": "~0.3.0",
+    "grunt-contrib-connect": "~0.5.0"
+  }
 }

@@ -1,4 +1,3 @@
-
 module.exports = function(mongoose) {
 	
 	var DiagramElementSchema = new mongoose.Schema({

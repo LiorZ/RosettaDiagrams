@@ -1,19 +1,19 @@
-define(['Backbone','BackboneRelational','models/DiagramElement','models/DiagramElementCollection','models/globals'],
-		function(Backbone,BackboneRelational,DiagramElement,DiagramElementCollection,globals) {
+define(['Backbone','BackboneRelational','models/DiagramElementCollection','models/globals'],
+		function(Backbone,BackboneRelational,DiagramElementCollection,globals) {
 	var Diagram = Backbone.RelationalModel.extend({
 		idAttribute: "_id",
 		relations: [
 					{
 						type: Backbone.HasMany,
 						key: 'elements',
-						relatedModel: DiagramElement,
+						relatedModel:'DiagramElement',
 						collectionType: DiagramElementCollection,
 						reverseRelation: {
 							key: 'diagram',
 							includeInJSON: 'id'
 						}
 					}
-				]
+					]
 	});
 	
 	globals.Diagram = Diagram;
