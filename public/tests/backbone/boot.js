@@ -35,18 +35,17 @@ require.config({
     ]
 });
 
-console = window.console || function() {};
-
-
 
 mocha.setup({
     ui: 'bdd',
     ignoreLeaks: true	
 });
 
-var runMocha = function(test,Backbone,BackboneRelational,globals) {
+var runMocha = function(test,complex,Backbone,BackboneRelational,globals) {
 	Backbone.Relational.store.addModelScope(globals);
 	Backbone.sync = function(method, model, options){ }
+	console = window.console || function() {};
+	
 	if (window.mochaPhantomJS) { 
 		mochaPhantomJS.run(); 
 	}
@@ -55,5 +54,5 @@ var runMocha = function(test,Backbone,BackboneRelational,globals) {
 };
 
 require([
-         '/tests/backbone/test.js','Backbone','BackboneRelational','models/globals'
+         '/tests/backbone/basic.js','tests/backbone/complex_scenarios','Backbone','BackboneRelational','models/globals'
        ], runMocha);

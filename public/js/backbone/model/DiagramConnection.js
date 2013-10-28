@@ -2,7 +2,64 @@ define(['Backbone','BackboneRelational','models/globals','models/DiagramLink'],f
 	var DiagramConnection = DiagramLink.extend({
 		defaults:{
 			type:'connection'
+		},
+		initialize:function(options) {
+			if ( options.source ) {
+				this.listenTo(options.source,'destroy',this.destroy);
+			}
+			if ( options.target ) {
+				this.listenTo(options.target,'destroy',this.destroy);
+			}
+			this.listenTo(this,'change:source',this.set_new_source);
+			this.listenTo(this,'change:target',this.set_new_target);
+
+		},
+	
+		set_new_element:function(new_element,which) {
+			var prev_elem = this.previous(which);
+			if ( !_.isUndefined(prev_elem) ){
+				this.stopListening(prev_elem);
+			}
+			if ( !_.isUndefined(new_element) && !_.isNull(new_element) )
+				this.listenTo(new_element,'destroy',this.destroy);
+		},
+		
+		set_new_source: function(model,value,options){
+			this.set_new_element(value,'source');
+		},
+		
+		set_new_target:function(model,value,options) {
+			this.set_new_element(value,'target');
+		},
+		
+	changeConnectedElement: function(side,rawElement) { 
+		
+		var foundElement = undefined;
+		var elements = globals.ActiveDiagram.get('elements');
+		if ( elements == undefined || elements.length == 0) {
+			alert("ERROR: No elements in canvas");
+			return undefined;
 		}
+		elements.each(
+				function(element) {
+					var jointObj = element.get('jointObj');  
+					if ( jointObj == rawElement ) {
+						foundElement = element; 
+					}
+				}
+		);
+		
+		if ( foundElement == undefined ) {
+			alert("Error / Bug: can't find the element in the model");
+			return;
+		}
+		if ( side == "end" ) {
+			console.log("Setting target element to be " + foundElement.get('attributes').byKey('name').get('value'));
+			this.set("target",foundElement);
+		}else { 
+			this.set("source",foundElement);
+		}
+	}
 	});
 	
 	globals.DiagramConnection = DiagramConnection;

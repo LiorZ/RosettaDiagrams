@@ -30,7 +30,11 @@ define(['chai','models/Diagram','models/globals'],function(chai,Diagram,model_gl
       
       it("Adding attributes to first element" , function(done) {
     	 globals.first_element.add_attribute("bb","1");
-    	 expect(globals.first_element.get('attributes').size()).to.equal(1);
+    	 globals.first_element.add_attribute("name","element_0");
+    	 
+    	 globals.second_element.add_attribute("name","element_1");
+    	 expect(globals.first_element.get('attributes').size()).to.equal(2);
+    	 expect(globals.second_element.get('attributes').size()).to.equal(1);
     	 assert.ok(globals.first_element.get('subdiagram'));
     	 done();
       });
@@ -53,7 +57,7 @@ define(['chai','models/Diagram','models/globals'],function(chai,Diagram,model_gl
       });
       
       it("Creating a task operation element", function(done) {
-    	  globals.task_operation_element = globals.diagram.create_element({name:'IncludeCurrent', type:'task_operation'});
+    	  globals.task_operation_element = globals.diagram.create_element({name:'IncludeCurrent', type:'task_operation', attributes:[{key:'name',value:'task_op_element'}]});
     	  globals.task_operation_element.connect_element();
      	  assert.ok(model_globals.pendingConnection,"Temp connection object exists");
      	  globals.first_element.connect_element();
@@ -65,7 +69,14 @@ define(['chai','models/Diagram','models/globals'],function(chai,Diagram,model_gl
      	  var task_attr = attributes.byKey('task_operations');
      	  assert.ok(task_attr,"Task operation attribute exists");
      	  done();
-     	  
+      });
+      
+      it("Deleting the task operation element", function(done){
+    	  globals.task_operation_element.destroy();
+    	  var attributes = globals.first_element.get('attributes');
+     	  var task_attr = attributes.byKey('task_operations');
+     	  expect(task_attr).to.be.undefined;
+    	  done();
       });
    });
    

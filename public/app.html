@@ -4,8 +4,10 @@
 		<meta http-equiv='cache-control' content='no-cache'>
 		<meta http-equiv='expires' content='0'>
 		<meta http-equiv='pragma' content='no-cache'>
-		<script type="text/javascript" src="js/lib/head/head.js"></script>
-		<script type="text/javascript" src="js/loader.js"></script>
+		<!-- <script type="text/javascript" src="js/lib/head/head.js"></script> -->
+		<!-- <script type="text/javascript" src="js/loader.js"></script> -->
+		
+		<script src="/js/lib/requirejs/require.js" data-main="/js/boot.js"></script>
 		<link rel="stylesheet" href="js/lib/jquery-ui/plugins/tablesorter/themes/blue/style.css"/>
 
 		<script type="text/template" id="attribute_template">
@@ -257,7 +259,7 @@
 
 					</div>
 					<div id='menu_resizer' style='height:99%; width:340px;'>
-						<div id="menu" style='float:left; '>
+						<div id="menu" style='float:left;'>
 
 							<h3>Movers</h3>
 							<div id='movers_menu'>

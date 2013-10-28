@@ -1,11 +1,13 @@
-define(['Backbone','BackboneRelational','models/BaseAttribute','models/globals'],function(Backbone,BackboneRelational,BaseAttribute,globals) {
+define(['Backbone','BackboneRelational','models/BaseAttribute','models/globals'],
+		function(Backbone,BackboneRelational,BaseAttribute,globals) {
+	
 	var TaskOAttribute = BaseAttribute.extend({
 		defaults:{
 			type:'task_operation'
 		},
 		initialize: function(options) {
-   	      this.constructor.__super__.initialize.apply(this, [options])
-			this.set('moversList',new app.DiagramElementList());
+			this.constructor.__super__.initialize.apply(this, [options]);
+			this.set('moversList',new Backbone.Collection());
 			this.set('key','task_operations');
 			this.listenTo( this.get('moversList'), 'add remove change', this.reset_value );
 		},
@@ -28,11 +30,17 @@ define(['Backbone','BackboneRelational','models/BaseAttribute','models/globals']
 		
 		add_task: function(new_task_element) {
 			var name_attr = new_task_element.get('attributes').byKey('name');
+			if ( _.isUndefined(name_attr) ) {
+				throw new Error("No Name attribute");
+			}
 			this.listenTo(name_attr,'change:value',this.reset_value);
 			this.get('moversList').add(new_task_element);
 		},
 		remove_task: function(task) {
 			var name_attr = task.get('attributes').byKey('name');
+			if ( _.isUndefined(name_attr) ) {
+				throw new Error("No Name attribute");
+			}
 			this.stopListening(name_attr);
 			this.get('moversList').remove(task);
 		}

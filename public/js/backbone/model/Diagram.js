@@ -13,10 +13,48 @@ define(['Backbone','BackboneRelational','models/DiagramElementCollection','model
 							includeInJSON: 'id'
 						}
 					}
-					],
+		],
+		
 		create_element: function(elem_obj) {
 			return this.get('elements').create(elem_obj);
-		}
+		},
+		
+		find_first_element_in_diagram: function() {
+			var elements = this.get('elements').filter(function(elem){
+				return elem.get('type') != 'task_operation'
+			});
+			if ( elements.length == 1 ) {
+				return elements.at(0);
+			}
+			
+			var first = _.find(elements,function(elem) {
+				var connections = elem.get('pointed_by').filter(function(con){ return con.get('type') == 'connection' });
+				return  ( connections.length == 0 && elem.get('connections').size() > 0 );
+			});
+			
+			return first;
+		},
+		
+		get_ordered_elements:function() {
+			var first_element = this.find_first_element_in_diagram();
+			if ( _.isUndefined(first_element) || _.isNull(first_element) ) {
+				return [];
+			}
+			var connections = first_element.get('connections');
+			if ( connections.size() == 0 ){
+				return [first_element];
+			}
+			var order = [first_element];
+			while (connections.size() > 0) {
+				var con = connections.at(0);
+				var target = con.get('target');
+				order.push(target);
+				connections = target.get('connections');
+			}
+			
+			return order;
+	}
+		
 	});
 	
 	globals.Diagram = Diagram;
@@ -92,6 +130,7 @@ define(['Backbone','BackboneRelational','models/DiagramElementCollection','model
 //			var cons = this.get('connections');
 //			return cons.bySource(source);
 //		},
+	
 //		connection_by_target:function(target){ 
 //			var cons = this.get('connections');
 //			return cons.byTarget(target);

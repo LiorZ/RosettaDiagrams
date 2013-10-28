@@ -1,4 +1,4 @@
-define(['Backbone','models/globals'],function(Backbone,model_globals) {
+define(['Backbone','BackboneRelational','models/globals'],function(Backbone,R,model_globals) {
 	var DiagramLink =  Backbone.RelationalModel.extend({
 		idAttribute: "_id",
 		subModelTypes:{
@@ -16,7 +16,11 @@ define(['Backbone','models/globals'],function(Backbone,model_globals) {
 						type: Backbone.HasOne,
 						key: 'target',
 						relatedModel: 'DiagramElement',
-						includeInJSON:'id'
+						includeInJSON:'id',
+						reverseRelation: {
+							key:'pointed_by',
+							includeInJSON: false,
+						}
 					}
 				]
 	});

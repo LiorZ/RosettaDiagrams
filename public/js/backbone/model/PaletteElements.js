@@ -1,4 +1,4 @@
-define(['Backbone','DiagramElementCollection','models/IFMover'],function(Backbone,DiagramElementCollection,IFMover) {
+define(['Backbone','models/DiagramElementCollection','models/IFMover'],function(Backbone,DiagramElementCollection,IFMover) {
 	var PaletteElements = DiagramElementCollection.extend({
 		add: function(model) {
 			if ( model instanceof Array){

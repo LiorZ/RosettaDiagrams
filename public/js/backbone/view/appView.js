@@ -47,8 +47,10 @@
 //	app.MainDiagram = new app.Diagram();
 //	app.ActiveDiagram = app.MainDiagram;
 	
-define(['Backbone','views/globals','views/CodeView','models/globals','models/PaletteElements','views/DiagramElementView','views/DiagramConnectionView','views/InformationMessageView'],
-		function(Backbone,view_globals,model_globals,PaletteElements,DiagramElementView,DiagramConnectionView,InformationMessageView) {
+define(['Backbone','views/globals','models/globals','models/PaletteElements','views/DiagramElementView','views/DiagramConnectionView','views/InformationMessageView','views/CodeView'
+        ,'views/DiagramElementPropertiesView', 'views/MenuView','views/PaletteView'],
+		function(Backbone,view_globals,model_globals,PaletteElements,DiagramElementView,DiagramConnectionView,InformationMessageView,CodeView,DiagramElementPropertiesView,MenuView,
+				PaletteView) {
 	var AppView = Backbone.View.extend({
 		main_joint: undefined,
 		el: '#container',
@@ -62,18 +64,19 @@ define(['Backbone','views/globals','views/CodeView','models/globals','models/Pal
 		},
 		
 		handle_key_press: function(e) {
-			if ( e.keyCode == 27 && app.pendingConnection != undefined) { //ESC char
+			if ( e.keyCode == 27 ) { //ESC char
 				model_globals.pendingConnection = undefined;
 				view_globals.event_agg.trigger('connection_mode_ended');
 			}
 		},
-		initialize: function() {
+		initialize: function(options) {
 			this.add_element_listeners();
+			var palette_model = options.palette;
 			$(document).bind('keyup',this.handle_key_press);
 			this.addPropertiesView();
 			this.addCodeView();
 			this.addMenuView();
-			this.addPaletteView();
+			this.addPaletteView(palette_model);
 			this.addInformationMessageContainer();
 			_.bindAll(this.show_main_canvas);
 			this.listenTo(view_globals.event_agg,'show_main_canvas',this.show_main_canvas);
@@ -96,12 +99,13 @@ define(['Backbone','views/globals','views/CodeView','models/globals','models/Pal
 			this.add_element_listeners();
 		},
 		
-		addPaletteView:function() {
-			var paletteView = new PaletteView({model: new PaletteElements()});
-			paletteView.render();
+		addPaletteView:function(model) {
+			this.paletteView = new PaletteView({model: model});
+			this.paletteView.render();
 		},
+		
 		addPropertiesView: function() {
-			var propertiesView = new app.DiagramElementPropertiesView({eventagg: view_globals.event_agg});
+			this.propertiesView = new DiagramElementPropertiesView({eventagg: view_globals.event_agg});
 		},
 		
 		transformXMLToDiagram: function(xml_str) {
@@ -155,7 +159,7 @@ define(['Backbone','views/globals','views/CodeView','models/globals','models/Pal
 		},
 		
 		addMenuView: function() {
-			var menuView = new app.MenuView({eventagg: view_globals.event_agg});
+			this.menuView = new MenuView({eventagg: view_globals.event_agg});
 		},
 		/*
 		 * Returns a position for the new page , in the middle of the editor, takes into account translate and zoom..
@@ -204,8 +208,10 @@ define(['Backbone','views/globals','views/CodeView','models/globals','models/Pal
 			model_globals.MainDiagram.set('jointObj',this.main_joint);
 			this.$("#attribute_list").tablesorter();
 			this.$("button").button();
-			this.$("#menu").accordion({heightStyle: "fill", autoHeight:true});
+			this.$("#menu").accordion({heightStyle: "fill", autoHeight:false});
+			$("#container").show();
 			this.$("#menu").accordion('refresh');
+
 		}
 		
 	});

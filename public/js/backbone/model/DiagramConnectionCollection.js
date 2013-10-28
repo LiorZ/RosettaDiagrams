@@ -35,7 +35,6 @@ define(['Backbone','models/DiagramConnection','models/DiagramContainment','model
 			}
 			return elements;
 		},
-		
 		bySomethingNoTasks:function(elem,which) {
 			var elements;
 			if ( which ) {

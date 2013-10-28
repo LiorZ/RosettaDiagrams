@@ -1,4 +1,4 @@
-define(['models/globals','view/globals','Backbone'],function(model_globals,view_globals,Backbone){
+define(['models/globals','views/globals','Backbone'],function(model_globals,view_globals,Backbone){
 	var DiagramConnectionView = Backbone.View.extend({
 		initialize: function() {
 			var model = this.model;

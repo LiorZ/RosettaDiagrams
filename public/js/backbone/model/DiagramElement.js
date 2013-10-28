@@ -100,12 +100,10 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 			if ( _.isUndefined( model_globals.pendingConnection ) ) {
 			
 				if ( type == 'task_operation' ) {
-//					model_globals.pendingConnection = new DiagramContainment({source: this, type: Joint.dia.uml.generalizationArrow});
 					model_globals.pendingConnection = { source: this, type: 'containment'};
 				}
 				else {
 					model_globals.pendingConnection = {source: this, type:'connection'};
-//					model_globals.pendingConnection = new DiagramConnection({source: this, type: Joint.dia.uml.dependencyArrow});
 				}
 			
 				view_globals.event_agg.trigger('connection_mode_activated',{info_msg: {message: "Click on the element you want to connect ... (<b>ESC</b> to cancel) "}});
@@ -118,7 +116,68 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 				model_globals.pendingConnection = undefined;
 
 			}
+		},
+		get_name_attribute: function() {
+			var attrs = this.get('attributes');
+			var name_arr = attrs.filter(function(element){
+				return element.get('key') == 'name';
+			});
+			if ( name_arr.length == 0 ) {
+				return undefined;
+			}
+			return name_arr[0];
+		},
+		
+		get_nested_elements_string:function(protocol_form) {
+			var subdiagram = this.get('subdiagram');
+			var string ='';
+			if (subdiagram == undefined || subdiagram.is_empty() )
+				return undefined;
+			var ordered_elements = subdiagram.get_ordered_elements();
+			_.each(ordered_elements,function(element){
+				if (protocol_form)
+					string += element.get_protocols_string();
+				else 
+					string += element.get_declaration_string();
+			});
+			return string;
+		},
+		
+		get_declaration_string:function() {
+			var string = '&lt;' + this.get('name') + ' ';
+			var attr_non_empty = this.get('attributes').nonEmpty();
+			_.each(attr_non_empty,function(attr){
+				string += attr.get('key') + '=' + "\"" + attr.get('value')+ "\" ";
+			});
+			
+			var nested_elements_string = this.get_nested_elements_string(true);
+			if (nested_elements_string == undefined)
+				string += '/&gt;';
+			else { 
+				string += '&gt;'+ nested_elements_string + '&lt;/'+this.get('name')+'&gt;';
+			}
+			
+			var nested_elements_non_protocol = this.get_nested_elements_string(false);
+			if (!_.isUndefined(nested_elements_non_protocol )) {
+				string = nested_elements_non_protocol + string;
+			}
+			return string;
+		}, 
+	
+	get_protocols_string: function() {
+		if ( !this.get('show_in_protocols') ){
+			return '';
 		}
+		var attributes = this.get('attributes');
+		var name_attr = attributes.byKey('name');
+		if ( name_attr == undefined ) {
+			alert("Can't find name attribute");
+			return;
+		}
+		var string = '&lt;Add ' + this.get('typeObj').add_protocol + '=' + name_attr.get('value')  + '/&gt;';
+		return string;
+	},
+	
 	});
 	model_globals.DiagramElement = DiagramElement;
 	
