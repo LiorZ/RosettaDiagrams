@@ -80,7 +80,6 @@ define(['chai','models/Diagram','models/globals'],function(chai,Diagram,model_gl
 		 expect(order[2]).to.eql(e4);
 		 expect(order[3]).to.eql(e2);
 		 
-		 console.log(d.get_protocol_string());
 		 done();
 		 
 	 });

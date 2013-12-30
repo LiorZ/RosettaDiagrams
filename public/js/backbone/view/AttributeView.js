@@ -30,8 +30,7 @@ define(['Backbone'], function(Backbone) {
 		update_model:function() { 
 			var key = this.$('#attr_key').val();
 			var value = this.$('#attr_value').val();
-			this.model.set('key',key);
-			this.model.set('value',value);
+			this.model.set({key:key,value:value});
 		},
 		
 		update_model_keypressed: function(e) { 

@@ -9,14 +9,17 @@ define(['Backbone','BackboneRelational','models/BaseAttribute','models/globals']
 			this.constructor.__super__.initialize.apply(this, [options]);
 			this.set('moversList',new Backbone.Collection());
 			this.set('key','task_operations');
-			this.listenTo( this.get('moversList'), 'add remove change', this.reset_value );
+			this.listenTo( this.get('moversList'), 'add remove', this.reset_value );
 		},
 		
 		reset_value:function() {
+			
 			var movers = this.get('moversList');
 			
-			if ( movers.length == 0 )
+			if ( movers.length == 0 ){
 				this.destroy();
+				return;
+			}
 			
 			var value_arr = [];
 			movers.each(function(mover){
@@ -36,6 +39,7 @@ define(['Backbone','BackboneRelational','models/BaseAttribute','models/globals']
 			this.listenTo(name_attr,'change:value',this.reset_value);
 			this.get('moversList').add(new_task_element);
 		},
+		
 		remove_task: function(task) {
 			var name_attr = task.get('attributes').byKey('name');
 			if ( _.isUndefined(name_attr) ) {

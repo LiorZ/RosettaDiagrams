@@ -7,7 +7,7 @@ define(['Backbone','BackboneRelational','models/DiagramElementCollection','model
 						type: Backbone.HasMany,
 						key: 'elements',
 						relatedModel:'DiagramElement',
-						collectionType: DiagramElementCollection,
+						collectionType: 'DiagramElementCollection',
 						reverseRelation: {
 							key: 'diagram',
 							includeInJSON: 'id'
@@ -18,13 +18,15 @@ define(['Backbone','BackboneRelational','models/DiagramElementCollection','model
 		create_element: function(elem_obj) {
 			return this.get('elements').create(elem_obj);
 		},
-		
+		is_empty: function() { 
+			return (this.get('elements') == undefined || this.get('elements').length == 0 );
+		},
 		find_first_element_in_diagram: function() {
 			var elements = this.get('elements').filter(function(elem){
 				return elem.get('type') != 'task_operation'
 			});
 			if ( elements.length == 1 ) {
-				return elements.at(0);
+				return elements[0];
 			}
 			
 			var first = _.find(elements,function(elem) {
@@ -33,6 +35,10 @@ define(['Backbone','BackboneRelational','models/DiagramElementCollection','model
 			});
 			
 			return first;
+		},
+		
+		add_element:function(element){
+			this.get('elements').add(element);
 		},
 		
 		get_ordered_elements:function() {
@@ -53,7 +59,11 @@ define(['Backbone','BackboneRelational','models/DiagramElementCollection','model
 			}
 			
 			return order;
-	}
+		},
+		element_by_jointObj: function(jointObj) {
+			var elements = this.get('elements');
+			return elements.byJointObject(jointObj);
+		},
 		
 	});
 	

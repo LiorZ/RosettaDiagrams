@@ -1,4 +1,5 @@
-define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone'],function(model_globals,view_globals,DiagramVerifier,Backbone) {
+define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone','views/DiagramConnectionView'],
+		function(model_globals,view_globals,DiagramVerifier,Backbone,DiagramConnectionView) {
 	var DiagramElementView = Backbone.View.extend({
 		tagName: 'rect',
 		eventagg: undefined,
@@ -26,8 +27,9 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 			
 			this.$el = jQuery(jointObj.wrapper.node);
 			this.model.set('jointObj',jointObj);
+			this.listenTo(this.model,'change',this.refresh_attributes);
 			this.listenTo(this.model,"change:name",this.model_changed);
-			this.listenTo(this.model,"change:attributes",this.refresh_attributes);
+			this.listenTo(this.model.get('attributes'),"change",this.refresh_attributes);
 			this.listenTo(this.model, 'destroy',this.destroyElement);
 			_.bindAll(this, "toggleHighlight");
 			view_globals.event_agg.bind("toggleDeleteMode",this.toggleDeleteMode);
@@ -41,8 +43,8 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 			this.refresh_attributes();
 			
 			var subdiagram = this.model.get('subdiagram');
-			this.listenTo(subdiagram,'add:element',this.show_subdiagram_icon);
-			this.listenTo(subdiagram,'remove:element',this.hide_subdiagram_icon);
+			this.listenTo(subdiagram,'add:elements',this.show_subdiagram_icon);
+			this.listenTo(subdiagram,'remove:elements',this.hide_subdiagram_icon);
 		},
 		
 		show_subdiagram_icon:function() {
@@ -75,7 +77,7 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 			
 		//Toggles the highlighting of an element upon clicking on it.
 		toggleHighlight: function(element){ 
-			if ( this.model.get('parent_diagram') != model_globals.ActiveDiagram ) {
+			if ( this.model.get('diagram') != model_globals.ActiveDiagram ) {
 				return;
 			}
 			var jointObj = this.model.get('jointObj');
@@ -98,6 +100,7 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 		},
 		
 		refresh_attributes: function() {
+			console.log("Refreshing attributes");
 			var raw_attributes = this.model.get('attributes');
 			if (raw_attributes == undefined) {
 				alert("ERROR: attributes are undefined");
@@ -112,18 +115,18 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 			jointObj.properties.actions.inner = [];
 			
 			for (var i=0; i<Math.min(view_globals.ATTR_IN_DIAGRAM_VIEW,attributes.length); ++i) {
-				jointObj.properties.actions.inner.push(attributes[i].get("key"));
 				var actual_value = attributes[i].get('value')
 				var value_attr = actual_value.length>9?actual_value.substr(0,9)+'...':actual_value;
-				jointObj.properties.actions.inner.push(value_attr);
+				jointObj.properties.actions.inner.unshift(value_attr);
+				jointObj.properties.actions.inner.unshift(attributes[i].get("key"));
 			}
 			jointObj.zoom();
 		},
 		
 		which_menu_items: function() {
 			//Not allowing more than one outgoing connection:
-			var source_connection = model_globals.ActiveDiagram.connection_by_source(this.model);
-			if ( this.model.get('type') != 'task_operation' && this.model.get('type') != 'logic' && !_.isUndefined(source_connection)) {
+			var source_connection = this.model.get('connections');
+			if ( this.model.get('type') != 'task_operation' && this.model.get('type') != 'logic' && source_connection.size() > 0 ) {
 				return ['#btn_connect'];
 			}else { 
 				return undefined;
@@ -143,7 +146,7 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 		
 		mouseUp: function(e) { 
 			this.trigger_menu();
-			view_globals.event_agg.EventAgg.trigger('editDiagramElement',this.model);
+			view_globals.event_agg.trigger('editDiagramElement',this.model);
 		},
 		
 		mouseenter: function(e) {
@@ -152,7 +155,7 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 		},
 		
 		mouseleave: function(e){
-			view_globals.event_agg.EventAgg.trigger('hide_menu_delay');
+			view_globals.event_agg.trigger('hide_menu_delay');
 		},
 		
 		mouseDown: function(e) {
@@ -160,21 +163,27 @@ define(['models/globals','views/globals','controllers/DiagramVerifier','Backbone
 			var connectionMode = this.model.get("connectionReady");
 			view_globals.event_agg.trigger('hide_menu_now');
 			if ( connectionMode == true ) { 
-				if ( model_globals.pendingConnection != undefined ) { 
-					model_globals.pendingConnection.set("target",this.model);
-					var status = DiagramVerifier.is_valid_connection(model_globalspendingConnection);
-					if ( status.valid ){
-						view_globals.event_agg.trigger('connection_mode_deactivated');
-						model_globals.ActiveDiagram.add_connection(model_globals.pendingConnection);
-					}else {
-						view_globals.event_agg.trigger('wrong_connection_created',{info_msg: {message:status.message, type:'error',title:'Error: '}});
-						model_globals.pendingConnection.destroy();
-					}
-					
-					this.model.set('connectionReady',false);
-					model_globals.pendingConnection = undefined;
+//				if ( model_globals.pendingConnection != undefined ) { 
+//					model_globals.pendingConnection.set("target",this.model);
+//					var status = DiagramVerifier.is_valid_connection(model_globalspendingConnection);
+//					if ( status.valid ){
+//						view_globals.event_agg.trigger('connection_mode_deactivated');
+//						model_globals.ActiveDiagram.add_connection(model_globals.pendingConnection);
+//					}else {
+//						view_globals.event_agg.trigger('wrong_connection_created',{info_msg: {message:status.message, type:'error',title:'Error: '}});
+//						model_globals.pendingConnection.destroy();
+//					}
+//					
+//					this.model.set('connectionReady',false);
+//					model_globals.pendingConnection = undefined;
+//
+//				}
+				var connection = this.model.connect_element();
+				new DiagramConnectionView({model:connection});
+				view_globals.event_agg.trigger('connection_mode_deactivated');
+				this.model.set('connectionReady',false);
 
-				}
+				
 			}
 		}
 		

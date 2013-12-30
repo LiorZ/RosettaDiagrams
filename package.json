@@ -16,7 +16,8 @@
     "async": "=0.2.9",
     "passport-google": "latest",
     "passport": "latest",
-    "mongoose-findorcreate": "latest"
+    "mongoose-findorcreate": "latest",
+    "mongoose-schema-formatdate":"latest"
   },
   "devDependencies": {
     "chai": ">=1.6",

@@ -121,7 +121,7 @@ define(['views/globals','views/SubdiagramView','Backbone'],function(view_globals
 		},
 		hide_menu_delay: function(time_out){
 			if ( time_out == undefined )
-				time_out = consts.MENU_TIMEOUT;	
+				time_out = view_globals.MENU_TIMEOUT;	
 			clearTimeout(this.timeoutId);
 			var obj = this.$el;
 			var t = this;
@@ -137,7 +137,6 @@ define(['views/globals','views/SubdiagramView','Backbone'],function(view_globals
 			this.connectionReady = true;
 			console.log("Connection mode is " + this.connectionReady);
 			this.model.connect_element();
-
 		}
 	});
 	

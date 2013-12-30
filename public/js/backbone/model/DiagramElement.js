@@ -1,5 +1,7 @@
-define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','models/Diagram','models/DiagramLink','models/DiagramConnection','models/DiagramContainment','models/BaseAttribute','models/AttributeList','models/globals','views/globals'],
-		function(Backbone,BackboneRelational,DiagramConnectionCollection,Diagram,DiagramLink,DiagramConnection,DiagramContainment,BaseAttribute,AttributeList,model_globals,view_globals) {
+define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','models/Diagram','models/DiagramLink','models/DiagramConnection','models/DiagramContainment'
+        ,'models/BaseAttribute','models/Attribute','models/AttributeList','models/globals','views/globals'],
+		function(Backbone,BackboneRelational,DiagramConnectionCollection,Diagram,DiagramLink,DiagramConnection,DiagramContainment,BaseAttribute,Attribute,
+				AttributeList,model_globals,view_globals) {
 	var DiagramElement = Backbone.RelationalModel.extend({
 		idAttribute: "_id",
 		relations: [
@@ -18,7 +20,7 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 						type:Backbone.HasMany,
 						key:'attributes',
 						relatedModel:'BaseAttribute',
-						collectionType:AttributeList,
+						collectionType:'AttributeList',
 						reverseRelation: {
 							key: 'element',
 							includeInJSON: 'id'
@@ -58,12 +60,17 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 				this.set('typeObj',view_globals.Attributes[this.get('type')]);
 				this.set('width',view_globals.DIAGRAM_ELEMENT_DEFAULT_WIDTH);
 				this.set('height',view_globals.DIAGRAM_ELEMENT_DEFAULT_HEIGHT);
+
 				
 				var attributes = this.get('attributes');
+				if ( _.isUndefined(attributes.byKey('name') ) )
+					this.set_name_attribute('element_'+(model_globals.elementCounter++));
 				
+				this.listenTo(this.get('connections'),'change add remove',function() {this.trigger('change')});
+				this.listenTo(attributes,'change add remove',function() { this.trigger('change')});
 				this.listenTo(subdiagram,'add:element',this.element_added_subdiagram);
 				this.listenTo(subdiagram,'add:connection',this.connection_added);
-				this.listenTo(attributes,"change",this.attributes_changed);
+//				this.listenTo(attributes,"change",this.attributes_changed);
 				this.listenTo(attributes,"add",this.attributes_changed);
 				this.listenTo(attributes,"remove",this.attributes_changed);
 				this.listenTo(view_globals.event_agg,'connection_mode_activated',this.connection_mode_activated);
@@ -76,6 +83,37 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 			}else {
 				return "/diagram/" + this.get('diagram').id + "/element"/ + this.id;
 			}
+		},
+		
+		set_name_attribute:function(name_value) {
+			var attr = this.get('attributes');
+			if ( attr === undefined ) {
+				attr = new AttributeList();
+				this.set('attributes',attr);
+			}
+			var name_arr = this.get_name_attribute();
+			if (name_arr == undefined || name_arr.length == 0){
+				attr.add(new Attribute({key:'name',value:name_value}));
+				return;
+			}
+			
+			if ( name_arr.length > 1 ) {
+				alert ("Error! more than one name attributes found.");
+				return;
+			}
+	
+			var name_attr = name_arr[0];
+			name_attr.set('value',name_value);
+		
+		
+		},
+		add_attributes:function(json_attrs) {
+			var attributes = this.get('attributes');
+			if ( attributes == undefined ){
+				attributes = new AttributeList();
+				this.set('attributes',attributes);
+			}
+			attributes.add(json_attrs);
 		},
 		add_attribute: function(key,value){
 			this.get('attributes').create({key:key,value:value});
@@ -112,9 +150,9 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 				//TODO: check if both elements are from the same diagram ...
 				//TODO: check if target isn't the same as source
 				model_globals.pendingConnection.target = this;
-				model_globals.pendingConnection.source.get('connections').create(model_globals.pendingConnection);
+				var new_connection = model_globals.pendingConnection.source.get('connections').create(model_globals.pendingConnection);
 				model_globals.pendingConnection = undefined;
-
+				return new_connection;
 			}
 		},
 		get_name_attribute: function() {
@@ -151,7 +189,7 @@ define(['Backbone','BackboneRelational','models/DiagramConnectionCollection','mo
 			});
 			
 			var nested_elements_string = this.get_nested_elements_string(true);
-			if (nested_elements_string == undefined)
+			if (nested_elements_string === undefined)
 				string += '/&gt;';
 			else { 
 				string += '&gt;'+ nested_elements_string + '&lt;/'+this.get('name')+'&gt;';

@@ -30,9 +30,7 @@ define(['chai','models/Diagram','models/globals'],function(chai,Diagram,model_gl
       
       it("Adding attributes to first element" , function(done) {
     	 globals.first_element.add_attribute("bb","1");
-    	 globals.first_element.add_attribute("name","element_0");
     	 
-    	 globals.second_element.add_attribute("name","element_1");
     	 expect(globals.first_element.get('attributes').size()).to.equal(2);
     	 expect(globals.second_element.get('attributes').size()).to.equal(1);
     	 assert.ok(globals.first_element.get('subdiagram'));

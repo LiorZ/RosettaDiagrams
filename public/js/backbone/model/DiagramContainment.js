@@ -11,6 +11,7 @@ define(['Backbone','BackboneRelational','models/DiagramConnection','models/globa
 		      this.on('change:target',this.change_target);
 		      this.on('destroy',this.remove_tasks); //Remove all the task operations from the target.
 		},
+		
 		remove_tasks:function() {
 			var attributes = this.get('target').get('attributes');
 			var name = this.get('source').get('attributes').byKey('name');
@@ -85,6 +86,7 @@ define(['Backbone','BackboneRelational','models/DiagramConnection','models/globa
 				alert("Attributes in target doesn't exist!");
 				return;
 			}	
+			
 			var tasks = new_attributes.byKey('task_operations');
 			if ( tasks == undefined ) {
 				new_attributes.add(new TaskOAttribute({key: 'task_operations'}));

@@ -5,7 +5,7 @@ define(['models/globals','views/globals','Backbone'],function(model_globals,view
 			var source = model.get('source');
 			var target =  model.get('target');
 			var target_joint = target.get('jointObj');
-			var jointObj = source.get('jointObj').joint(target_joint,_.extend(model.get('type'),{label:this.model.get("title")}));
+			var jointObj = source.get('jointObj').joint(target_joint,_.extend(view_globals.Attributes[model.get('type')].jointObj,{label:this.model.get("title")}));
 			var dom_obj = jointObj.dom.connection[jointObj.dom.connection.length-1];
 			
 			this.$el = $(dom_obj.node);
@@ -23,8 +23,9 @@ define(['models/globals','views/globals','Backbone'],function(model_globals,view
 				var rawElement = this.wholeShape;
 				
 				var element = model_globals.ActiveDiagram.element_by_jointObj(this);
-				var target_by_connection = model_globals.ActiveDiagram.connection_by_target(element);
-				var source_by_connection = model_globals.ActiveDiagram.connection_by_source(element);
+				var target_by_connection = element.get('pointed_by').at(0);
+				var source_by_connection = element.get('connections').at(0);
+				
 				if ( source.get('type') != 'task_operation' && (side == 'end' && target_by_connection != undefined && target_by_connection != view.model) || 
 						(side == 'start' && source_by_connection != undefined && source_by_connection != view.model)) {
 					view.undo_connection(side);

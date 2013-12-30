@@ -12,7 +12,7 @@ define(['Backbone','models/DiagramElementCollection','models/IFMover'],function(
 				Backbone.Collection.prototype.add.call(this, model);
 			}
 		},
-		url: '/js/json/elements.json',
+		url: '/js/rosetta_diagrams/js/json/elements.json',
 		comparator: function(element) { 
 			return element.get('name');
 		} 

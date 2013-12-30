@@ -1,4 +1,4 @@
-define(['Backbone'],function(Backbone){
+define(['Backbone','Joint_dia_uml'],function(Backbone,j){
 	var view_globals = {
 			elementCounter: 0,
 			Attributes: {
@@ -34,7 +34,14 @@ define(['Backbone'],function(Backbone){
 					jointObjColor: "90-#000-yellow:1-#fff",
 					codeTemplate: '#xml_movers',
 					palette_div: '#containers_menu'
+				},
+				'connection':{
+					jointObj: Joint.dia.uml.dependencyArrow
+				},
+				'containment':{
+					jointObj: Joint.dia.uml.generalizationArrow
 				}
+				
 			},
 			
 			ATTR_IN_DIAGRAM_VIEW: 5,

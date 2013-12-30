@@ -9,7 +9,13 @@ require.config({
         BackboneRelational: '/js/lib/backbone-relational/backbone-relational',
         'models'		: '/js/backbone/model/',
         'views'		: '/js/backbone/view/',
-        'chai': '/tests/backbone/chai/chai'
+        'chai': '/tests/backbone/chai/chai',
+        Joint: '/js/lib/joint/joint',
+        Raphael:'/js/lib/joint/raphael',
+        json2:'/js/lib/joint/json2',
+        Joint_dia_uml:'/js/lib/joint/joint.dia.uml',
+        Joint_dia_org:'/js/lib/joint/joint.dia.org',
+        Joint_dia:'/js/lib/joint/joint.dia'
 
     },
     shim: {
@@ -26,6 +32,22 @@ require.config({
         'BackboneRelational':{
         	deps:['Backbone'],
         	exports: 'BackboneRelational'
+        },
+        Joint: {
+        	deps:['Raphael','json2'],
+        	exports:'Joint'
+        },
+        Joint_dia_org: {
+        	deps:['Joint_dia'],
+        	exports:'Joint_dia_uml'
+        },
+        Joint_dia_uml: {
+        	deps:['Joint_dia'],
+        	exports:'Joint_dia_org'
+        },
+        Joint_dia:{
+        	deps:['Joint'],
+        	exports:'Joint_dia'
         },
     },
     priority: [

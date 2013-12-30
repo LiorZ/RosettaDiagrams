@@ -1,28 +1,33 @@
 require.config({
   paths: {
-    jQuery: '/js/lib/jquery/jquery.min',
-    Underscore: '/js/lib/underscore/underscore-min',
-    Backbone: '/js/lib/backbone/backbone',
-    models:'/js/backbone/model/',
-    controllers:'/js/backbone/controllers/',
-    views:'/js/backbone/view/',
-    BackboneRelational: '/js/lib/backbone-relational/backbone-relational',
-    jQueryUI: '/js/lib/jquery-ui/jqueryui',
-    prettify: '/js/lib/prettify/prettify',
-    Joint: '/js/lib/joint/joint',
-    Raphael:'/js/lib/joint/raphael',
-    json2:'/js/lib/joint/json2',
-    Joint_dia_uml:'/js/lib/joint/joint.dia.uml',
-    Joint_dia_org:'/js/lib/joint/joint.dia.org',
-    Joint_dia:'/js/lib/joint/joint.dia',
-    tablesorter: '/js/lib/jquery-ui/plugins/tablesorter/jquery.tablesorter',
-    EasingMenu: '/js/behavior/EasingMenu'
+    jQuery: 'lib/jquery/jquery.min',
+    Underscore: 'lib/underscore/underscore-min',
+    Backbone: 'lib/backbone/backbone',
+    models:'backbone/model/',
+    controllers:'backbone/controllers/',
+    views:'backbone/view/',
+    BackboneRelational: 'lib/backbone-relational/backbone-relational',
+    jQueryUI: 'lib/jquery-ui/jqueryui',
+    prettify: 'lib/prettify/prettify',
+    Joint: 'lib/joint/joint',
+    Raphael:'lib/joint/raphael',
+    json2:'lib/joint/json2',
+    Joint_dia_uml:'lib/joint/joint.dia.uml',
+    Joint_dia_org:'lib/joint/joint.dia.org',
+    Joint_dia:'lib/joint/joint.dia',
+    tablesorter: 'lib/jquery-ui/plugins/tablesorter/jquery.tablesorter',
+    EasingMenu: 'behavior/EasingMenu',
+    vkbeautify: 'lib/vkbeautify/vkbeautify.0.99.00.beta'
   },
 
   shim: {
 	'Underscore': {
 		deps:['jQuery'],
 		exports:'_'
+	},
+	vkbeautify: {
+		deps:['jQuery'],
+		exports:'vkbeautify'
 	},
 	EasingMenu: {
 		deps:['jQueryUI'],
@@ -72,7 +77,7 @@ require.config({
   }
 });
 
-require(['views/appView','models/Diagram','models/globals','models/PaletteElements','Backbone','BackboneRelational','prettify','jQueryUI','Joint','Joint_dia_org','Joint_dia_uml','tablesorter','EasingMenu'], 
+require(['views/appView','models/Diagram','models/globals','models/PaletteElements','Backbone','BackboneRelational','vkbeautify','prettify','jQueryUI','Joint','Joint_dia_org','Joint_dia_uml','tablesorter','EasingMenu'], 
 		function(appView,Diagram,model_globals,PaletteElements) {
 	
 	

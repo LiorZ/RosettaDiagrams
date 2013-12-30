@@ -84,8 +84,8 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 		},
 		
 		add_element_listeners: function() {
-			this.listenTo(model_globals.ActiveDiagram,'add:element',this.addElementView);
-			this.listenTo(model_globals.ActiveDiagram,'add:connection', this.addConnectionView);
+			this.listenTo(model_globals.ActiveDiagram,'add:elements',this.addElementView);
+			this.listenTo(model_globals.ActiveDiagram,'add:connections', this.addConnectionView);
 		},
 		
 		paste_code: function(){
@@ -196,7 +196,6 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 		},
 		
 		render: function() {
-			this.main_joint = Joint.paper("world");
 //			this.viewBoxHeight = this.main_joint.height;
 //			this.viewBoxWidth = this.main_joint.width;
 //			
@@ -211,6 +210,8 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 			this.$("#menu").accordion({heightStyle: "fill", autoHeight:false});
 			$("#container").show();
 			this.$("#menu").accordion('refresh');
+			this.main_joint = Joint.paper("world",9000,9000);
+			prettyPrint();
 
 		}
 		
