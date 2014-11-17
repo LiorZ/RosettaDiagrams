@@ -80,23 +80,23 @@ require.config({
 require(['views/appView','models/Diagram','models/globals','models/PaletteElements','Backbone','BackboneRelational','vkbeautify','prettify','jQueryUI','Joint','Joint_dia_org','Joint_dia_uml','tablesorter','EasingMenu'], 
 		function(appView,Diagram,model_globals,PaletteElements) {
 	
-	
 	Backbone.Relational.store.addModelScope(model_globals);
 	var d = new Diagram();
 	model_globals.MainDiagram = d;
 	model_globals.ActiveDiagram = d;
-	var palette = new PaletteElements();
-	palette.fetch({update: true, 
-		success:function() {
-			palette.sort();
-			Backbone.sync = function(method, model, options) { };
-			new appView({palette:palette}).render();
-		},
-		error: function() {
-			alert("Error loading page - could not load palette");
-		}
+	
+	$.getJSON('/js/rosetta_diagrams/js/json/elements.json',function(models) {
+		new appView({palette:models}).render();
 	});
-	
-	
+//	palette.fetch({update: true, 
+//		success:function() {
+//			palette.sort();
+////			Backbone.sync = function(method, model, options) { };
+//			
+//		},
+//		error: function() {
+//			alert("Error loading page - could not load palette");
+//		}
+//	});
 	
 });

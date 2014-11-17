@@ -1,0 +1,21 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS></SCOREFXNS>
+    <TASKOPERATIONS></TASKOPERATIONS>
+    <FILTERS></FILTERS>
+    <MOVERS>
+        <Prepack name="element_2" min_bb="1" />
+        <Docking name="element_3" fullatom="1" conserve_foldtree="1" />
+        <MinMover name="element_6" chi="1" />
+        <GrowLigand name="element_7" />
+        <ParsedProtocol name="element_4" >
+            <Add mover_name="element_6"/>
+            <Add mover_name="element_7"/>
+        </ParsedProtocol>
+    </MOVERS>
+    <APPLY_TO_POSE></APPLY_TO_POSE>
+    <PROTOCOLS>
+        <Add mover_name="element_2"/>
+        <Add mover_name="element_3"/>
+        <Add mover_name="element_4"/>
+    </PROTOCOLS>
+</ROSETTASCRIPTS>

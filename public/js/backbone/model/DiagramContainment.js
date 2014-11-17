@@ -6,10 +6,10 @@ define(['Backbone','BackboneRelational','models/DiagramConnection','models/globa
 		},
 		initialize: function(options) {
 		      this.constructor.__super__.initialize.apply(this, [options]);
-		      this.change_target(this, this.get('target'));
-		      this.on('change:source',this.change_source);
-		      this.on('change:target',this.change_target);
-		      this.on('destroy',this.remove_tasks); //Remove all the task operations from the target.
+		      //this.change_target(this, this.get('target'));
+		      this.listenTo(this,'change:source',this.change_source);
+		      this.listenTo(this,'change:target',this.change_target);
+		      this.listenTo(this,'destroy',this.remove_tasks); //Remove all the task operations from the target.
 		},
 		
 		remove_tasks:function() {

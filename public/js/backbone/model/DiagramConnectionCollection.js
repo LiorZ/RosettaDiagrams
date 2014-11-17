@@ -3,6 +3,15 @@ define(['Backbone','models/DiagramConnection','models/DiagramContainment','model
 	
 	var DiagramConnectionList = Backbone.Collection.extend({
 		model: DiagramLink,
+		initialize:function() {
+			this.listenTo(this,"add",this.add_change_listener);
+		},
+		add_change_listener: function(model) {
+			this.listenTo(model,'change:target',function(m,v,options) {
+				model.save(null,{silent:true});
+			})
+		},
+		
 		bySourceRaw:function(elem) {
 			var returned_arr = this.filter(function(dia) {return (dia.get('source') == elem);});
 			if (returned_arr ==0 )
@@ -10,6 +19,7 @@ define(['Backbone','models/DiagramConnection','models/DiagramContainment','model
 			else
 				return returned_arr;
 		},
+		
 		byTargetRaw:function(elem) {
 			var returned_arr = this.filter(function(dia) {return (dia.get('target') == elem);});
 			if (returned_arr ==0 )
@@ -56,8 +66,6 @@ define(['Backbone','models/DiagramConnection','models/DiagramContainment','model
 		byTargetNoTasks: function(elem){
 			return this.bySomethingNoTasks(elem,false);
 		}
-		
-		
 	});
 	model_globals.DiagramConnectionCollection = DiagramConnectionList; 
 	return DiagramConnectionList;

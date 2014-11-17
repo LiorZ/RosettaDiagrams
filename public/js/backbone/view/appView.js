@@ -1,61 +1,13 @@
-//	app.elementCounter = 0;
-//	app.Attributes = {
-//			'mover':{
-//				jointObjColor: "90-#000-green:1-#fff",
-//				codeTemplate: '#xml_movers',
-//				add_protocol: 'mover_name',
-//				palette_div:'#movers_menu',
-//				wiki_address:'wiki/movers.html#'
-//			},
-//			'logic':{
-//				jointObjColor: "90-#000-red:1-#fff",
-//				codeTemplate: '#xml_movers',
-//				add_protocol: 'mover_name',
-//				palette_div:'#logic_menu',
-//				wiki_address:'wiki/movers.html#'
-//			},
-//			'filter':{
-//				jointObjColor: "90-#000-orange:1-#fff",
-//				codeTemplate: '#xml_filters',
-//				add_protocol: 'filter_name',
-//				palette_div:'#filters_menu',
-//				wiki_address:'wiki/filters.html#'
-//			},
-//			'task_operation': {
-//				jointObjColor: "90-#000-blue:1-#fff",
-//				codeTemplate: '#xml_task_operations',
-//				palette_div: '#task_operations_menu',
-//				wiki_address:'wiki/task_operations.html#'
-//			
-//			},
-//			'container':{
-//				jointObjColor: "90-#000-yellow:1-#fff",
-//				codeTemplate: '#xml_movers',
-//				palette_div: '#containers_menu'
-//			}
-//	};
-//	consts.ATTR_IN_DIAGRAM_VIEW = 5;
-//	consts.LENGTH_DIAGRAM_TITLE = 20;
-//	consts.MENU_TIMEOUT = 2000;
-//	consts.DIAGRAM_ELEMENT_DEFAULT_WIDTH = 150;
-//	consts.DIAGRAM_ELEMENT_DEFAULT_HEIGHT = 100;
-//	consts.DIAGRAM_ELEMENT_SMALL_SCALE_WIDTH = 90;
-//	consts.DIAGRAM_ELEMENT_SMALL_SCALE_HEIGHT = 60;
-//	consts.DIAGRAM_CONTAINER_DEFAULT_WIDTH = 300;
-//	consts.DIAGRAM_CONTAINER_DEFAULT_HEIGHT = 400;
-//	app.EventAgg = _.extend({}, Backbone.Events);
-//	app.MainDiagram = new app.Diagram();
-//	app.ActiveDiagram = app.MainDiagram;
 	
-define(['Backbone','views/globals','models/globals','models/PaletteElements','views/DiagramElementView','views/DiagramConnectionView','views/InformationMessageView','views/CodeView'
-        ,'views/DiagramElementPropertiesView', 'views/MenuView','views/PaletteView'],
+define(['Backbone','views/globals','models/globals','models/PaletteElements','views/DiagramElementView','views/DiagramConnectionView','views/InformationMessageView','views/CodeView','views/DiagramElementPropertiesView', 'views/MenuView','views/PaletteView','../jobdialog'],
 		function(Backbone,view_globals,model_globals,PaletteElements,DiagramElementView,DiagramConnectionView,InformationMessageView,CodeView,DiagramElementPropertiesView,MenuView,
-				PaletteView) {
+				PaletteView, jobdialog) {
 	var AppView = Backbone.View.extend({
 		main_joint: undefined,
 		el: '#container',
 		events:{
 			'click #btn_paste_code':'paste_code',
+			'click #play':'launch_diagram'
 		},
 		
 		connectionReady: false,
@@ -77,10 +29,21 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 			this.addCodeView();
 			this.addMenuView();
 			this.addPaletteView(palette_model);
+			this.addToolBar();
 			this.addInformationMessageContainer();
 			_.bindAll(this.show_main_canvas);
 			this.listenTo(view_globals.event_agg,'show_main_canvas',this.show_main_canvas);
 			this.listenTo(view_globals.event_agg,'switch_diagram',this.switch_diagram);
+		},
+		
+		addToolBar: function() {
+		        var maint = $('#main_toolbar');
+		        maint.find('#play').button({
+		              text: false,
+                              icons: {
+                                primary: "ui-icon-play"
+                              }
+                        });
 		},
 		
 		add_element_listeners: function() {
@@ -99,8 +62,8 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 			this.add_element_listeners();
 		},
 		
-		addPaletteView:function(model) {
-			this.paletteView = new PaletteView({model: model});
+		addPaletteView:function(json_models) {
+			this.paletteView = new PaletteView({json_models: json_models});
 			this.paletteView.render();
 		},
 		
@@ -111,7 +74,13 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 		transformXMLToDiagram: function(xml_str) {
 			app.XMLToDiagram(xml_str);
 		},
-		
+		launch_diagram:function() {
+		        $.getJSON("/data/jobdefs/xmlscript_generic.json",function(data) {
+		                var xml = $('#code').text().replace(/^\s*[\r\n]/gm,"");
+		                data.xmlscript.content=xml;
+		                JobDialogManager.open_job_dialog(data);
+		        });
+		},
 		addCodeView: function() {
 			var context = this;
 			var plot_diag_func = function(dialog_obj) {
@@ -178,10 +147,12 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 		},
 		
 		addElementView: function(element) {
+			
 			if ( _.isUndefined(element.get('x')) && _.isUndefined(element.get('y') )){
 				var new_pos = this.getPosForNewPage();
 				element.set(new_pos);
 			}
+			
 			var view = new DiagramElementView({model: element, eventagg: view_globals.event_agg});
 			view.render();
 		},
@@ -195,15 +166,24 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 			view_globals.InformationMessageContainer = new InformationMessageView();
 		},
 		
+		
+		draw_elements: function() {
+			var elements = model_globals.MainDiagram.get('elements');
+			var view = this
+			elements.each(function(elem) {
+				view.addElementView(elem);
+			});
+			
+			//need to draw all elements before drawing the connections between them
+			elements.each(function(elem){
+				var cons = elem.get('connections');
+				cons.each(function(c) {
+					new DiagramConnectionView({model:c});
+				})
+			});
+		},
 		render: function() {
-//			this.viewBoxHeight = this.main_joint.height;
-//			this.viewBoxWidth = this.main_joint.width;
-//			
-//			var oX = 0, oY=0;
-//			this.viewBox = this.main_joint.setViewBox(oX, oY, this.viewBoxWidth, this.viewBoxHeight);
-//			this.viewBox.X = oX;
-//			this.viewBox.Y = oY;
-//			
+
 			model_globals.MainDiagram.set('jointObj',this.main_joint);
 			this.$("#attribute_list").tablesorter();
 			this.$("button").button();
@@ -211,8 +191,9 @@ define(['Backbone','views/globals','models/globals','models/PaletteElements','vi
 			$("#container").show();
 			this.$("#menu").accordion('refresh');
 			this.main_joint = Joint.paper("world",9000,9000);
+			this.draw_elements();
 			prettyPrint();
-
+			
 		}
 		
 	});

@@ -10,7 +10,7 @@ define(['views/globals','models/globals','views/DiagramElementView','views/Diagr
 			this.jointObj = Joint.paper(canvas.get(0),650,700);
 			var subdiagram = this.model.get('subdiagram');
 			subdiagram.set('jointObj',this.jointObj);
-			view_globals.trigger('switch_diagram',subdiagram);
+			view_globals.event_agg.trigger('switch_diagram',subdiagram);
 		},
 		
 		render: function() { 
@@ -19,8 +19,8 @@ define(['views/globals','models/globals','views/DiagramElementView','views/Diagr
 				width:700,
 				title:this.model.get('name') + " Subdiagram",
 				close: function() {
-					view_globals.trigger('editDiagramElement',undefined);
-					view_globals.trigger('switch_diagram',model_globals.MainDiagram);
+					view_globals.event_agg.trigger('editDiagramElement',undefined);
+					view_globals.event_agg.trigger('switch_diagram',model_globals.MainDiagram);
 				}
 			} );
 			

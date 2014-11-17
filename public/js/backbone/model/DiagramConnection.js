@@ -4,12 +4,13 @@ define(['Backbone','BackboneRelational','models/globals','models/DiagramLink'],f
 			type:'connection'
 		},
 		initialize:function(options) {
-			if ( options.source ) {
-				this.listenTo(options.source,'destroy',this.destroy);
-			}
-			if ( options.target ) {
-				this.listenTo(options.target,'destroy',this.destroy);
-			}
+//			if ( options.source ) {
+//				this.listenTo(options.source,'destroy',this.destroy);
+//			}
+//			if ( options.target ) {
+//				this.listenTo(options.target,'destroy',this.destroy);
+//			}
+//			console.log("CREATING CONNECTION");
 			this.listenTo(this,'change:source',this.set_new_source);
 			this.listenTo(this,'change:target',this.set_new_target);
 

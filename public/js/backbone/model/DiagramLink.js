@@ -5,25 +5,13 @@ define(['Backbone','BackboneRelational','models/globals'],function(Backbone,R,mo
 			'connection':'DiagramConnection',
 			'containment':'DiagramContainment'
 		},
-		relations: [
-					{
-						type: Backbone.HasOne,
-						key: 'source',
-						relatedModel: 'DiagramElement',
-						includeInJSON:'id'
-					},
-					{
-						type: Backbone.HasOne,
-						key: 'target',
-						relatedModel: 'DiagramElement',
-						includeInJSON:'id',
-						reverseRelation: {
-							key:'pointed_by',
-							includeInJSON: false,
-						}
-					}
-				],
-				
+		url:function() {
+			if ( this.isNew() ) {
+				return '/connection/new';
+			}else {
+				return '/connection/id/' + this.id;
+			}
+		},
 				changeConnectedElement: function(side,rawElement) { 
 					
 					var foundElement = undefined;
@@ -51,7 +39,12 @@ define(['Backbone','BackboneRelational','models/globals'],function(Backbone,R,mo
 					}else { 
 						this.set("source",foundElement);
 					}
-				}
+				},
+				
+			toJSON: function(options) {
+				var json = Backbone.RelationalModel.prototype.toJSON.apply(this, [options]);
+				return _.omit(json,['jointObj']);
+			} 
 	});
 	
 	model_globals.DiagramLink = DiagramLink;
