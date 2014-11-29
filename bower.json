@@ -1,0 +1,26 @@
+{
+  "name": "RosettaDiagrams",
+  "version": "1.0.0",
+  "homepage": "https://github.com/LiorZ/RosettaDiagrams",
+  "authors": [
+    "lior <liorz1984@gmail.com>"
+  ],
+  "main": "?",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "https://github.com/twbs/bootstrap.git#3.2",
+    "joint": "https://github.com/DavidDurman/joint.git#~0.9.2",
+    "jquery": "https://github.com/jquery/jquery.git#1.11",
+    "bootstrap3-editable":"https://github.com/vitalets/x-editable",
+    "vkbeautify":"https://raw.githubusercontent.com/vkiryukhin/vkBeautify/master/vkbeautify.js"
+
+  }
+}

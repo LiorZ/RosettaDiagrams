@@ -1,376 +1,151 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv='cache-control' content='no-cache'>
-		<meta http-equiv='expires' content='0'>
-		<meta http-equiv='pragma' content='no-cache'>
-		<script type="text/javascript" src="js/lib/head/head.js"></script>
-		<script type="text/javascript" src="js/loader.js"></script>
-		<link rel="stylesheet" href="js/lib/jquery-ui/plugins/tablesorter/themes/blue/style.css"/>
 
-		<script type="text/template" id="attribute_template">
-			<td><input type="text" value="<%= key %>" id="attr_key"/></td>
-			<td><input type="text" value="<%= value %>" id="attr_value"/></td>
-			<td><button id="deleteBtn">X</button></td>
-		</script>
-		<script type="text/template" id="movers_template">
-			&lt;<%=name%><%
-			var attributes = attributes.nonEmpty();
-			for (var i=0; i<attributes.length; ++i) {
-			var attr = attributes[i];
+<head>
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <link rel="stylesheet" href="bower_components/joint/dist/joint.nojquery.min.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap3-editable-1.5.1/bootstrap3-editable/css/bootstrap-editable.css" />
+  <link rel="stylesheet" href="bower_components/google-code-prettify/prettify.css" />
+  <style>
+    .btn:focus {
+      outline: none;
+    }
+		#floating_menu .btn{
+			display:block;
+			margin-bottom:5px;
+		}
+  </style>
+  <script type="text/template" id="single_attribute_view">
+    <tr>
+      <td class='td_key_class'>
+        <%=key%>
+      </td>
+      <td class='td_value_class'>
+        <%=value%>
+      </td>
+      <td>
+        <button type="button" class="btn btn-primary" id="btn_delete_attribute">
+          <span class="glyphicon glyphicon-minus"></span>
+        </button>
+      </td>
+    </tr>
+  </script>
+  <script type="text/template" id="attribute_view_template">
+    <div class="modal fade" id="attribute_view">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="attributes_view_title"><%=name%></h4>
+          </div>
+          <div class="modal-body">
+            <div>
+              <button type="button" class="btn btn-primary" id="btn_add_attribute">
+                <span class="glyphicon glyphicon-plus"></span> New Attribue
+              </button>
+            </div>
+            <table id="attributes_table" class="table table-striped">
 
-			%> <%= attr.get('key') %>='<%= attr.get('value') %>'<% } %>/&gt;
-		</script>
-		<script type="text/template" id="protocols_template">
-			&lt;Add <%=typeObj.add_protocol%>='<%= attributes.byKey("name").get('value') %>'/&gt;
-		</script>
-		<script type="text/template" id="information_message_template">
-			<div id='information_message_body' class="<% if (type == 'error') {%> ui-state-error <%} else {%> ui-state-highlight <%}%> ui-corner-all"
-			style="margin-top: 20px; padding: 0 .7em; margin:0px auto; width:50%;">
-			<p>
-			<span class="ui-icon ui-icon-info"
-			style="float: left; margin-right: .3em;"></span> <strong><%=title%></strong>
-			<%=message%>
-			</p>
-			</div>
-		</script>
-		<title>Rosetta Diagrams</title>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_close">Close</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+  </script>
 
-		<style type="text/css">
-			html {
-				overflow: hidden;
-			}
 
-			.body_class {
-				background-color: #ffffff;
-				background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2NkYGDwAeIthGhGoAKiAEghzES8GkZNxBs8ALOvCQtmZ8UqAAAAAElFTkSuQmCC   ) repeat;
-			}
-			.blur {
-				background-color: rgba(192,192,192,0.5)
-			}
 
-			#world {
-				width: 100%;
-				height: 100%;
-				background-image: url('icons/large/logo_transparent.png');
-				background-repeat: no-repeat;
-				background-position: center center;
-				background-size: 60%;
-				position: relative;
-			}
+  <body>
+    <div id="code_template" style="display:none;">
+      &lt;ROSETTASCRIPTS&gt; &lt;SCOREFXNS&gt; &lt;/SCOREFXNS&gt; &lt;TASKOPERATIONS&gt;
+      <span id=xml_task_operation class="rscripts_elements">
 
-			.rounded_border {
-				border: 3px solid gray;
-				border-radius: 30px;
-			}
+</span> &lt;/TASKOPERATIONS&gt; &lt;FILTERS&gt;
+      <span id=xml_filter class="rscripts_elements">
 
-			#title {
-				position: fixed;
-				left: 10px;
-				top: 10px;
-				color: white;
-				font-size: 14px;
-			}
-			#description {
-				position: fixed;
-				left: 10px;
-				top: 45px;
-				color: white;
-				font-size: 12px;
-				width: 250px;
-			}
-			#source {
-				position: fixed;
-				left: 20px;
-				top: 37px;
-				color: white;
-				font-size: 12px;
-			}
-			#menu_container {
-				background-color: white;
-				height: 99%;
-				padding: 3px;
-				margin-right: 5px;
-				font-size: 12px;
-				position: absolute;
-				left: -295px;
-				z-index: 100;
-			}
-			.menuItem {
-				position: absolute;
-				width: 26px;
-				height: 26px;
-				background-color: black;
-				display: none;
-			}
-			#instructionLabel {
-				text-align: center;
-				display: inline;
-			}
-			#mover_div {
-				text-align: center
-			}
-			#container {
-				width: 100%;
-				height: 100%;
-				display: none;
-			}
-			#workspace_container {
-				height: 100%;
-				width: 100%;
-			}
+</span> &lt;/FILTERS&gt; &lt;MOVERS&gt;
 
-			#display_code {
-				height: 95%;
-				width: 700px;
-				margin: 0px;
-				margin-top: 55px;
-				margin-left: 5px;
-				margin-right: 5px;
-				background-color: white;
-			}
-			.wordwrap {
-				white-space: pre-wrap; /* CSS3 */
-				white-space: -moz-pre-wrap; /* Firefox */
-				white-space: -pre-wrap; /* Opera <7 */
-				white-space: -o-pre-wrap; /* Opera 7 */
-				word-wrap: break-word; /* IE */
-			}
-			#code {
-				display: none;
-			}
-			#toolbar {
-				display: none;
-				position: absolute;
-				padding: 2px;
-				font-size: 12px;
-			}
+      <span id=xml_mover class="rscripts_elements"> </span> &lt;/MOVERS&gt; &lt;APPLY_TO_POSE&gt; &lt;/APPLY_TO_POSE&gt; &lt;PROTOCOLS&gt;
+      <span id=xml_protocols class="rscripts_elements">
 
-			td input {
-				width: 100%;
-				height: 100%;
-			}
-			td {
-				text-align: center;
-			}
-			html, body {
-				height: 100%;
-			}
-			#mover_properties_label {
-				float: top;
-				text-align: center;
-			}
-			#mover_properties {
-				width: 40%;
-				background-color: white;
-				margin: 0 auto;
-			}
-			#mover_properties_container {
-				margin-top: 1%;
-				position: absolute;
-				bottom: -200px;
-				height: 250px;
-				padding-top: 0px;
-				width: 100%;
-				margin: 0 auto;
-				z-index: 100
-			}
-			.palette_button {
-				display: block;
-				margin-top: 5px;
-			}
+</span> &lt;/PROTOCOLS&gt; &lt;/ROSETTASCRIPTS&gt;
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+          <div id="paper">
+            <input type="text" class="form-control" style="display:inline; width:20em;" id="txt_elem_name" />
+            <button type="button" class="btn btn-primary" id="btn_add_element">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <input type="checkbox" data-toggle="toggle" id="connection_checkbox"> Connection mode
+            <button type="button" class="btn btn-primary" id="btn_generate_rs">
+              <span class="glyphicon glyphicon-cog"></span> Generate RosettaScripts
+            </button>
 
-			.label_border {
-				border: 1px solid black;
-				border-radius: 10px;
-			}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="rosetta_scripts_view">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="rosetta_scripts_view_title">Rosetta Script</h4>
+          </div>
+          <div class="modal-body">
+            <pre id="code_view" class="prettyprint">
 
-			#menu_label {
-				/*display:table-cell;*/
-			}
+			</pre>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_close">Close</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
 
-			#display_code_container {
-				display: table;
-				position: absolute;
-				right: -715px;
-				height: 99%;
-				background-color: white;
-				z-index: 100;
-			}
+    <div id="floating_menu" style="position:absolute;">
+      <button type="button" class="btn btn-danger btn-xs" id="btn_delete_element">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+			<button type="button" class="btn btn-warning btn-xs" id="btn_connect">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</button>
+			<button type="button" class="btn btn-success btn-xs" id="btn_show_attributes">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+    </div>
 
-			#display_code_label {
-				display: table-cell;
-				vertical-align: middle;
-				width: 50px;
-			}
-			#information_panel_wrapper {
-				display: none;
-				position: absolute;
-				width: 100%;
-			}
-			#progressbar {
-				background-color: #ccc;
-			}
-			#paste_code_dialog {
-				display: none
-			}
-		</style>
-		<link href="js/lib/prettify/prettify.css" type="text/css" rel="stylesheet" />
-		<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
-	</head>
-	<body class='body_class' onload="prettyPrint()">
-		<div id="container">
-			<div id="workspace_container">
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/vkbeautify/index.js"></script>
+    <!-- endbower -->
+    <script src="bower_components/joint/dist/joint.nojquery.js"></script>
+    <script src="bower_components/google-code-prettify/prettify.js"></script>
+    <script src="js/diagrams.js"></script>
+    <script src="js/joint.shapes.rosetta_diagrams.js"></script>
+    <script src="bower_components/bootstrap3-editable-1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+  </body>
 
-				<div id='mover_properties_container'>
-					<div id='mover_properties' class='label_border' >
-						<div id='mover_properties_label' style='margin: 0 auto;'>
-							<img src='icons/large/rscripts_properties_label.png'/>
-						</div>
-						<div id='mover_properties_content' style='overflow:auto; height:200px;'>
-							<button id="add_attribute">
-								Add Attribute
-							</button>
-							<table id='attribute_list' class='tablesorter'>
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Value</th>
-										<th>Delete</th>
-									</tr>
-								</thead>
-								<tbody id='attribute_list_body'>
-
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-
-				<div id='menu_container' class='label_border'  >
-					<div id='menu_label' style='float:right; height:100%;'>
-						<table style='height:100%'>
-							<tr>
-								<td valign="middle"><img src='icons/large/rscripts_palette_label.png'/></td>
-							</tr>
-						</table>
-
-					</div>
-					<div id='menu_resizer' style='height:99%; width:340px;'>
-						<div id="menu" style='float:left; '>
-
-							<h3>Movers</h3>
-							<div id='movers_menu'>
-
-							</div>
-							<h3>Filters</h3>
-							<div id='filters_menu'>
-
-							</div>
-							<h3>TaskOperations</h3>
-							<div id ='task_operations_menu'>
-
-							</div>
-
-							<h3>Control structures</h3>
-							<div id='logic_menu'>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-				<div id='display_code_container'  class='label_border'>
-					<div id='display_code_label' style='display: table-cell; vertical-align:middle; width:50px;' >
-						<img src='icons/large/rscripts_code_label.png'/>
-					</div>
-					<button id ='btn_paste_code' style="position:absolute; right:10px; margin-top:1em; font-size:12px;">Paste existing code</button> 
-					<pre id='display_code' class='prettyprint wordwrap' style="display:table-cell;"></pre>
-
-				</div>
-				<div id='progressbar_dialog'>
-					<div id="progressbar"></div>
-				</div>
-
-				<div id='paste_code_dialog'>
-					<h3>Rosetta Scripts Code:</h3>
-					<textarea style='width:100%; height:70%;'></textarea>
-				</div>
-
-				<div id="dialog-confirm" title="Discard existing diagram?" style='display:none;'>
-				  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>The current diagram will be overwrriten. Are you sure?</p>
-				</div>
-
-				<div id='information_panel_wrapper'>
-
-				</div>
-				<div id="world">
-
-				</div>
-				<!-- world -->
-			</div>
-			<!--  workspace container -->
-
-			<div id="code">
-				<pre>
-&lt;ROSETTASCRIPTS&gt;
-
-        &lt;SCOREFXNS&gt;
-        &lt;/SCOREFXNS&gt;
-
-        &lt;TASKOPERATIONS&gt;
-<span id=xml_task_operations>
-
-</span>
-        &lt;/TASKOPERATIONS&gt;
-
-        &lt;FILTERS&gt;
-<span id=xml_filters>
-	
-</span>
-        &lt;/FILTERS&gt;
-
-        &lt;MOVERS&gt;
-</pre>
-				<span id=xml_movers> </span>
-				<pre>
-        &lt;/MOVERS&gt;
-
-        &lt;APPLY_TO_POSE&gt;
-        &lt;/APPLY_TO_POSE&gt;
-
-        &lt;PROTOCOLS&gt;
-<span id=xml_protocols>
-	
-</span>
-        &lt;/PROTOCOLS&gt;
-
-&lt;/ROSETTASCRIPTS&gt;
-</pre>
-			</div>
-
-			<div id="toolbar" class="ui-widget-header ui-corner-all">
-				<button id='btn_delete' class="ui-icon-trash">
-					Delete element
-				</button>
-				<button id='btn_connect' class="ui-icon-arrowthick-1-e">
-					Form a connection
-				</button>
-				<button id='btn_info' class='ui-icon-info'>
-					About
-				</button>
-				<button id='btn_subdiagram' class='ui-icon-newwin'>
-					Open Subdiagram
-				</button>
-			</div>
-		</div>
-		<!--container -->
-		<div id='wiki_info' style='display:none;'>
-
-			<iframe style='width:100%; height:100%; display:none; overflow-x:hidden; border-width:0px;'>
-
-			</iframe>
-
-		</div>
-	</body>
 </html>

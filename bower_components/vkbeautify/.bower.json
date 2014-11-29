@@ -1,0 +1,14 @@
+{
+  "name": "vkbeautify",
+  "_cacheHeaders": {
+    "ETag": "\"13cee3a5ea98a392ecf481a6c8fe4c87efa86b96\"",
+    "Content-Length": "10111",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:13cee3a5e",
+  "main": "index.js",
+  "_source": "https://raw.githubusercontent.com/vkiryukhin/vkBeautify/master/vkbeautify.js",
+  "_target": "*",
+  "_originalSource": "https://raw.githubusercontent.com/vkiryukhin/vkBeautify/master/vkbeautify.js",
+  "_direct": true
+}
