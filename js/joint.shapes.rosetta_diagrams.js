@@ -209,6 +209,21 @@ var COLORS = {
   }
 }
 
+var Attribute = Backbone.Model.extend({
+
+});
+
+var AttributeCollection = Backbone.Collection.extend({
+  model: Attribute,
+  initialize: function() {
+    this.on("change:value", this.change_event);
+  },
+  change_event: function() {
+    this.trigger("change");
+  }
+});
+
+
 joint.shapes.rosetta.DiagramElement = joint.shapes.basic.Generic.extend({
 
     markup: [
@@ -254,6 +269,10 @@ joint.shapes.rosetta.DiagramElement = joint.shapes.basic.Generic.extend({
             'change:name': this.updateName,
             'change:size': this.updatePath
         }, this);
+        var raw_attributes = this.get('attributes');
+        if ( Array.isArray(raw_attributes) ){
+          this.set_attributes();
+        }
         this.listenTo(this.get('attributes'),'change',this.updateAttributes);
 
         this.get('attrs')['.uml-state-body'].fill = COLORS[this.get('element_type')].fill;
@@ -265,6 +284,10 @@ joint.shapes.rosetta.DiagramElement = joint.shapes.basic.Generic.extend({
         this.updatePath();
 
         joint.shapes.basic.Generic.prototype.initialize.apply(this, arguments);
+    },
+    set_attributes:function(){
+      var raw = this.get('attributes');
+      this.set('attributes',new AttributeCollection(raw));
     },
     toJSON: function() {
       var json = _.clone(this.attributes);
