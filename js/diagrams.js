@@ -12,7 +12,43 @@ $(function($) {
   var GlobalEvents = _.extend({}, Backbone.Events);
   var connection_waiting;
   var paper;
-  RosettaDiagrams.DiagramsCollection = [];
+  var DiagramCollectionModel = Backbone.Collection.extend({
+    model: joint.dia.Graph,
+    url:'/diagrams',
+    save: function(options) {
+      var arr = this;
+      var json_arr = [];
+      for (var i = 0; i < arr.length; ++i) {
+        if (arr.at(i).get('id') === undefined) {
+          var id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0,
+              v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
+
+          arr.at(i).set('id', id);
+        }
+        json_arr.push(arr.at(i).toJSON());
+      }
+
+      window.localStorage.setItem('diagrams', JSON.stringify(json_arr));
+    },
+
+
+
+    parse: function(response, options) {
+      var arr = [];
+      for (var i = 0; i<response.length; ++i ) {
+        var graph = new joint.dia.Graph();
+        graph.fromJSON(response[i]);
+        arr.push(graph);
+      }
+      return arr;
+    }
+  });
+
+
+  RosettaDiagrams.DiagramsCollection = new DiagramCollectionModel();
 
   GlobalEvents.on("connection:start", function(model) {
     connection_waiting = model;
@@ -33,40 +69,11 @@ $(function($) {
     connection_waiting = undefined;
   });
 
-  if (window.localStorage.getItem('diagrams') !== null && window.localStorage.getItem('diagrams') !== undefined) {
-    var arr = JSON.parse(window.localStorage.getItem('diagrams'));
-
-    for (var i = 0; i < arr.length; ++i) {
-      var g = new joint.dia.Graph();
-      g.fromJSON(arr[i]);
-      RosettaDiagrams.DiagramsCollection.push(g);
-    }
-
-  }
-
-  RosettaDiagrams.DiagramsCollection.save = function(options) {
-    var arr = RosettaDiagrams.DiagramsCollection;
-    var json_arr = [];
-    for (var i = 0; i < arr.length; ++i) {
-      if (arr[i].get('id') === undefined) {
-        var id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          var r = Math.random() * 16 | 0,
-            v = c == 'x' ? r : (r & 0x3 | 0x8);
-          return v.toString(16);
-        });
-
-        arr[i].set('id', id);
-      }
-      json_arr.push(arr[i].toJSON());
-    }
-
-    window.localStorage.setItem('diagrams', JSON.stringify(json_arr));
-  };
-
   RosettaDiagrams.new_diagram = function() {
 
-    var graph = new joint.dia.Graph({name:"Untitled Diagram"});
-    RosettaDiagrams.DiagramsCollection.push(graph);
+    var graph = RosettaDiagrams.DiagramsCollection.create({
+      name: "Untitled Diagram"
+    },{wait:true});
     set_paper(graph);
     GlobalEvents.trigger("diagram:new", graph);
 
@@ -131,7 +138,7 @@ $(function($) {
   };
 
   RosettaDiagrams.diagram_by_id = function(id) {
-    var diagram = _.find(RosettaDiagrams.DiagramsCollection, function(d) {
+    var diagram = RosettaDiagrams.DiagramsCollection.find(function(d) {
       return d.get('id') == id;
     });
     return diagram;
@@ -314,7 +321,7 @@ $(function($) {
     },
     add_element_on_enter: function(ev) {
       var key_pressed = ev.which;
-      if (ev.which == 13){
+      if (ev.which == 13) {
         this.add_element();
       }
     },
@@ -324,9 +331,13 @@ $(function($) {
       this.model = model;
       this.delegateEvents();
 
-      if ( this.elements_names === undefined ) {
-        this.elements_names = _.map(elements,function(elem){return elem.name});
-        $("#txt_elem_name").typeahead({source: this.elements_names});
+      if (this.elements_names === undefined) {
+        this.elements_names = _.map(elements, function(elem) {
+          return elem.name
+        });
+        $("#txt_elem_name").typeahead({
+          source: this.elements_names
+        });
       }
 
       this.$el.find("#rosetta_diagrams_view_title").text(model.get("name"));
@@ -334,8 +345,9 @@ $(function($) {
 
     },
     save_diagram: function() {
-      RosettaDiagrams.DiagramsCollection.save();
+      this.model.save();
     },
+
     add_element: function() {
       var context = this;
       var element_text = $("#txt_elem_name").val();
@@ -524,6 +536,4 @@ $(function($) {
     paper.stopListening();
     $("#paper svg").remove();
   });
-
-
 }(jQuery));

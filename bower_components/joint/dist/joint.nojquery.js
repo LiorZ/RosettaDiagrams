@@ -1,4 +1,4 @@
-/*! JointJS v0.9.2 - JavaScript diagramming library  2014-09-16 
+/*! JointJS v0.9.2 - JavaScript diagramming library  2014-09-16
 
 
 This Source Code Form is subject to the terms of the Mozilla Public
@@ -7987,7 +7987,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define([], factory);
-        
+
     } else {
         // Browser globals.
         root.Vectorizer = root.V = factory();
@@ -8029,7 +8029,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     function createElement(el, attrs, children) {
 
         if (!el) return undefined;
-        
+
         // If `el` is an object, it is probably a native SVG element. Wrap it to VElement.
         if (typeof el === 'object') {
             return new VElement(el);
@@ -8038,13 +8038,13 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
         // If `el` is a `'svg'` or `'SVG'` string, create a new SVG canvas.
         if (el.toLowerCase() === 'svg') {
-            
+
 	    return new VElement(createSvgDocument());
-            
+
         } else if (el[0] === '<') {
             // Create element from an SVG string.
             // Allows constructs of type: `document.appendChild(Vectorizer('<rect></rect>').node)`.
-            
+
             var svgDoc = createSvgDocument(el);
 
             // Note that `createElement()` might also return an array should the SVG string passed as
@@ -8060,10 +8060,10 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 }
                 return ret;
             }
-            
+
             return new VElement(document.importNode(svgDoc.firstChild, true));
         }
-        
+
         el = document.createElementNS(ns.xmlns, el);
 
         // Set attributes.
@@ -8071,7 +8071,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
             setAttribute(el, key, attrs[key]);
         }
-        
+
         // Normalize `children` array.
         if (Object.prototype.toString.call(children) != '[object Array]') children = [children];
 
@@ -8081,12 +8081,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             child = children[i];
             el.appendChild(child instanceof VElement ? child.node : child);
         }
-        
+
         return new VElement(el);
     }
 
     function setAttribute(el, name, value) {
-        
+
         if (name.indexOf(':') > -1) {
             // Attribute names can be namespaced. E.g. `image` elements
             // have a `xlink:href` attribute to set the source of the image.
@@ -8124,7 +8124,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         }
 
         var sx = (scale && scale[0]) ? parseFloat(scale[0]) : 1;
-        
+
         return {
             translate: {
                 tx: (translate && translate[0]) ? parseInt(translate[0], 10) : 0,
@@ -8147,7 +8147,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     // ---------------------
 
     function deltaTransformPoint(matrix, point)  {
-        
+
 	var dx = point.x * matrix.a + point.y * matrix.c + 0;
 	var dy = point.x * matrix.b + point.y * matrix.d + 0;
 	return { x: dx, y: dy };
@@ -8156,17 +8156,17 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     function decomposeMatrix(matrix) {
 
         // @see https://gist.github.com/2052247
-        
+
         // calculate delta transform point
 	var px = deltaTransformPoint(matrix, { x: 0, y: 1 });
 	var py = deltaTransformPoint(matrix, { x: 1, y: 0 });
-        
+
 	// calculate skew
 	var skewX = ((180 / Math.PI) * Math.atan2(px.y, px.x) - 90);
 	var skewY = ((180 / Math.PI) * Math.atan2(py.y, py.x));
-        
+
 	return {
-            
+
 	    translateX: matrix.e,
 	    translateY: matrix.f,
 	    scaleX: Math.sqrt(matrix.a * matrix.a + matrix.b * matrix.b),
@@ -8176,7 +8176,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	    rotation: skewX // rotation is the same as skew x
 	};
     }
-    
+
     // VElement.
     // ---------
 
@@ -8191,12 +8191,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     // --------------------
 
     VElement.prototype = {
-        
+
         translate: function(tx, ty, opt) {
 
             opt = opt || {};
             ty = ty || 0;
-            
+
             var transformAttr = this.attr('transform') || '',
                 transform = parseTransformString(transformAttr);
 
@@ -8204,7 +8204,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             if (typeof tx === 'undefined') {
                 return transform.translate;
             }
-            
+
             transformAttr = transformAttr.replace(/translate\([^\)]*\)/g, '').trim();
 
             var newTx = opt.absolute ? tx : transform.translate.tx + tx,
@@ -8228,7 +8228,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             if (typeof angle === 'undefined') {
                 return transform.rotate;
             }
-            
+
             transformAttr = transformAttr.replace(/rotate\([^\)]*\)/g, '').trim();
 
             angle %= 360;
@@ -8244,7 +8244,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         // Note that `scale` as the only transformation does not combine with previous values.
         scale: function(sx, sy) {
             sy = (typeof sy === 'undefined') ? sx : sy;
-            
+
             var transformAttr = this.attr('transform') || '',
                 transform = parseTransformString(transformAttr);
 
@@ -8252,7 +8252,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             if (typeof sx === 'undefined') {
                 return transform.scale;
             }
-            
+
             transformAttr = transformAttr.replace(/scale\([^\)]*\)/g, '').trim();
 
             var newScale = 'scale(' + sx + ',' + sy + ')';
@@ -8269,7 +8269,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             // If the element is not in the live DOM, it does not have a bounding box defined and
             // so fall back to 'zero' dimension element.
             if (!this.node.ownerSVGElement) return { x: 0, y: 0, width: 0, height: 0 };
-            
+
             var box;
             try {
 
@@ -8305,15 +8305,15 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             point.x = box.x;
             point.y = box.y;
             corners.push(point.matrixTransform(matrix));
-            
+
             point.x = box.x + box.width;
             point.y = box.y;
             corners.push(point.matrixTransform(matrix));
-            
+
             point.x = box.x + box.width;
             point.y = box.y + box.height;
             corners.push(point.matrixTransform(matrix));
-            
+
             point.x = box.x;
             point.y = box.y + box.height;
             corners.push(point.matrixTransform(matrix));
@@ -8322,9 +8322,9 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             var maxX = minX;
             var minY = corners[0].y;
             var maxY = minY;
-            
+
             for (var i = 1, len = corners.length; i < len; i++) {
-                
+
                 var x = corners[i].x;
                 var y = corners[i].y;
 
@@ -8333,7 +8333,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 } else if (x > maxX) {
                     maxX = x;
                 }
-                
+
                 if (y < minY) {
                     minY = y;
                 } else if (y > maxY) {
@@ -8378,27 +8378,27 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             }
             // Easy way to erase all `<tspan>` children;
             this.node.textContent = '';
-            
+
             for (; i < lines.length; i++) {
 
                 // Shift all the <tspan> but first by one line (`1em`)
                 tspan = V('tspan', { dy: (i == 0 ? '0em' : opt.lineHeight || '1em'), x: this.attr('x') || 0});
-		// Make sure the textContent is never empty. If it is, add an additional 
+		// Make sure the textContent is never empty. If it is, add an additional
 		// space (an invisible character) so that following lines are correctly
 		// relatively positioned. `dy=1em` won't work with empty lines otherwise.
                 tspan.node.textContent = lines[i] || ' ';
-                
+
                 this.append(tspan);
             }
             return this;
         },
-        
+
         attr: function(name, value) {
-            
+
             if (typeof name === 'string' && typeof value === 'undefined') {
                 return this.node.getAttribute(name);
             }
-            
+
             if (typeof name === 'object') {
 
                 for (var attrName in name) {
@@ -8406,7 +8406,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                         setAttribute(this.node, attrName, name[attrName]);
                     }
                 }
-                
+
             } else {
 
                 setAttribute(this.node, name, value);
@@ -8424,9 +8424,9 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         append: function(el) {
 
             var els = el;
-            
+
             if (Object.prototype.toString.call(el) !== '[object Array]') {
-                
+
                 els = [el];
             }
 
@@ -8434,7 +8434,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 el = els[i];
                 this.node.appendChild(el instanceof VElement ? el.node : el);
             }
-            
+
             return this;
         },
 
@@ -8450,7 +8450,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         defs: function() {
 
             var defs = this.svg().node.getElementsByTagName('defs');
-            
+
             return (defs && defs.length) ? V(defs[0]) : undefined;
         },
 
@@ -8477,12 +8477,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             }
             return nodes;
         },
-        
+
         // Convert global point into the coordinate space of this element.
         toLocalPoint: function(x, y) {
 
             var svg = this.svg().node;
-            
+
             var p = svg.createSVGPoint();
             p.x = x;
             p.y = y;
@@ -8579,7 +8579,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 animateMotion.node.beginElement();
             } catch (e) {
                 // Fallback for IE 9.
-		// Run the animation programatically if FakeSmile (`http://leunen.me/fakesmile/`) present 
+		// Run the animation programatically if FakeSmile (`http://leunen.me/fakesmile/`) present
 		if (document.documentElement.getAttribute('smiling') === 'fake') {
 
 		    // Register the animation. (See `https://answers.launchpad.net/smil/+question/203333`)
@@ -8671,14 +8671,14 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     V.rectToPath = rectToPath;
 
     var svgDocument = V('svg').node;
-    
+
     V.createSVGMatrix = function(m) {
 
         var svgMatrix = svgDocument.createSVGMatrix();
         for (var component in m) {
             svgMatrix[component] = m[component];
         }
-        
+
         return svgMatrix;
     };
 
@@ -8709,13 +8709,13 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define([], factory);
-        
+
     } else if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like environments that support module.exports,
         // like Node.
         module.exports = factory();
-        
+
     } else {
         // Browser globals.
         root.g = factory();
@@ -8802,10 +8802,10 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             // Makes sure that the comparison with zero takes rounding errors into account.
             var PRECISION = 10;
             // Note that `atan2` is not defined for `x`, `y` both equal zero.
-	    var rad = (y.toFixed(PRECISION) == 0 && x.toFixed(PRECISION) == 0) ? 0 : atan2(y, x); 
+	    var rad = (y.toFixed(PRECISION) == 0 && x.toFixed(PRECISION) == 0) ? 0 : atan2(y, x);
 
             // Correction for III. and IV. quadrant.
-	    if (rad < 0) { 
+	    if (rad < 0) {
 	        rad = 2*PI + rad;
 	    }
 	    return 180*rad / PI;
@@ -8850,7 +8850,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         // Return the bearing between me and point `p`.
         bearing: function(p) {
             return line(this, p).bearing();
-        },        
+        },
         // Converts rectangular to polar coordinates.
         // An origin can be specified, otherwise it's 0@0.
         toPolar: function(o) {
@@ -8910,7 +8910,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         if (deg < 90) y = -y;
         else if (deg < 180) { x = -x; y = -y; }
         else if (deg < 270) x = -x;
-        
+
         return point(o.x + x, o.y + y);
     };
 
@@ -8927,7 +8927,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
         this.start = point(p1);
         this.end = point(p2);
     }
-    
+
     line.prototype = {
         toString: function() {
 	    return this.start.toString() + ' ' + this.end.toString();
@@ -8964,7 +8964,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	        alpha * det < 0 ||
 	        beta * det < 0) {
                 // No intersection found.
-	        return null;	
+	        return null;
 	    }
 	    if (det > 0){
 	        if (alpha > det || beta > det){
@@ -8978,11 +8978,11 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	    return point(this.start.x + (alpha * pt1Dir.x / det),
 		         this.start.y + (alpha * pt1Dir.y / det));
         },
-        
+
         // @return the bearing (cardinal direction) of the line. For example N, W, or SE.
         // @returns {String} One of the following bearings : NE, E, SE, S, SW, W, NW, N.
         bearing: function() {
-            
+
             var lat1 = toRad(this.start.y);
             var lat2 = toRad(this.end.y);
             var lon1 = this.start.x;
@@ -9019,14 +9019,14 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             y = x.y;
             w = x.width;
             h = x.height;
-            x = x.x;        
+            x = x.x;
         }
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
     }
-    
+
     rect.prototype = {
         toString: function() {
 	    return this.origin().toString() + ' ' + this.corner().toString();
@@ -9052,7 +9052,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	    var myCorner = this.corner();
 	    var rOrigin = r.origin();
 	    var rCorner = r.corner();
-            
+
 	    if (rCorner.x <= myOrigin.x ||
 	        rCorner.y <= myOrigin.y ||
 	        rOrigin.x >= myCorner.x ||
@@ -9069,7 +9069,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	    var distToBottom = (this.y + this.height) - p.y;
 	    var closest = distToLeft;
 	    var side = 'left';
-            
+
 	    if (distToRight < closest) {
 	        closest = distToRight;
 	        side = 'right';
@@ -9135,7 +9135,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
                 if (h >= y && H > h) return false;
             }
             return true;
-        },        
+        },
         // @return {point} a point on my boundary nearest to p
         // @see Squeak Smalltalk, Rectangle>>pointNearestTo:
         pointNearestToPoint: function(p) {
@@ -9159,7 +9159,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	    var center = point(this.x + this.width/2, this.y + this.height/2);
             var result;
             if (angle) p.rotate(center, angle);
-            
+
 	    // (clockwise, starting from the top side)
 	    var sides = [
 	        line(this.origin(), this.topRight()),
@@ -9168,7 +9168,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	        line(this.bottomLeft(), this.origin())
 	    ];
 	    var connector = line(center, p);
-            
+
 	    for (var i = sides.length - 1; i >= 0; --i){
 	        var intersection = sides[i].intersection(connector);
 	        if (intersection !== null){
@@ -9289,11 +9289,11 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             var path = ['M', points[0].x, points[0].y];
 
             for (var i = 0; i < controlPoints[0].length; i++) {
-                path.push('C', controlPoints[0][i].x, controlPoints[0][i].y, controlPoints[1][i].x, controlPoints[1][i].y, points[i+1].x, points[i+1].y);        
+                path.push('C', controlPoints[0][i].x, controlPoints[0][i].y, controlPoints[1][i].x, controlPoints[1][i].y, points[i+1].x, points[i+1].y);
             }
             return path;
         },
-        
+
         // Get open-ended Bezier Spline Control Points.
         // @param knots Input Knot Bezier spline points (At least two points!).
         // @param firstControlPoints Output First Control points. Array of knots.length - 1 length.
@@ -9305,7 +9305,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             var i;
 
             // Special case: Bezier curve should be a straight line.
-            if (n == 1) { 
+            if (n == 1) {
 	        // 3P1 = 2P0 + P3
 	        firstControlPoints[0] = point((2 * knots[0].x + knots[1].x) / 3,
 	                                      (2 * knots[0].y + knots[1].y) / 3);
@@ -9314,11 +9314,11 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	                                       2 * firstControlPoints[0].y - knots[0].y);
 	        return [firstControlPoints, secondControlPoints];
             }
-            
+
                 // Calculate first Bezier control points.
             // Right hand side vector.
             var rhs = [];
-            
+
             // Set right hand side X values.
             for (i = 1; i < n - 1; i++) {
                 rhs[i] = 4 * knots[i].x + 2 * knots[i + 1].x;
@@ -9327,7 +9327,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             rhs[n - 1] = (8 * knots[n - 1].x + knots[n].x) / 2.0;
             // Get first control points X-values.
             var x = this.getFirstControlPoints(rhs);
-            
+
             // Set right hand side Y values.
             for (i = 1; i < n - 1; ++i) {
 	        rhs[i] = 4 * knots[i].y + 2 * knots[i + 1].y;
@@ -9336,7 +9336,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             rhs[n - 1] = (8 * knots[n - 1].y + knots[n].y) / 2.0;
             // Get first control points Y-values.
             var y = this.getFirstControlPoints(rhs);
-            
+
             // Fill output arrays.
             for (i = 0; i < n; i++) {
 	        // First control point.
@@ -9362,17 +9362,17 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
             var x = [];
             var tmp = [];
             var b = 2.0;
-            
+
             x[0] = rhs[0] / b;
             // Decomposition and forward substitution.
-            for (var i = 1; i < n; i++) { 
+            for (var i = 1; i < n; i++) {
 	        tmp[i] = 1 / b;
 	        b = (i < n - 1 ? 4.0 : 3.5) - tmp[i];
 	        x[i] = (rhs[i] - x[i - 1]) / b;
             }
             for (i = 1; i < n; i++) {
                 // Backsubstitution.
-	        x[n - i - 1] -= tmp[n - i] * x[n - i]; 
+	        x[n - i - 1] -= tmp[n - i] * x[n - i];
             }
             return x;
         },
@@ -9502,11 +9502,11 @@ var joint = {
         },
 
         getByPath: function(obj, path, delim) {
-            
+
             delim = delim || '.';
             var keys = path.split(delim);
             var key;
-            
+
             while (keys.length) {
                 key = keys.shift();
                 if (key in obj) {
@@ -9567,10 +9567,10 @@ var joint = {
         },
 
         flattenObject: function(obj, delim, stop) {
-            
+
             delim = delim || '.';
             var ret = {};
-	    
+
 	    for (var key in obj) {
 		if (!obj.hasOwnProperty(key)) continue;
 
@@ -9578,12 +9578,12 @@ var joint = {
                 if (shouldGoDeeper && stop && stop(obj[key])) {
                     shouldGoDeeper = false;
                 }
-                
+
 		if (shouldGoDeeper) {
 		    var flatObject = this.flattenObject(obj[key], delim, stop);
 		    for (var flatKey in flatObject) {
 			if (!flatObject.hasOwnProperty(flatKey)) continue;
-			
+
 			ret[key + delim + flatKey] = flatObject[flatKey];
 		    }
 		} else {
@@ -9596,7 +9596,7 @@ var joint = {
         uuid: function() {
 
             // credit: http://stackoverflow.com/posts/2117523/revisions
-            
+
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
                 return v.toString(16);
@@ -9605,7 +9605,7 @@ var joint = {
 
         // Generate global unique id for obj and store it as a property of the object.
         guid: function(obj) {
-            
+
             this.guid.id = this.guid.id || 1;
             obj.id = (obj.id === undefined ? 'j_' + this.guid.id++ : obj.id);
             return obj.id;
@@ -9615,13 +9615,13 @@ var joint = {
         // All the properties will be overwritten by the properties from the following
         // arguments. Inherited properties are ignored.
         mixin: function() {
-            
+
             var target = arguments[0];
-            
+
             for (var i = 1, l = arguments.length; i < l; i++) {
-                
+
                 var extension = arguments[i];
-                
+
                 // Only functions and objects can be mixined.
 
                 if ((Object(extension) !== extension) &&
@@ -9632,30 +9632,30 @@ var joint = {
                 }
 
                 _.each(extension, function(copy, key) {
-                    
+
                     if (this.mixin.deep && (Object(copy) === copy)) {
 
                         if (!target[key]) {
 
                             target[key] = _.isArray(copy) ? [] : {};
                         }
-                        
+
                         this.mixin(target[key], copy);
                         return;
                     }
-                    
+
                     if (target[key] !== copy) {
-                        
+
                         if (!this.mixin.supplement || !target.hasOwnProperty(key)) {
-                            
+
 	                    target[key] = copy;
                         }
 
                     }
-                    
+
                 }, this);
             }
-            
+
             return target;
         },
 
@@ -9674,7 +9674,7 @@ var joint = {
 
         // Same as `mixin()` but deep version.
         deepMixin: function() {
-            
+
             this.mixin.deep = true;
             var ret = this.mixin.apply(this, arguments);
             this.mixin.deep = false;
@@ -9683,7 +9683,7 @@ var joint = {
 
         // Same as `supplement()` but deep version.
         deepSupplement: function() {
-            
+
             this.mixin.deep = this.mixin.supplement = true;
             var ret = this.mixin.apply(this, arguments);
             this.mixin.deep = this.mixin.supplement = false;
@@ -9899,7 +9899,7 @@ var joint = {
 	    if (url.substr(0, 'data:'.length) === 'data:') {
 		// No need to convert to data uri if it is already in data uri.
 
-		// This not only convenient but desired. For example, 
+		// This not only convenient but desired. For example,
 		// IE throws a security error if data:image/svg+xml is used to render
 		// an image to the canvas and an attempt is made to read out data uri.
 		// Now if our image is already in data uri, there is no need to render it to the canvas
@@ -9920,7 +9920,7 @@ var joint = {
 		canvas.height = img.height;
 
 		ctx.drawImage(img, 0, 0);
-		
+
 		try {
 
 		    // Guess the type of the image from the url suffix.
@@ -10084,7 +10084,7 @@ var joint = {
             // `x` ... horizontal blur
             // `y` ... vertical blur (optional)
             blur: function(args) {
-                
+
                 var x = _.isFinite(args.x) ? args.x : 2;
 
                 return _.template('<filter><feGaussianBlur stdDeviation="${stdDeviation}"/></filter>', {
@@ -10116,7 +10116,7 @@ var joint = {
             grayscale: function(args) {
 
                 var amount = _.isFinite(args.amount) ? args.amount : 1;
-                
+
                 return _.template('<filter><feColorMatrix type="matrix" values="${a} ${b} ${c} 0 0 ${d} ${e} ${f} 0 0 ${g} ${b} ${h} 0 0 0 0 0 1 0"/></filter>', {
                     a: 0.2126 + 0.7874 * (1 - amount),
                     b: 0.7152 - 0.7152 * (1 - amount),
@@ -10169,7 +10169,7 @@ var joint = {
             invert: function(args) {
 
                 var amount = _.isFinite(args.amount) ? args.amount : 1;
-                
+
                 return _.template('<filter><feComponentTransfer><feFuncR type="table" tableValues="${amount} ${amount2}"/><feFuncG type="table" tableValues="${amount} ${amount2}"/><feFuncB type="table" tableValues="${amount} ${amount2}"/></feComponentTransfer></filter>', {
                     amount: amount,
                     amount2: 1 - amount
@@ -10188,7 +10188,7 @@ var joint = {
             contrast: function(args) {
 
                 var amount = _.isFinite(args.amount) ? args.amount : 1;
-                
+
                 return _.template('<filter><feComponentTransfer><feFuncR type="linear" slope="${amount}" intercept="${amount2}"/><feFuncG type="linear" slope="${amount}" intercept="${amount2}"/><feFuncB type="linear" slope="${amount}" intercept="${amount2}"/></feComponentTransfer></filter>', {
                     amount: amount,
                     amount2: .5 - amount / 2
@@ -10210,7 +10210,7 @@ var joint = {
                     thousands: ',',
                     grouping: [3]
                 };
-                
+
                 // See Python format specification mini-language: http://docs.python.org/release/3.1.3/library/string.html#format-specification-mini-language.
                 // [[fill]align][sign][symbol][0][width][,][.precision][type]
                 var re = /(?:([^{])?([<>=^]))?([+\- ])?([$#])?(0)?(\d+)?(,)?(\.-?\d+)?([a-z%])?/i;
@@ -10231,7 +10231,7 @@ var joint = {
                 var integer = false;
 
                 if (precision) precision = +precision.substring(1);
-                
+
                 if (zfill || fill === '0' && align === '=') {
                     zfill = fill = '0';
                     align = '=';
@@ -10274,7 +10274,7 @@ var joint = {
                 var negative = value < 0 || value === 0 && 1 / value < 0 ? (value = -value, '-') : sign;
 
                 var fullSuffix = suffix;
-                
+
                 // Apply the scale, computing it from the value's exponent for si format.
                 // Preserve the existing suffix, if any, such as the currency symbol.
                 if (scale < 0) {
@@ -10294,7 +10294,7 @@ var joint = {
                 var after = i < 0 ? '' : locale.decimal + value.substring(i + 1);
 
                 function formatGroup(value) {
-                    
+
                     var i = value.length;
                     var t = [];
                     var j = 0;
@@ -10305,7 +10305,7 @@ var joint = {
                     }
                     return t.reverse().join(locale.thousands);
                 }
-                
+
                 // If the fill character is not `'0'`, grouping is applied before padding.
                 if (!zfill && comma && locale.grouping) {
 
@@ -10390,7 +10390,7 @@ var joint = {
             },
 
             precision: function(value, precision) {
-                
+
                 return precision - (value ? Math.ceil(Math.log(value) / Math.LN10) : 1);
             },
 
@@ -10403,7 +10403,7 @@ var joint = {
                         symbol: d
                     };
                 });
-                
+
                 var i = 0;
                 if (value) {
                     if (value < 0) value *= -1;
@@ -10445,7 +10445,7 @@ if (typeof exports === 'object') {
 joint.dia.GraphCells = Backbone.Collection.extend({
 
     initialize: function() {
-        
+
         // Backbone automatically doesn't trigger re-sort if models attributes are changed later when
         // they're already in the collection. Therefore, we're triggering sort manually here.
         this.on('change:z', this.sort, this);
@@ -10465,7 +10465,7 @@ joint.dia.GraphCells = Backbone.Collection.extend({
 
             return new joint.shapes[module][entity](attrs, options);
         }
-        
+
         return new joint.dia.Element(attrs, options);
     },
 
@@ -10485,14 +10485,14 @@ joint.dia.GraphCells = Backbone.Collection.extend({
         }
 
         var links = [];
-        
+
         this.each(function(cell) {
 
             var source = cell.get('source');
             var target = cell.get('target');
 
             if (source && source.id === model.id && opt.outbound) {
-                
+
                 links.push(cell);
             }
 
@@ -10516,7 +10516,7 @@ joint.dia.Graph = Backbone.Model.extend({
         // Make all the events fired in the `cells` collection available.
         // to the outside world.
         this.get('cells').on('all', this.trigger, this);
-        
+
         this.get('cells').on('remove', this.removeCell, this);
     },
 
@@ -10552,7 +10552,7 @@ joint.dia.Graph = Backbone.Model.extend({
         if (cell instanceof Backbone.Model && _.isUndefined(cell.get('z'))) {
 
             cell.set('z', this.maxZIndex() + 1, { silent: true });
-            
+
         } else if (_.isUndefined(cell.z)) {
 
             cell.z = this.maxZIndex() + 1;
@@ -10596,19 +10596,23 @@ joint.dia.Graph = Backbone.Model.extend({
     // reset the entire cells collection in one go.
     // Useful for bulk operations and optimizations.
     resetCells: function(cells, opt) {
-        
+
         this.get('cells').reset(_.map(cells, this._prepareCell, this), opt);
 
         return this;
     },
-
+    parse: function(response, options ){
+      var m = new joint.dia.Graph();
+      m.fromJSON(response);
+      return m;
+    },
     removeCell: function(cell, collection, options) {
 
         // Applications might provide a `disconnectLinks` option set to `true` in order to
         // disconnect links when a cell is removed rather then removing them. The default
         // is to remove all the associated links.
         if (options && options.disconnectLinks) {
-            
+
             this.disconnectLinks(cell);
 
         } else {
@@ -10636,7 +10640,7 @@ joint.dia.Graph = Backbone.Model.extend({
             return cell instanceof joint.dia.Element;
         });
     },
-    
+
     getLinks: function() {
 
         return this.get('cells').filter(function(cell) {
@@ -10656,7 +10660,7 @@ joint.dia.Graph = Backbone.Model.extend({
         var links = this.getConnectedLinks(el);
         var neighbors = [];
         var cells = this.get('cells');
-        
+
         _.each(links, function(link) {
 
             var source = link.get('source');
@@ -10681,7 +10685,7 @@ joint.dia.Graph = Backbone.Model.extend({
 
         return neighbors;
     },
-    
+
     // Disconnect links connected to the cell `model`.
     disconnectLinks: function(model) {
 
@@ -10718,9 +10722,9 @@ joint.dia.Graph = Backbone.Model.extend({
 
 	var origin = { x: Infinity, y: Infinity };
 	var corner = { x: 0, y: 0 };
-	
+
 	_.each(elements, function(cell) {
-	    
+
 	    var bbox = cell.getBBox();
 	    origin.x = Math.min(origin.x, bbox.x);
 	    origin.y = Math.min(origin.y, bbox.y);
@@ -10795,11 +10799,11 @@ joint.dia.Cell = Backbone.Model.extend({
             var defaultAttr = defaultAttrs[selector];
 
             _.each(attr, function(value, name) {
-                
+
                 // attr is mainly flat though it might have one more level (consider the `style` attribute).
                 // Check if the `value` is object and if yes, go one level deep.
                 if (_.isObject(value) && !_.isArray(value)) {
-                    
+
                     _.each(value, function(value2, name2) {
 
                         if (!defaultAttr || !defaultAttr[name] || !_.isEqual(defaultAttr[name][name2], value2)) {
@@ -10874,7 +10878,7 @@ joint.dia.Cell = Backbone.Model.extend({
 
         // Remove all the incoming/outgoing links that have source/target port set to any of the removed ports.
         if (this.collection && !_.isEmpty(removedPorts)) {
-            
+
             var inboundLinks = this.collection.getConnectedLinks(this, { inbound: true });
             _.each(inboundLinks, function(link) {
 
@@ -10903,13 +10907,13 @@ joint.dia.Cell = Backbone.Model.extend({
         // First, unembed this cell from its parent cell if there is one.
         var parentCellId = this.get('parent');
         if (parentCellId) {
-            
+
             var parentCell = this.collection && this.collection.get(parentCellId);
             parentCell.unembed(this);
         }
-        
+
         _.invoke(this.getEmbeddedCells(), 'remove', options);
-        
+
         this.trigger('remove', this, this.collection, options);
 
 	if (collection) {
@@ -10928,11 +10932,11 @@ joint.dia.Cell = Backbone.Model.extend({
 
 	return this;
     },
-    
+
     toBack: function() {
 
         if (this.collection) {
-            
+
             this.set('z', (this.collection.first().get('z') || 0) - 1);
         }
 
@@ -10983,7 +10987,7 @@ joint.dia.Cell = Backbone.Model.extend({
             return _.map(this.get('embeds') || [], function(cellId) {
 
                 return this.collection.get(cellId);
-                
+
             }, this);
         }
         return [];
@@ -10994,7 +10998,7 @@ joint.dia.Cell = Backbone.Model.extend({
         opt = opt || {};
 
         var clone = Backbone.Model.prototype.clone.apply(this, arguments);
-        
+
         // We don't want the clone to have the same ID as the original.
         clone.set('id', joint.util.uuid(), { silent: true });
         clone.set('embeds', '');
@@ -11014,7 +11018,7 @@ joint.dia.Cell = Backbone.Model.extend({
         // This mapping stores cloned links under the `id`s of they originals.
         // This prevents cloning a link more then once. Consider a link 'self loop' for example.
         var linkCloneMapping = {};
-        
+
         _.each(embeds, function(embed) {
 
             var embedClones = embed.clone({ deep: true });
@@ -11072,7 +11076,7 @@ joint.dia.Cell = Backbone.Model.extend({
                 });
 
             }, this);
-            
+
         }, this);
 
         // Add link clones to the array of all the new clones.
@@ -11085,7 +11089,7 @@ joint.dia.Cell = Backbone.Model.extend({
     // This method merges the properties you'd like to set with the ones
     // stored in the cell and makes sure change events are properly triggered.
     // You can either set a nested property with one object
-    // or use a property path. 
+    // or use a property path.
     // The most simple use case is:
     // `cell.prop('name/first', 'John')` or
     // `cell.prop({ name: { first: 'John' } })`.
@@ -11143,7 +11147,7 @@ joint.dia.Cell = Backbone.Model.extend({
 
         var currentAttrs = this.get('attrs');
         var delim = '/';
-        
+
         if (_.isString(attrs)) {
             // Get/set an attribute by a special path syntax that delimits
             // nested objects by the colon character.
@@ -11153,13 +11157,13 @@ joint.dia.Cell = Backbone.Model.extend({
                 var attr = {};
                 joint.util.setByPath(attr, attrs, value, delim);
                 return this.set('attrs', _.merge({}, currentAttrs, attr), opt);
-                
+
             } else {
-                
+
                 return joint.util.getByPath(currentAttrs, attrs, delim);
             }
         }
-        
+
         return this.set('attrs', _.merge({}, currentAttrs, attrs), value, opt);
     },
 
@@ -11170,7 +11174,7 @@ joint.dia.Cell = Backbone.Model.extend({
             _.each(path, function(p) { this.removeAttr(p, opt); }, this);
             return this;
         }
-        
+
         var attrs = joint.util.unsetByPath(_.merge({}, this.get('attrs')), path, '/');
 
         return this.set('attrs', attrs, _.extend({ dirty: true }, opt));
@@ -11349,10 +11353,10 @@ joint.dia.CellView = Backbone.View.extend({
 
         this.setElement(el, false);
     },
-    
+
     findBySelector: function(selector) {
 
-        // These are either descendants of `this.$el` of `this.$el` itself. 
+        // These are either descendants of `this.$el` of `this.$el` itself.
        // `.` is a special selector used to select the wrapping `<g>` element.
         var $selected = selector === '.' ? this.$el : this.$el.find(selector);
         return $selected;
@@ -11366,7 +11370,7 @@ joint.dia.CellView = Backbone.View.extend({
 
             // Trigger the event on both the element itself and also on the paper.
             this.trigger.apply(this, [evt].concat(args));
-            
+
             // Paper event handlers receive the view object as the first argument.
             this.paper.trigger.apply(this.paper, [evt, this].concat(args));
         }
@@ -11380,7 +11384,7 @@ joint.dia.CellView = Backbone.View.extend({
         // @TODO any better solution is very welcome!
 
         var isMagnet = !!el;
-        
+
         el = el || this.el;
         var bbox = V(el).bbox(false, this.paper.viewport);
 
@@ -11388,7 +11392,7 @@ joint.dia.CellView = Backbone.View.extend({
         if (isMagnet) {
 
             strokeWidth = V(el).attr('stroke-width');
-            
+
         } else {
 
             strokeWidth = this.model.attr('rect/stroke-width') || this.model.attr('circle/stroke-width') || this.model.attr('ellipse/stroke-width') || this.model.attr('path/stroke-width');
@@ -11398,7 +11402,7 @@ joint.dia.CellView = Backbone.View.extend({
 
         return g.rect(bbox).moveAndExpand({ x: -strokeWidth/2, y: -strokeWidth/2, width: strokeWidth, height: strokeWidth });
     },
-    
+
     getBBox: function() {
 
         return V(this.el).bbox();
@@ -11479,7 +11483,7 @@ joint.dia.CellView = Backbone.View.extend({
         }
 
         $selected.each(function() {
-            
+
             V(this).attr('filter', 'url(#' + filterId + ')');
         });
     },
@@ -11508,7 +11512,7 @@ joint.dia.CellView = Backbone.View.extend({
                 }).join(''),
                 '</' + gradient.type + '>'
             ].join('');
-            
+
             var gradientElement = V(gradientSVGString);
             if (gradient.attrs) { gradientElement.attr(gradient.attrs); }
             gradientElement.node.id = gradientId;
@@ -11516,7 +11520,7 @@ joint.dia.CellView = Backbone.View.extend({
         }
 
         $selected.each(function() {
-            
+
             V(this).attr(attr, 'url(#' + gradientId + ')');
         });
     },
@@ -11556,7 +11560,7 @@ joint.dia.CellView = Backbone.View.extend({
 
         this.notify('cell:pointerclick', evt, x, y);
     },
-    
+
     pointerdown: function(evt, x, y) {
 
 	if (this.model.collection) {
@@ -11566,12 +11570,12 @@ joint.dia.CellView = Backbone.View.extend({
 
         this.notify('cell:pointerdown', evt, x, y);
     },
-    
+
     pointermove: function(evt, x, y) {
 
         this.notify('cell:pointermove', evt, x, y);
     },
-    
+
     pointerup: function(evt, x, y) {
 
         this.notify('cell:pointerup', evt, x, y);
@@ -11626,7 +11630,7 @@ joint.dia.Element = joint.dia.Cell.extend({
 
         this.set('position', { x: x, y: y });
     },
-    
+
     translate: function(tx, ty, opt) {
 
         ty = ty || 0;
@@ -11672,7 +11676,7 @@ joint.dia.Element = joint.dia.Cell.extend({
     // If `absolute` is `true`, the `angle` is considered is abslute, i.e. it is not
     // the difference from the previous angle.
     rotate: function(angle, absolute, origin) {
-	
+
 	if (origin) {
 
 	    var center = this.getBBox().center();
@@ -11685,7 +11689,7 @@ joint.dia.Element = joint.dia.Cell.extend({
 	    this.translate(dx, dy);
 	    this.rotate(angle, absolute);
 	    this.trigger('batch:stop');
-            
+
 	} else {
 
 	    this.set('angle', absolute ? angle : ((this.get('angle') || 0) + angle) % 360);
@@ -11716,7 +11720,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
         _.bindAll(this, 'translate', 'resize', 'rotate');
 
         joint.dia.CellView.prototype.initialize.apply(this, arguments);
-        
+
 	this.listenTo(this.model, 'change:position', this.translate);
 	this.listenTo(this.model, 'change:size', this.resize);
 	this.listenTo(this.model, 'change:angle', this.rotate);
@@ -11733,7 +11737,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
             var rotation = rotatable.attr('transform');
             rotatable.attr('transform', '');
         }
-        
+
         var relativelyPositioned = [];
 
         _.each(renderingOnlyAttrs || allAttrs, function(attrs, selector) {
@@ -11784,9 +11788,9 @@ joint.dia.ElementView = joint.dia.CellView.extend({
             // Set regular attributes on the `$selected` subelement. Note that we cannot use the jQuery attr()
             // method as some of the attributes might be namespaced (e.g. xlink:href) which fails with jQuery attr().
             var finalAttributes = _.omit(attrs, specialAttributes);
-            
+
             $selected.each(function() {
-                
+
                 V(this).attr(finalAttributes);
             });
 
@@ -11801,7 +11805,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
 
                 $selected.css(attrs.style);
             }
-            
+
             if (!_.isUndefined(attrs.html)) {
 
                 $selected.each(function() {
@@ -11809,7 +11813,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
                     $(this).html(attrs.html + '');
                 });
             }
-            
+
             // Special `ref-x` and `ref-y` attributes make it possible to set both absolute or
             // relative positioning of subelements.
             if (!_.isUndefined(attrs['ref-x']) ||
@@ -11829,7 +11833,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
                        relativelyPositioned.push($el);
                    });
             }
-            
+
         }, this);
 
         // We don't want the sub elements to affect the bounding box of the root element when
@@ -11839,7 +11843,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
 
         // Note that we're using the bounding box without transformation because we are already inside
         // a transformed coordinate system.
-        var bbox = this.el.getBBox();        
+        var bbox = this.el.getBBox();
 
         renderingOnlyAttrs = renderingOnlyAttrs || {};
 
@@ -11854,7 +11858,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
                 : allAttrs[$el.selector];
 
             this.positionRelative($el, bbox, elAttrs);
-            
+
         }, this);
 
         if (rotatable) {
@@ -11941,21 +11945,21 @@ joint.dia.ElementView = joint.dia.CellView.extend({
                 // Compensate for the scale grid in case the elemnt is in the scalable group.
                 var scale = V(this.$('.scalable')[0]).scale();
                 tx = bbox.x + bbox.width + refDx / scale.sx;
-                
+
             } else {
-                
+
                 tx = bbox.x + bbox.width + refDx;
             }
         }
         if (isDefined(refDy)) {
 
             if (isScalable) {
-                
+
                 // Compensate for the scale grid in case the elemnt is in the scalable group.
                 var scale = V(this.$('.scalable')[0]).scale();
                 ty = bbox.y + bbox.height + refDy / scale.sy;
             } else {
-                
+
                 ty = bbox.y + bbox.height + refDy;
             }
         }
@@ -11975,7 +11979,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
                 // Compensate for the scale grid in case the elemnt is in the scalable group.
                 var scale = V(this.$('.scalable')[0]).scale();
                 tx = bbox.x + refX / scale.sx;
-                
+
             } else {
 
                 tx = bbox.x + refX;
@@ -11984,15 +11988,15 @@ joint.dia.ElementView = joint.dia.CellView.extend({
         if (isDefined(refY)) {
 
             if (refY > 0 && refY < 1) {
-                
+
                 ty = bbox.y + bbox.height * refY;
-                
+
             } else if (isScalable) {
 
                 // Compensate for the scale grid in case the elemnt is in the scalable group.
                 var scale = V(this.$('.scalable')[0]).scale();
                 ty = bbox.y + refY / scale.sy;
-                
+
             } else {
 
                 ty = bbox.y + refY;
@@ -12004,7 +12008,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
         if (yAlignment === 'middle') {
 
             ty -= velbbox.height/2;
-            
+
         } else if (isDefined(yAlignment)) {
 
             ty += (yAlignment > -1 && yAlignment < 1) ?  velbbox.height * yAlignment : yAlignment;
@@ -12012,9 +12016,9 @@ joint.dia.ElementView = joint.dia.CellView.extend({
 
         // `x-alignment` when set to `middle` causes centering of the subelement around its new x coordinate.
         if (xAlignment === 'middle') {
-            
+
             tx -= velbbox.width/2;
-            
+
         } else if (isDefined(xAlignment)) {
 
             tx += (xAlignment > -1 && xAlignment < 1) ?  velbbox.width * xAlignment : xAlignment;
@@ -12026,14 +12030,14 @@ joint.dia.ElementView = joint.dia.CellView.extend({
     // `prototype.markup` is rendered by default. Set the `markup` attribute on the model if the
     // default markup is not desirable.
     renderMarkup: function() {
-        
+
         var markup = this.model.markup || this.model.get('markup');
-        
+
         if (markup) {
 
             var nodes = V(markup);
             V(this.el).append(nodes);
-            
+
         } else {
 
             throw new Error('properties.markup is missing while the default render() implementation is used.');
@@ -12050,7 +12054,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
 
         this.resize();
         this.rotate();
-        this.translate();        
+        this.translate();
 
         return this;
     },
@@ -12071,7 +12075,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
 
         var size = this.model.get('size') || { width: 1, height: 1 };
         var angle = this.model.get('angle') || 0;
-        
+
         var scalable = V(this.$('.scalable')[0]);
         if (!scalable) {
             // If there is no scalable elements, than there is nothing to resize.
@@ -12089,7 +12093,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
         // rotation changes). The new `x` and `y` coordinates are computed by canceling the previous rotation
         // around the center of the resized object (which is a different origin then the origin of the previous rotation)
         // and getting the top-left corner of the resulting object. Then we clean up the rotation back to what it originally was.
-        
+
         // Cancel the rotation but now around a different origin, which is the center of the scaled object.
         var rotatable = V(this.$('.rotatable')[0]);
         var rotation = rotatable && rotatable.attr('transform');
@@ -12097,7 +12101,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
 
             rotatable.attr('transform', rotation + ' rotate(' + (-angle) + ',' + (size.width/2) + ',' + (size.height/2) + ')');
             var rotatableBbox = scalable.bbox(false, this.paper.viewport);
-            
+
             // Store new x, y and perform rotate() again against the new rotation origin.
             this.model.set('position', { x: rotatableBbox.x, y: rotatableBbox.y });
             this.rotate();
@@ -12122,13 +12126,13 @@ joint.dia.ElementView = joint.dia.CellView.extend({
             // If there is no rotatable elements, then there is nothing to rotate.
             return;
         }
-        
+
         var angle = this.model.get('angle') || 0;
         var size = this.model.get('size') || { width: 1, height: 1 };
 
         var ox = size.width/2;
         var oy = size.height/2;
-        
+
 
         rotatable.attr('transform', 'rotate(' + angle + ',' + ox + ',' + oy + ')');
     },
@@ -12136,7 +12140,7 @@ joint.dia.ElementView = joint.dia.CellView.extend({
     // Interaction. The controller part.
     // ---------------------------------
 
-    
+
     pointerdown: function(evt, x, y) {
 
         if ( // target is a valid magnet start linking
@@ -12316,12 +12320,12 @@ joint.dia.Link = joint.dia.Cell.extend({
     label: function(idx, value) {
 
         idx = idx || 0;
-        
+
         var labels = this.get('labels') || [];
-        
+
         // Is it a getter?
         if (arguments.length === 0 || arguments.length === 1) {
-            
+
             return labels[idx];
         }
 
@@ -12329,7 +12333,7 @@ joint.dia.Link = joint.dia.Cell.extend({
 
         var newLabels = labels.slice();
         newLabels[idx] = newValue;
-        
+
         return this.set({ labels: newLabels });
     },
 
@@ -12372,7 +12376,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
 
         shortLinkLength: 100
     },
-    
+
     initialize: function() {
 
         joint.dia.CellView.prototype.initialize.apply(this, arguments);
@@ -12472,7 +12476,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
 
         var labels = this.model.get('labels') || [];
         if (!labels.length) return this;
-        
+
         var labelTemplate = _.template(this.model.get('labelMarkup') || this.model.labelMarkup);
         // This is a prepared instance of a vectorized SVGDOM node for the label element resulting from
         // compilation of the labelTemplate. The purpose is that all labels will just `clone()` this
@@ -12490,9 +12494,9 @@ joint.dia.LinkView = joint.dia.CellView.extend({
 
             // Text attributes with the default `text-anchor` and font-size set.
             var textAttributes = _.extend({ 'text-anchor': 'middle', 'font-size': 14 }, joint.util.getByPath(label, 'attrs/text', '/'));
-            
+
             $text.attr(_.omit(textAttributes, 'text'));
-                
+
             if (!_.isUndefined(textAttributes.text)) {
 
                 V($text[0]).text(textAttributes.text + '');
@@ -12512,9 +12516,9 @@ joint.dia.LinkView = joint.dia.CellView.extend({
                 fill: 'white',
                 rx: 3,
                 ry: 3
-                
+
             }, joint.util.getByPath(label, 'attrs/rect', '/'));
-            
+
             $rect.attr(_.extend(rectAttributes, {
 
                 x: textBbox.x,
@@ -12522,7 +12526,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
                 width: textBbox.width,
                 height: textBbox.height
             }));
-            
+
         }, this);
 
         return this;
@@ -12542,7 +12546,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
         var tool = V(toolTemplate());
 
         $tools.append(tool.node);
-        
+
         // Cache the tool node so that the `updateToolsPosition()` can update the tool position quickly.
         this._toolCache = tool;
 
@@ -12559,12 +12563,12 @@ joint.dia.LinkView = joint.dia.CellView.extend({
         // if default styling (elements) are not desired. This makes it possible to use any
         // SVG elements for .marker-vertex and .marker-vertex-remove tools.
         var markupTemplate = _.template(this.model.get('vertexMarkup') || this.model.vertexMarkup);
-        
+
         _.each(this.model.get('vertices'), function(vertex, idx) {
 
             $markerVertices.append(V(markupTemplate(_.extend({ idx: idx }, vertex))).node);
         });
-        
+
         return this;
     },
 
@@ -12598,16 +12602,16 @@ joint.dia.LinkView = joint.dia.CellView.extend({
 
         // Update attributes.
         _.each(this.model.get('attrs'), function(attrs, selector) {
-            
+
             // If the `filter` attribute is an object, it is in the special JointJS filter format and so
             // it becomes a special attribute and is treated separately.
             if (_.isObject(attrs.filter)) {
-                
+
                 this.findBySelector(selector).attr(_.omit(attrs, 'filter'));
                 this.applyFilter(selector, attrs.filter);
-                
+
             } else {
-                
+
                 this.findBySelector(selector).attr(attrs);
             }
         }, this);
@@ -12738,7 +12742,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
         }
 
         var toolPosition = this.getPointAtLength(offset);
-        
+
         this._toolCache.attr('transform', 'translate(' + toolPosition.x + ', ' + toolPosition.y + ') ' + scale);
 
         return this;
@@ -12870,7 +12874,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
     removeVertex: function(idx) {
 
         var vertices = _.clone(this.model.get('vertices'));
-        
+
         if (vertices && vertices.length) {
 
             vertices.splice(idx, 1);
@@ -12887,7 +12891,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
 
         this.model.set('attrs', this.model.get('attrs') || {});
         var attrs = this.model.get('attrs');
-        
+
         // As it is very hard to find a correct index of the newly created vertex,
         // a little heuristics is taking place here.
         // The heuristics checks if length of the newly created
@@ -12901,8 +12905,8 @@ joint.dia.LinkView = joint.dia.CellView.extend({
 
         // A `<path>` element used to compute the length of the path during heuristics.
         var path = this._V.connection.node.cloneNode(false);
-        
-        // Length of the original path.        
+
+        // Length of the original path.
         var originalPathLength = path.getTotalLength();
         // Current path length.
         var pathLength;
@@ -12928,7 +12932,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
                 // Revert vertices to the original array. The path length has changed too much
                 // so that the index was not found yet.
                 vertices = originalVertices.slice();
-                
+
             } else {
 
                 break;
@@ -13043,9 +13047,9 @@ joint.dia.LinkView = joint.dia.CellView.extend({
             // `_sourceBbox` (`_targetBbox`) comes from `_sourceBboxUpdate` (`_sourceBboxUpdate`)
             // method, it exists since first render and are automatically updated
             var spotBbox = end === 'source' ? this.sourceBBox : this.targetBBox;
-            
+
             var reference;
-            
+
             if (this._isPoint(referenceSelectorOrPoint)) {
 
                 // Reference was passed as a point, therefore, we're ready to find the sticky point of connection on the source element.
@@ -13086,7 +13090,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
                         spot = g.rect(spotBbox).center();
                         break;
                     }
-                    
+
                 } else if (verticalLineRect.intersect(g.rect(spotBbox))) {
 
                     nearestSide = g.rect(spotBbox).sideNearestToPoint(reference);
@@ -13101,7 +13105,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
                         spot = g.rect(spotBbox).center();
                         break;
                     }
-                    
+
                 } else {
 
                     // If there is no intersection horizontally or vertically with the object bounding box,
@@ -13111,7 +13115,7 @@ joint.dia.LinkView = joint.dia.CellView.extend({
                     spot = g.rect(spotBbox).intersectionWithLineFromCenterToPoint(reference);
                     spot = spot || g.rect(spotBbox).center();
                 }
-                
+
             } else if (this.paper.options.linkConnectionPoint) {
 
 		var view = end === 'target' ? this.targetView : this.sourceView;
@@ -13601,7 +13605,7 @@ joint.dia.Paper = Backbone.View.extend({
         V(this.svg).append(V('defs').node);
 
         V(this.viewport).attr({ 'class': 'viewport' });
-        
+
         V(this.svg).append(this.viewport);
 
         this.$el.append(this.svg);
@@ -13808,7 +13812,7 @@ joint.dia.Paper = Backbone.View.extend({
     createViewForModel: function(cell) {
 
         var view;
-        
+
         var type = cell.get('type');
         var module = type.split('.')[0];
         var entity = type.split('.')[1];
@@ -13817,9 +13821,9 @@ joint.dia.Paper = Backbone.View.extend({
         if (joint.shapes[module] && joint.shapes[module][entity + 'View']) {
 
             view = new joint.shapes[module][entity + 'View']({ model: cell, interactive: this.options.interactive });
-            
+
         } else if (cell instanceof joint.dia.Element) {
-                
+
             view = new this.options.elementView({ model: cell, interactive: this.options.interactive });
 
         } else {
@@ -13831,6 +13835,10 @@ joint.dia.Paper = Backbone.View.extend({
     },
 
     onAddCell: function(cell, graph, options) {
+
+        if ( !(cell instanceof joint.dia.Cell)  ){
+          return;
+        }
 
         if (this.options.async && options.async !== false && _.isNumber(options.position)) {
 
@@ -13873,7 +13881,7 @@ joint.dia.Paper = Backbone.View.extend({
         // Make sure links are always added AFTER elements.
         // They wouldn't find their sources/targets in the DOM otherwise.
         cells.sort(function(a, b) { return a instanceof joint.dia.Link ? 1 : -1; });
-        
+
 	if (this._frameId) {
 
 	    joint.util.cancelFrame(this._frameId);
@@ -13936,7 +13944,7 @@ joint.dia.Paper = Backbone.View.extend({
 
             var cellA = cells.get($(a).attr('model-id'));
             var cellB = cells.get($(b).attr('model-id'));
-            
+
             return (cellA.get('z') || 0) > (cellB.get('z') || 0) ? 1 : -1;
         });
     },
@@ -13946,7 +13954,7 @@ joint.dia.Paper = Backbone.View.extend({
     sortElements: function(elements, comparator) {
 
         var $elements = $(elements);
-        
+
         var placements = $elements.map(function() {
 
             var sortElement = this;
@@ -13961,18 +13969,18 @@ joint.dia.Paper = Backbone.View.extend({
             );
 
             return function() {
-                
+
                 if (parentNode === this) {
                     throw new Error(
                         "You can't sort elements if any one is a descendant of another."
                     );
                 }
-                
+
                 // Insert before flag:
                 parentNode.insertBefore(this, nextSibling);
                 // Remove flag:
                 parentNode.removeChild(nextSibling);
-                
+
             };
         });
 
@@ -13998,7 +14006,7 @@ joint.dia.Paper = Backbone.View.extend({
         var oldTx = this.options.origin.x;
         var oldTy = this.options.origin.y;
 
-        // TODO: V.scale() doesn't support setting scale origin. #Fix        
+        // TODO: V.scale() doesn't support setting scale origin. #Fix
         if (ox || oy || oldTx || oldTy) {
 
             var newTx = oldTx - ox * (sx - 1);
@@ -14014,7 +14022,7 @@ joint.dia.Paper = Backbone.View.extend({
     },
 
     rotate: function(deg, ox, oy) {
-        
+
         // If the origin is not set explicitely, rotate around the center. Note that
         // we must use the plain bounding box (`this.el.getBBox()` instead of the one that gives us
         // the real bounding box (`bbox()`) including transformations).
@@ -14051,7 +14059,7 @@ joint.dia.Paper = Backbone.View.extend({
     findViewByModel: function(cell) {
 
         var id = _.isString(cell) ? cell : cell.id;
-        
+
         var $view = this.$('[model-id="' + id + '"]');
         if ($view.length) {
 
@@ -14092,7 +14100,7 @@ joint.dia.Paper = Backbone.View.extend({
     snapToGrid: function(p) {
 
         // Convert global coordinates to the local ones of the `viewport`. Otherwise,
-        // improper transformation would be applied when the viewport gets transformed (scaled/rotated). 
+        // improper transformation would be applied when the viewport gets transformed (scaled/rotated).
         var localPoint = V(this.viewport).toLocalPoint(p.x, p.y);
 
         return {
@@ -14114,19 +14122,19 @@ joint.dia.Paper = Backbone.View.extend({
     // ------------
 
     mousedblclick: function(evt) {
-        
+
         evt.preventDefault();
         evt = joint.util.normalizeEvent(evt);
-        
+
         var view = this.findView(evt.target);
         var localPoint = this.snapToGrid({ x: evt.clientX, y: evt.clientY });
 
         if (view) {
-            
+
             view.pointerdblclick(evt, localPoint.x, localPoint.y);
-            
+
         } else {
-            
+
             this.trigger('blank:pointerdblclick', evt, localPoint.x, localPoint.y);
         }
     },
@@ -14135,7 +14143,7 @@ joint.dia.Paper = Backbone.View.extend({
 
         // Trigger event when mouse not moved.
         if (!this._mousemoved) {
-            
+
             evt = joint.util.normalizeEvent(evt);
 
             var view = this.findView(evt.target);
@@ -14144,7 +14152,7 @@ joint.dia.Paper = Backbone.View.extend({
             if (view) {
 
                 view.pointerclick(evt, localPoint.x, localPoint.y);
-                
+
             } else {
 
                 this.trigger('blank:pointerclick', evt, localPoint.x, localPoint.y);
@@ -14157,17 +14165,17 @@ joint.dia.Paper = Backbone.View.extend({
     pointerdown: function(evt) {
 
         evt = joint.util.normalizeEvent(evt);
-        
+
         var view = this.findView(evt.target);
 
         var localPoint = this.snapToGrid({ x: evt.clientX, y: evt.clientY });
-        
+
         if (view) {
 
             this.sourceView = view;
 
             view.pointerdown(evt, localPoint.x, localPoint.y);
-            
+
         } else {
 
             this.trigger('blank:pointerdown', evt, localPoint.x, localPoint.y);
@@ -14195,7 +14203,7 @@ joint.dia.Paper = Backbone.View.extend({
         evt = joint.util.normalizeEvent(evt);
 
         var localPoint = this.snapToGrid({ x: evt.clientX, y: evt.clientY });
-        
+
         if (this.sourceView) {
 
             this.sourceView.pointerup(evt, localPoint.x, localPoint.y);
@@ -14235,48 +14243,48 @@ joint.shapes.basic = {};
 joint.shapes.basic.Generic = joint.dia.Element.extend({
 
     defaults: joint.util.deepSupplement({
-        
+
         type: 'basic.Generic',
         attrs: {
             '.': { fill: '#FFFFFF', stroke: 'none' }
         }
-        
+
     }, joint.dia.Element.prototype.defaults)
 });
 
 joint.shapes.basic.Rect = joint.shapes.basic.Generic.extend({
 
     markup: '<g class="rotatable"><g class="scalable"><rect/></g><text/></g>',
-    
+
     defaults: joint.util.deepSupplement({
-    
+
         type: 'basic.Rect',
         attrs: {
             'rect': { fill: '#FFFFFF', stroke: 'black', width: 100, height: 60 },
             'text': { 'font-size': 14, text: '', 'ref-x': .5, 'ref-y': .5, ref: 'rect', 'y-alignment': 'middle', 'x-alignment': 'middle', fill: 'black', 'font-family': 'Arial, helvetica, sans-serif' }
         }
-        
+
     }, joint.shapes.basic.Generic.prototype.defaults)
 });
 
 joint.shapes.basic.Text = joint.shapes.basic.Generic.extend({
 
     markup: '<g class="rotatable"><g class="scalable"><text/></g></g>',
-    
+
     defaults: joint.util.deepSupplement({
-        
+
         type: 'basic.Text',
         attrs: {
             'text': { 'font-size': 18, fill: 'black' }
         }
-        
+
     }, joint.shapes.basic.Generic.prototype.defaults)
 });
 
 joint.shapes.basic.Circle = joint.shapes.basic.Generic.extend({
 
     markup: '<g class="rotatable"><g class="scalable"><circle/></g><text/></g>',
-    
+
     defaults: joint.util.deepSupplement({
 
         type: 'basic.Circle',
@@ -14291,7 +14299,7 @@ joint.shapes.basic.Circle = joint.shapes.basic.Generic.extend({
 joint.shapes.basic.Image = joint.shapes.basic.Generic.extend({
 
     markup: '<g class="rotatable"><g class="scalable"><image/></g><text/></g>',
-    
+
     defaults: joint.util.deepSupplement({
 
         type: 'basic.Image',
@@ -14304,7 +14312,7 @@ joint.shapes.basic.Image = joint.shapes.basic.Generic.extend({
 joint.shapes.basic.Path = joint.shapes.basic.Generic.extend({
 
     markup: '<g class="rotatable"><g class="scalable"><path/></g><text/></g>',
-    
+
     defaults: joint.util.deepSupplement({
 
         type: 'basic.Path',
@@ -14319,13 +14327,13 @@ joint.shapes.basic.Path = joint.shapes.basic.Generic.extend({
 joint.shapes.basic.Rhombus = joint.shapes.basic.Path.extend({
 
     defaults: joint.util.deepSupplement({
-    
+
         type: 'basic.Rhombus',
         attrs: {
             'path': { d: 'M 30 0 L 60 30 30 60 0 30 z' },
             'text': { 'ref-y': .5 }
         }
-        
+
     }, joint.shapes.basic.Path.prototype.defaults)
 });
 
@@ -14364,7 +14372,7 @@ joint.shapes.basic.PortsModelInterface = {
         // Call the `initialize()` of the parent.
         this.constructor.__super__.constructor.__super__.initialize.apply(this, arguments);
     },
-    
+
     updatePortsAttrs: function(eventName) {
 
         // Delete previously set attributes for ports.
@@ -14372,20 +14380,20 @@ joint.shapes.basic.PortsModelInterface = {
         _.each(this._portSelectors, function(selector) {
             if (currAttrs[selector]) delete currAttrs[selector];
         });
-        
+
         // This holds keys to the `attrs` object for all the port specific attribute that
         // we set in this method. This is necessary in order to remove previously set
         // attributes for previous ports.
         this._portSelectors = [];
-        
+
         var attrs = {};
-        
+
         _.each(this.get('inPorts'), function(portName, index, ports) {
             var portAttributes = this.getPortAttrs(portName, index, ports.length, '.inPorts', 'in');
             this._portSelectors = this._portSelectors.concat(_.keys(portAttributes));
             _.extend(attrs, portAttributes);
         }, this);
-        
+
         _.each(this.get('outPorts'), function(portName, index, ports) {
             var portAttributes = this.getPortAttrs(portName, index, ports.length, '.outPorts', 'out');
             this._portSelectors = this._portSelectors.concat(_.keys(portAttributes));
@@ -14419,12 +14427,12 @@ joint.shapes.basic.PortsModelInterface = {
 };
 
 joint.shapes.basic.PortsViewInterface = {
-    
+
     initialize: function() {
 
         // `Model` emits the `process:ports` whenever it's done configuring the `attrs` object for ports.
         this.listenTo(this.model, 'process:ports', this.update);
-        
+
         joint.dia.ElementView.prototype.initialize.apply(this, arguments);
     },
 
@@ -14612,7 +14620,7 @@ joint.routers.orthogonal = function() {
     // Return the direction that one would have to take traveling from `p1` to `p2`.
     // This function assumes the line between `p1` and `p2` is orthogonal.
     function direction(p1, p2) {
-        
+
         if (p1.y < p2.y && p1.x === p2.x) {
             return 'down';
         } else if (p1.y > p2.y && p1.x === p2.x) {
@@ -14667,7 +14675,7 @@ joint.routers.orthogonal = function() {
     // Find a vertex in between the vertices `p1` and `p2` so that the route between those vertices
     // is orthogonal. Prefer going the direction determined by `preferredDirection`.
     function findMiddleVertex(p1, p2, preferredDirection) {
-        
+
         var direction = bestDirection(p1, p2, preferredDirection);
         if (direction === 'down' || direction === 'up') {
             return { x: p1.x, y: p2.y, d: direction };
@@ -14714,7 +14722,7 @@ joint.routers.orthogonal = function() {
             vertex = vertices[i];
             nextVertex = vertices[i + 1];
             lastOrthogonalVertex = _.last(orthogonalVertices);
-            
+
             if (i > 0) {
                 // Push all the link vertices to the orthogonal route.
                 orthogonalVertex = vertex;
@@ -15358,7 +15366,7 @@ joint.connectors.smooth = function(sourcePoint, targetPoint, vertices) {
         // between the source and target points. SourceControlPoint Y is equal to sourcePoint Y
         // and targetControlPointY being equal to targetPointY. Handle situation were
         // sourcePointX is greater or less then targetPointX.
-        var controlPointX = (sourcePoint.x < targetPoint.x) 
+        var controlPointX = (sourcePoint.x < targetPoint.x)
                 ? targetPoint.x - ((targetPoint.x - sourcePoint.x) / 2)
                 : sourcePoint.x - ((sourcePoint.x - targetPoint.x) / 2);
 
