@@ -14,7 +14,7 @@ $(function($) {
   var paper;
   var DiagramCollectionModel = Backbone.Collection.extend({
     model: joint.dia.Graph,
-    url:'/diagrams',
+    url: '/diagrams',
     save: function(options) {
       var arr = this;
       var json_arr = [];
@@ -36,15 +36,6 @@ $(function($) {
 
 
 
-    parse: function(response, options) {
-      var arr = [];
-      for (var i = 0; i<response.length; ++i ) {
-        var graph = new joint.dia.Graph();
-        graph.fromJSON(response[i]);
-        arr.push(graph);
-      }
-      return arr;
-    }
   });
 
 
@@ -56,13 +47,20 @@ $(function($) {
 
 
   GlobalEvents.on("connection:end", function(model) {
-    var transition = new joint.shapes.uml.Transition({
+    var connection_model;
+    if (connection_waiting.get('element_type') != "task_operation") {
+      connection_model = joint.shapes.uml.Transition;
+    } else {
+      connection_model = joint.shapes.rosetta.TaskOPConnection;
+    }
+    var transition = new connection_model({
       source: {
         id: connection_waiting.id
       },
       target: {
         id: model.id
-      }
+      },
+      graph: paper.model
     });
 
     paper.model.addCell(transition);
@@ -71,12 +69,43 @@ $(function($) {
 
   RosettaDiagrams.new_diagram = function() {
 
-    var graph = RosettaDiagrams.DiagramsCollection.create({
-      name: "Untitled Diagram"
-    },{wait:true});
+    // var graph = RosettaDiagrams.DiagramsCollection.create({
+    //   name: "Untitled Diagram"
+    // }, {
+    //   wait: true,
+    //   success:function(g) {
+    //     console.log("GRAPH:");
+    //     console.log(g.toJSON());
+    //   }
+    // });
+
+    // $.ajax({
+    //   url: '/diagrams',
+    //   type: 'POST',
+    //   data: JSON.stringify({'name':'Untitled Diagram'}),
+    //   dataType: 'application/json'
+    // }).done(function(data,status){
+    //   console.log("DATA: ");
+    //   console.log(data);
+    // }).fail(function(dd){
+    //   console.log("FAIL");
+    //   console.log(dd);
+    // });
+    var graph = new joint.dia.Graph();
+    $.post("/diagrams",JSON.stringify({'name':'Untitled Diagram'}))
+    .done(function(data,status){
+      if ( data.cells === undefined ) {
+        data.cells = [];
+      }
+      graph.fromJSON(data);
+      RosettaDiagrams.DiagramsCollection.add(graph);
+    }).fail(function(dd){
+      //Handle fail of creation.
+      console.log("FAIL");
+      console.log(dd);
+    });
     set_paper(graph);
     GlobalEvents.trigger("diagram:new", graph);
-
   };
 
   var set_paper = function(g) {
@@ -144,7 +173,6 @@ $(function($) {
     return diagram;
   };
 
-  //WHERE WAS I? check and run it. Cells are missing the markup, therefore not rendered?
   RosettaDiagrams.open_existing_diagram = function(g) {
     set_paper(g);
     RosettaDiagrams.paper = paper;
@@ -157,7 +185,7 @@ $(function($) {
 
     var ordered_elements = RosettaDiagrams.ordered_elements(diagram_graph);
     for (var i = 0; i < ordered_elements.length; ++i) {
-      var html_str = '&lt;' + ordered_elements[i].name + " name=elem" + i + " ";
+      var html_str = '&lt;' + ordered_elements[i].name + " ";
       var attributes = ordered_elements[i].attributes;
       for (var j = 0; j < attributes.length; ++j) {
         if (attributes[j].value.length > 0)
@@ -165,8 +193,11 @@ $(function($) {
       }
       html_str = html_str + "/&gt;";
       $('#code_template #xml_' + ordered_elements[i].element_type).append(html_str);
+      var name_attr = _.findWhere(ordered_elements[i].attributes, {
+        key: 'name'
+      });
       if (ordered_elements[i].element_type != "task_operation") {
-        var protocol_str = "&lt;Add " + ordered_elements[i].element_type + "_name=elem" + i + " /&gt;";
+        var protocol_str = "&lt;Add " + ordered_elements[i].element_type + "_name=" + name_attr.value + " /&gt;";
         $('#xml_protocols').append(protocol_str);
       }
     }
@@ -191,15 +222,24 @@ $(function($) {
       diagram_graph = paper.model;
     }
     var first_element;
-    var elements = diagram_graph.getElements();
+    var elements = _.filter(diagram_graph.getElements(), function(elem) {
+      return elem.get('element_type') != "task_operation";
+    });
     var rscripts_elements = [];
+
+    var get_flow_links = function(elem, options) {
+      var all_links = diagram_graph.getConnectedLinks(elem, options);
+
+      return _.filter(all_links, function(link) {
+        return link.get('type') == 'uml.Transition';
+      });
+    };
 
     //Find the first element that has no inbound connections:
     for (var i = 0; i < elements.length; ++i) {
-      var links = diagram_graph.getConnectedLinks(elements[i], {
+      var links = get_flow_links(elements[i], {
         inbound: true
       });
-      console.log(links);
       if (links.length === 0) {
         first_element = elements[i];
         rscripts_elements.push(first_element.toJSON());
@@ -214,10 +254,10 @@ $(function($) {
 
     //Then, go through the path of the graph and add all the elements:
     var it_elem = first_element;
-    while (diagram_graph.getConnectedLinks(it_elem, {
+    while (get_flow_links(it_elem, {
         outbound: true
       }).length > 0) {
-      var links = diagram_graph.getConnectedLinks(it_elem, {
+      var links = get_flow_links(it_elem, {
         outbound: true
       });
       if (links.length > 1) {
@@ -353,6 +393,11 @@ $(function($) {
       var element_text = $("#txt_elem_name").val();
       $.each(elements, function(index, elem) {
         if (elem.name == element_text) {
+          var attributes_clone = _.map(elem.attributes, _.clone);
+          attributes_clone.push({
+            key: 'name',
+            value: "element_" + context.model.getElements().length
+          });
           var new_elem = new joint.shapes.rosetta.DiagramElement({
             position: {
               x: 100,
@@ -363,12 +408,14 @@ $(function($) {
               height: 100
             },
             name: element_text,
-            attributes: new AttributeCollection(elem.attributes),
+            attributes: new AttributeCollection(attributes_clone),
             element_type: elem.type
           });
           context.model.addCell(new_elem);
         }
       });
+
+
       $("#txt_elem_name").val('');
     }
   });
@@ -392,7 +439,7 @@ $(function($) {
     listen_to_graph: function() {
       var context = this;
       this.listenTo(this.model, "add", function(cell) {
-        if (cell.get('type') == 'uml.Transition') {
+        if (cell.get('type') == 'uml.Transition' || cell.get('type') == "rosetta.TaskOPConnection") {
           context.$el.bootstrapToggle('off');
           context.cancel_waiting();
         }

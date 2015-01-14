@@ -281,8 +281,63 @@ var Attribute = Backbone.Model.extend({
 
 });
 
+var DiagramElementCollection = Backbone.Collection.extend({
+  model: joint.shapes.rosetta.DiagramElement
+});
+
+var TaskOPAttribute = Attribute.extend({
+  initialize: function() {
+    this.set('moversList', []);
+    // this.listenTo(this.get('moversList'), 'add remove', this.reset_value);
+  },
+  reset_value: function() {
+    var movers = this.get('moversList');
+
+    if (movers.length === 0){
+      this.set('value','');
+      return;
+    }
+    var value_arr = [];
+    _.each(movers,function(mover) {
+      var nameStr = mover.get_attr_by_key('name').get('value');
+      value_arr.push(nameStr);
+    });
+
+    this.set('value', value_arr.join(','));
+  },
+
+
+  add_element: function(element, conn) {
+    var name_attr = element.get_attr_by_key('name');
+    this.listenTo(name_attr, 'change:value', this.reset_value);
+    var context = this;
+    conn.on("remove", function() {
+      context.remove_element(element);
+      context.reset_value();
+    });
+    this.get('moversList').push(element);
+    this.reset_value();
+  },
+  remove_element: function(element) {
+    var name_attr = element.get_attr_by_key('name');
+    this.stopListening(name_attr);
+    var index = this.get('moversList').indexOf(element);
+    if ( index >= 0 ) {
+      this.get('moversList').splice(index);
+      this.reset_value();
+    }
+
+  }
+});
+
 var AttributeCollection = Backbone.Collection.extend({
-  model: Attribute,
+  model: function(attrs, options) {
+    if (attrs.key == "task_operations") {
+      return new TaskOPAttribute(attrs);
+    } else {
+      return new Attribute(attrs);
+    }
+  },
   initialize: function() {
     this.on("change:value", this.change_event);
   },
@@ -291,7 +346,39 @@ var AttributeCollection = Backbone.Collection.extend({
   }
 });
 
+joint.shapes.rosetta.TaskOPConnection = joint.dia.Link.extend({
+  defaults: {
+    type: 'rosetta.TaskOPConnection',
+    attrs: {
+      '.marker-target': {
+        d: 'M 40 10 L 20 20 L 0 10 L 20 0 z',
+        fill: 'black'
+      }
+    }
+  },
+  initialize: function(options) {
 
+    joint.dia.Link.prototype.initialize.call(this, options);
+
+    var source_id = this.get('source');
+    var target_id = this.get('target');
+    var source_elem = options.graph.getCell(source_id);
+    var target_elem = options.graph.getCell(target_id);
+    var attributes = target_elem.get('attributes');
+    var task_attr = attributes.findWhere({
+      key: "task_operations"
+    });
+    if (task_attr === undefined) {
+      task_attr = new TaskOPAttribute({
+        key: "task_operations",
+        value: ""
+      });
+      attributes.add(task_attr);
+    }
+    task_attr.add_element(source_elem, this);
+    this.unset('graph');
+  }
+});
 joint.shapes.rosetta.DiagramElement = joint.shapes.basic.Generic.extend({
 
   markup: [
@@ -342,7 +429,8 @@ joint.shapes.rosetta.DiagramElement = joint.shapes.basic.Generic.extend({
 
     name: 'Element',
     attributes: [],
-    element_type: 'mover'
+    element_type: 'mover',
+
 
   }, joint.shapes.basic.Generic.prototype.defaults),
   initialize: function() {
@@ -366,6 +454,11 @@ joint.shapes.rosetta.DiagramElement = joint.shapes.basic.Generic.extend({
     this.updatePath();
 
     joint.shapes.basic.Generic.prototype.initialize.apply(this, arguments);
+  },
+  get_attr_by_key: function(key) {
+    return this.get('attributes').findWhere({
+      key: key
+    });
   },
   set_attributes: function() {
     var raw = this.get('attributes');
@@ -392,7 +485,8 @@ joint.shapes.rosetta.DiagramElement = joint.shapes.basic.Generic.extend({
         return attr.get('value') != undefined && attr.get('key').length > 0 && attr.get('value').length > 0;
       })
       .map(function(attr) {
-        return attr.get('key') + " = " + attr.get('value');
+        var text = attr.get('key') + " = " + attr.get('value');
+        return (text.length > 19)?text.substr(0,19)+"...":text;
       });
 
     if (attribute_text.length > 5) {
@@ -572,6 +666,10 @@ joint.shapes.uml.Transition = joint.dia.Link.extend({
         stroke: '#2c3e50'
       }
     }
+  },
+  initialize:function(options) {
+    joint.dia.Link.prototype.initialize.call(this, options);
+    this.unset('graph');
   }
 });
 

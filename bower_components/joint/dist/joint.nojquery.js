@@ -10601,11 +10601,11 @@ joint.dia.Graph = Backbone.Model.extend({
 
         return this;
     },
-    parse: function(response, options ){
-      var m = new joint.dia.Graph();
-      m.fromJSON(response);
-      return m;
-    },
+    // parse: function(response, options ){
+    //   var m = new joint.dia.Graph();
+    //   m.fromJSON(response);
+    //   return m.toJSON();
+    // },
     removeCell: function(cell, collection, options) {
 
         // Applications might provide a `disconnectLinks` option set to `true` in order to
