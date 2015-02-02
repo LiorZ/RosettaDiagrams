@@ -356,14 +356,16 @@ joint.shapes.rosetta.TaskOPConnection = joint.dia.Link.extend({
       }
     }
   },
-  initialize: function(options) {
+  initialize: function(options,opts2) {
 
     joint.dia.Link.prototype.initialize.call(this, options);
 
+    var graph = options.graph || opts2.graph;
+    
     var source_id = this.get('source');
     var target_id = this.get('target');
-    var source_elem = options.graph.getCell(source_id);
-    var target_elem = options.graph.getCell(target_id);
+    var source_elem = graph.getCell(source_id);
+    var target_elem = graph.getCell(target_id);
     var attributes = target_elem.get('attributes');
     var task_attr = attributes.findWhere({
       key: "task_operations"

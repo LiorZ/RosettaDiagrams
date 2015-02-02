@@ -9,11 +9,25 @@ $(function($) {
 
   });
 
+  RosettaDiagrams.RosettaDiagramsGraph = joint.dia.Graph.extend({
+
+    defaults: _.extend({},joint.dia.Graph.prototype.defaults,{
+      name:'Untitled Diagram',
+      is_public:false
+    })
+
+  });
+
+  //shortcut:
+  var RosettaDiagramsGraph = RosettaDiagrams.RosettaDiagramsGraph;
+
+
+
   var GlobalEvents = _.extend({}, Backbone.Events);
   var connection_waiting;
   var paper;
   var DiagramCollectionModel = Backbone.Collection.extend({
-    model: joint.dia.Graph,
+    model: RosettaDiagramsGraph,
     url: '/diagrams',
     save: function(options) {
       var arr = this;
@@ -91,13 +105,13 @@ $(function($) {
     //   console.log("FAIL");
     //   console.log(dd);
     // });
-    var graph = new joint.dia.Graph();
+    var graph = new RosettaDiagramsGraph();
     $.post("/diagrams",JSON.stringify({'name':'Untitled Diagram'}))
     .done(function(data,status){
       if ( data.cells === undefined ) {
         data.cells = [];
       }
-      graph.fromJSON(data);
+      graph.fromJSON(data,{graph:graph});
       RosettaDiagrams.DiagramsCollection.add(graph);
     }).fail(function(dd){
       //Handle fail of creation.
@@ -183,6 +197,7 @@ $(function($) {
 
     $('.rscripts_elements').html('');
 
+    //Get all elements, task operations appear at the end of the array
     var ordered_elements = RosettaDiagrams.ordered_elements(diagram_graph);
     for (var i = 0; i < ordered_elements.length; ++i) {
       var html_str = '&lt;' + ordered_elements[i].name + " ";
@@ -270,6 +285,12 @@ $(function($) {
       rscripts_elements.push(it_elem.toJSON());
     }
 
+    _.each(diagram_graph.getElements(), function(elem) {
+      if ( elem.get('element_type') == "task_operation" ) {
+        rscripts_elements.push(elem.toJSON());
+      }
+    });
+
     return rscripts_elements;
 
   }
@@ -351,11 +372,20 @@ $(function($) {
     },
     initialize: function() {
       var context = this;
-      this.$el.find('#rosetta_diagrams_view_title').editable({
+      var title = this.$el.find('#rosetta_diagrams_view_title');
+
+      title.editable({
         success: function(response, newValue) {
           context.model.set('name', newValue);
+          context.model.save(null,{
+            success: function() {}
+          });
         }
       });
+
+      title.on("shown", function(e, editable) {
+        editable.input.$input.val(context.model.get('name'));
+      })
 
       GlobalEvents.on("diagram:new", this.switch_model, this);
     },
