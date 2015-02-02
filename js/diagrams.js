@@ -2,6 +2,16 @@ var RosettaDiagrams = {} || RosettaDiagrams;
 
 $(function($) {
 
+  function random_string(len) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < len; i++ )
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
+  }
+
   var elements = [];
   $.get('/js/RosettaDiagrams/js/elements.json', function(data) {
 
@@ -199,6 +209,11 @@ $(function($) {
 
     //Get all elements, task operations appear at the end of the array
     var ordered_elements = RosettaDiagrams.ordered_elements(diagram_graph);
+
+    if ( ordered_elements === undefined ) {
+      ordered_elements = [];
+    }
+
     for (var i = 0; i < ordered_elements.length; ++i) {
       var html_str = '&lt;' + ordered_elements[i].name + " ";
       var attributes = ordered_elements[i].attributes;
@@ -426,7 +441,7 @@ $(function($) {
           var attributes_clone = _.map(elem.attributes, _.clone);
           attributes_clone.push({
             key: 'name',
-            value: "element_" + context.model.getElements().length
+            value: "element_" + random_string(5)
           });
           var new_elem = new joint.shapes.rosetta.DiagramElement({
             position: {
