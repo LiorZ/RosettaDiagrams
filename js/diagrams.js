@@ -149,8 +149,8 @@ $(function($) {
         if (cellView.model instanceof joint.dia.Link) {
           // Disable the default vertex add functionality on pointerdown.
           return {
-            vertexAdd: false
-              // arrowheadMove: false
+            vertexAdd: false,
+            arrowheadMove: false
           };
         }
         return true;

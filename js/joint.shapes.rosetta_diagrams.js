@@ -323,7 +323,7 @@ var TaskOPAttribute = Attribute.extend({
     this.stopListening(name_attr);
     var index = this.get('moversList').indexOf(element);
     if ( index >= 0 ) {
-      this.get('moversList').splice(index);
+      this.get('moversList').splice(index,1);
       this.reset_value();
     }
 
@@ -361,7 +361,7 @@ joint.shapes.rosetta.TaskOPConnection = joint.dia.Link.extend({
     joint.dia.Link.prototype.initialize.call(this, options);
 
     var graph = options.graph || opts2.graph;
-    
+
     var source_id = this.get('source');
     var target_id = this.get('target');
     var source_elem = graph.getCell(source_id);
