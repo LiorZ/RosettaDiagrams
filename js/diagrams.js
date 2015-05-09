@@ -2,28 +2,56 @@ var RosettaDiagrams = {} || RosettaDiagrams;
 
 $(function($) {
 
+
   function random_string(len) {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < len; i++ )
+    for (var i = 0; i < len; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-      return text;
+    return text;
   }
+
+  var autoCompleteElements = {
+    "mover": [],
+    "filter": [],
+    "task_operation": []
+  };
+  var bMovers, bFilters, bTask;
 
   var elements = [];
   $.get('/js/RosettaDiagrams/js/elements.json', function(data) {
 
     elements = data;
+    _.each(elements, function(elem) {
+      autoCompleteElements[elem.type].push(elem.name);
+    });
+    bMovers = new Bloodhound({
+      local: autoCompleteElements['mover'],
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('element'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+    });
+    bFilters = new Bloodhound({
+      local: autoCompleteElements['filter'],
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('element'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+    });
+
+    bTask = new Bloodhound({
+      local: autoCompleteElements['task_operation'],
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('element'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+    });
+
 
   });
 
   RosettaDiagrams.RosettaDiagramsGraph = joint.dia.Graph.extend({
 
-    defaults: _.extend({},joint.dia.Graph.prototype.defaults,{
-      name:'Untitled Diagram',
-      is_public:false
+    defaults: _.extend({}, joint.dia.Graph.prototype.defaults, {
+      name: 'Untitled Diagram',
+      is_public: false
     })
 
   });
@@ -116,18 +144,22 @@ $(function($) {
     //   console.log(dd);
     // });
     var graph = new RosettaDiagramsGraph();
-    $.post("/diagrams",JSON.stringify({'name':'Untitled Diagram'}))
-    .done(function(data,status){
-      if ( data.cells === undefined ) {
-        data.cells = [];
-      }
-      graph.fromJSON(data,{graph:graph});
-      RosettaDiagrams.DiagramsCollection.add(graph);
-    }).fail(function(dd){
-      //Handle fail of creation.
-      console.log("FAIL");
-      console.log(dd);
-    });
+    $.post("/diagrams", JSON.stringify({
+        'name': 'Untitled Diagram'
+      }))
+      .done(function(data, status) {
+        if (data.cells === undefined) {
+          data.cells = [];
+        }
+        graph.fromJSON(data, {
+          graph: graph
+        });
+        RosettaDiagrams.DiagramsCollection.add(graph);
+      }).fail(function(dd) {
+        //Handle fail of creation.
+        console.log("FAIL");
+        console.log(dd);
+      });
     set_paper(graph);
     GlobalEvents.trigger("diagram:new", graph);
   };
@@ -210,7 +242,7 @@ $(function($) {
     //Get all elements, task operations appear at the end of the array
     var ordered_elements = RosettaDiagrams.ordered_elements(diagram_graph);
 
-    if ( ordered_elements === undefined ) {
+    if (ordered_elements === undefined) {
       ordered_elements = [];
     }
 
@@ -232,8 +264,6 @@ $(function($) {
       }
     }
     var xml = $("#code_template").text();
-    console.log("Before Beautify:");
-    console.log(xml);
     var code_text = vkbeautify.xml($('#code_template').text());
     return code_text;
   };
@@ -301,7 +331,7 @@ $(function($) {
     }
 
     _.each(diagram_graph.getElements(), function(elem) {
-      if ( elem.get('element_type') == "task_operation" ) {
+      if (elem.get('element_type') == "task_operation") {
         rscripts_elements.push(elem.toJSON());
       }
     });
@@ -392,7 +422,7 @@ $(function($) {
       title.editable({
         success: function(response, newValue) {
           context.model.set('name', newValue);
-          context.model.save(null,{
+          context.model.save(null, {
             success: function() {}
           });
         }
@@ -400,7 +430,7 @@ $(function($) {
 
       title.on("shown", function(e, editable) {
         editable.input.$input.val(context.model.get('name'));
-      })
+      });
 
       GlobalEvents.on("diagram:new", this.switch_model, this);
     },
@@ -415,15 +445,33 @@ $(function($) {
       this.undelegateEvents();
       this.model = model;
       this.delegateEvents();
-
-      if (this.elements_names === undefined) {
-        this.elements_names = _.map(elements, function(elem) {
-          return elem.name
-        });
-        $("#txt_elem_name").typeahead({
-          source: this.elements_names
-        });
+      $("#txt_elem_name").typeahead({
+        highlight: true
+      }, {
+        name: 'movers',
+        display: 'element',
+        source: bMovers,
+        templates: {
+          header: '<h3 class="mover-type">Movers</h3>'
+        }
+      }, {
+        name: 'filters',
+        display: 'element',
+        source: bFilters,
+        templates: {
+          header: '<h3 class="mover-type">Filters</h3>'
+        }
+      },
+      {
+        name: 'task_operations',
+        display: 'element',
+        source: bTask,
+        templates: {
+          header: '<h3 class="mover-type">Task Operations</h3>'
+        }
       }
+
+      );
 
       this.$el.find("#rosetta_diagrams_view_title").text(model.get("name"));
 
@@ -548,12 +596,38 @@ $(function($) {
     events: {
       "click #btn_delete_element": 'delete_element',
       "click #btn_show_attributes": "show_attributes",
+      "click #btn_info_element": "show_info",
       "mousedown #btn_connect": "start_connecting"
     },
     initialize: function() {
       var context = this;
       this.$el.hide();
       GlobalEvents.on("diagram:new", this.switch_models, this);
+    },
+
+    show_info: function() {
+      iframe = $('#rosetta_doc');
+      iframe.load(function() {
+        var css = {
+          width: "100%",
+          height: "50%"
+        };
+
+        iframe.css(css);
+      });
+      var url_filename = "";
+      var element_name = this.model.get("name");
+      if (this.model.get("element_type") == "mover") {
+        url_filename = "movers.html";
+      } else if (this.model.get("element_type") == "filter") {
+        url_filename = "filters.html";
+      } else if (this.model.get("element_type") == "task_operation") {
+        url_filename = "taskop.html"
+      }
+
+      iframe.attr('src', '/docs/' + url_filename + "#" + element_name);
+
+      $('#rosetta_info_view').modal("show");
     },
 
     switch_models: function(g) {
@@ -576,9 +650,10 @@ $(function($) {
       var box = this.model.getBBox();
       var pos = box.topRight();
       var paper_top = $("#paper").offset().top;
+      console.log(box)
       this.$el.css({
-        top: pos.y + paper_top,
-        left: pos.x
+        top: pos.y + paper_top - box.height + 10,
+        left: pos.x + 20
       }).fadeIn();
     },
 

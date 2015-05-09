@@ -1,27 +1,5 @@
 [
-  {
-    "attributes": [
-      {
-        "value": "",
-        "key": "resnum"
-      },
-      {
-        "value": "",
-        "key": "pdb_num"
-      },
-      {
-        "value": "",
-        "key": "find_automatically"
-      },
-      {
-        "value": "",
-        "key": "change_foldtree"
-      }
-    ],
-    "type": "container",
-    "name": "SampleContainer"
-  },
-  
+
   {
     "attributes": [
       {
@@ -450,7 +428,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "ClearConstraintsMover"
@@ -467,14 +445,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "CompoundTranslate"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "ConformerSwitchMover"
@@ -725,7 +703,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "DnaInterfaceMinMover"
@@ -998,7 +976,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "Dssp"
@@ -1085,7 +1063,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "EnzdesRemodelMover"
@@ -1102,14 +1080,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "ExtractAsymmetricPose"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "ExtractAsymmetricUnit"
@@ -1230,7 +1208,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "FinalMinimizer"
@@ -1579,14 +1557,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "GridInitMover"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "GrowLigand"
@@ -1647,7 +1625,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "HighResDocker"
@@ -1902,17 +1880,7 @@
   },
   {
     "attributes": [
-      {
-        "value": "",
-        "key": "true_mover_name"
-      }
-    ],
-    "type": "logic",
-    "name": "If"
-  },
-  {
-    "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "InsertZincCoordinationRemarkLines"
@@ -1975,7 +1943,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "InterfaceScoreCalculator"
@@ -2074,14 +2042,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "JumpRotamerSidechainMover"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LigandDesign"
@@ -2098,14 +2066,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoadVarSolDistSasaCalculatorMover"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoadZnCoordNumHbondCalculatorMover"
@@ -2274,35 +2242,35 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopMover_Perturb_CCD"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopMover_Perturb_KIC"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopMover_Perturb_QuickCCD"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopMover_Perturb_QuickCCD_Moves"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopMover_Refine_Backrub"
@@ -2351,14 +2319,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopMover_Refine_KIC"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopMover_SlidingWindow"
@@ -2379,7 +2347,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "LoopRefineInnerCycleContainer"
@@ -2634,14 +2602,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "MinPackMover"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "MinimizeBackbone"
@@ -2696,7 +2664,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "MotifDnaPacker"
@@ -2731,7 +2699,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "PDBReloadMover"
@@ -2858,7 +2826,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "PerturbRotamerSidechainMover"
@@ -3123,7 +3091,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "RandomConformers"
@@ -3284,7 +3252,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "RepackTrial"
@@ -3407,21 +3375,21 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "Rotate"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "Rotates"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "SaneMinMover"
@@ -3616,7 +3584,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "SeparateDnaFromNonDna"
@@ -3847,7 +3815,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "ShearMinCCDTrial"
@@ -4048,7 +4016,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "SlideTogether"
@@ -4077,7 +4045,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "SmallMinCCDTrial"
@@ -4130,7 +4098,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "StartFrom"
@@ -4459,14 +4427,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "Transform"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "Translate"
@@ -4573,7 +4541,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "mover",
     "name": "load_unbound_rot"
@@ -4632,7 +4600,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "AtomCount"
@@ -4851,7 +4819,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "ContingentFilter"
@@ -5124,7 +5092,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "FalseFilter"
@@ -5241,14 +5209,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "HBondAcceptor"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "HBondDonor"
@@ -5275,7 +5243,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "HeavyAtom"
@@ -5440,14 +5408,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "MolarMass"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "MolecularMass"
@@ -5636,7 +5604,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "PoseInfo"
@@ -6385,7 +6353,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "filter",
     "name": "Time"
@@ -6406,28 +6374,28 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "AddLigandMotifRotamers"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "AddRigidBodyLigandConfs"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "AppendRotamer"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "AppendRotamerSet"
@@ -6540,7 +6508,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "DisableZnCoordinationResiduesTaskOp"
@@ -6667,21 +6635,21 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "IncludeCurrent"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "InitializeExtraRotsFromCommandline"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "InitializeFromCommandline"
@@ -6832,35 +6800,35 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "NoRepackDisulfides"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "OperateOnCertainResidues"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "OptCysHG"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "OptH"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "PreserveCBeta"
@@ -6981,14 +6949,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RemodelRotamerLinks"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "ReplicateTask"
@@ -7009,7 +6977,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictByCalculators"
@@ -7114,7 +7082,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictInterGroupVectorOperation"
@@ -7177,7 +7145,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictToCDRH3Loop"
@@ -7192,7 +7160,7 @@
   		}
   	]
   },
-  
+
   {
     "type":"task_operation",
   	"name":"ResidueType",
@@ -7215,7 +7183,7 @@
   		}
   	]
   },
-  
+
     {
     "type":"task_operation",
   	"name":"ResidueHasProperty",
@@ -7226,7 +7194,7 @@
   		}
   	]
   },
-  
+
   {
     "type":"task_operation",
   	"name":"ResidueHasProperty",
@@ -7237,7 +7205,7 @@
   		}
   	]
   },
-  
+
   {
     "type":"task_operation",
   	"name":"ChainIs",
@@ -7248,7 +7216,7 @@
   		}
   	]
   },
-  
+
   {
     "type":"task_operation",
   	"name":"ChainIsnt",
@@ -7259,7 +7227,7 @@
   		}
   	]
   },
-  
+
   {
     "type":"task_operation",
   	"name":"ResidueIndexIsnt",
@@ -7270,7 +7238,7 @@
   		}
   	]
   },
-  
+
   {
     "type":"task_operation",
   	"name":"ResidueName3Is",
@@ -7281,7 +7249,7 @@
   		}
   	]
   },
-  
+
   {
     "type":"task_operation",
   	"name":"ResidueName3Isnt",
@@ -7292,7 +7260,7 @@
   		}
   	]
   },
-  
+
   {
     "attributes": [
       {
@@ -7309,7 +7277,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictToInterfaceOperation"
@@ -7334,14 +7302,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictToLoopsAndNeighbors"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictToNeighborhood"
@@ -7362,7 +7330,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictToRepacking"
@@ -7387,7 +7355,7 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "RestrictYSDesign"
@@ -7518,14 +7486,14 @@
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "SetRotamerCouplings"
   },
   {
     "attributes": [
-      
+
     ],
     "type": "task_operation",
     "name": "SetRotamerLinks"
