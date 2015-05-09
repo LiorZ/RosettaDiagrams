@@ -1,0 +1,13 @@
+{
+  "name": "bloodhound",
+  "_cacheHeaders": {
+    "Last-Modified": "Mon, 27 Apr 2015 22:42:34 GMT",
+    "Content-Length": "33197",
+    "Content-Type": "application/javascript; charset=utf-8"
+  },
+  "main": "index.js",
+  "_source": "http://twitter.github.io/typeahead.js/releases/latest/bloodhound.js",
+  "_target": "*",
+  "_originalSource": "http://twitter.github.io/typeahead.js/releases/latest/bloodhound.js",
+  "_direct": true
+}
