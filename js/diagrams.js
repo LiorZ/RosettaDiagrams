@@ -29,21 +29,24 @@ $(function($) {
     });
     bMovers = new Bloodhound({
       local: autoCompleteElements['mover'],
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('element'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
     });
     bFilters = new Bloodhound({
       local: autoCompleteElements['filter'],
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('element'),
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
     });
 
     bTask = new Bloodhound({
       local: autoCompleteElements['task_operation'],
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('element'),
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
     });
 
+    bMovers.initialize();
+    bFilters.initialize();
+    bTask.initialize();
 
   });
 
@@ -410,6 +413,7 @@ $(function($) {
 
   var DiagramContainerView = Backbone.View.extend({
     el: '#rosetta_diagrams_view',
+    elementCounter:0,
     events: {
       "click #btn_add_element": "add_element",
       "click #btn_diagram_close": "save_diagram",
@@ -445,18 +449,17 @@ $(function($) {
       this.undelegateEvents();
       this.model = model;
       this.delegateEvents();
+      console.log(bMovers.ttAdapter());
       $("#txt_elem_name").typeahead({
-        highlight: true
+        highlight: true,
       }, {
         name: 'movers',
-        display: 'element',
-        source: bMovers,
+        source: bMovers ,
         templates: {
           header: '<h3 class="mover-type">Movers</h3>'
         }
       }, {
         name: 'filters',
-        display: 'element',
         source: bFilters,
         templates: {
           header: '<h3 class="mover-type">Filters</h3>'
@@ -464,7 +467,6 @@ $(function($) {
       },
       {
         name: 'task_operations',
-        display: 'element',
         source: bTask,
         templates: {
           header: '<h3 class="mover-type">Task Operations</h3>'
@@ -489,7 +491,7 @@ $(function($) {
           var attributes_clone = _.map(elem.attributes, _.clone);
           attributes_clone.push({
             key: 'name',
-            value: "element_" + random_string(5)
+            value: element_text+"_"+random_string(5)
           });
           var new_elem = new joint.shapes.rosetta.DiagramElement({
             position: {
@@ -590,6 +592,45 @@ $(function($) {
       });
     }
   });
+
+  var DocumentationView = Backbone.View.extend({
+      el:"#rosetta_info_view",
+      events: {
+          "hidden.bs.modal":"reset_iframe"
+      },
+      initialize: function() {
+          iframe = $('#rosetta_doc');
+          var context = this;
+          iframe.load(function() {
+              var css = {
+                  width: "100%",
+                  height: "70%"
+              };
+
+              iframe.css(css);
+          });
+      },
+      render: function(model) {
+          var url_filename = "";
+          var element_name = model.get("name");
+          if (model.get("element_type") == "mover") {
+              url_filename = "movers.html";
+          } else if (model.get("element_type") == "filter") {
+              url_filename = "filters.html";
+          } else if (model.get("element_type") == "task_operation") {
+              url_filename = "taskop.html"
+          }
+          iframe.attr('src', '/docs/' + url_filename + "#" + element_name);
+          $(this.el).modal("show");
+      },
+      reset_iframe: function() {
+          iframe.attr('src','');
+      }
+
+  });
+
+  var documentation_modal = new DocumentationView();
+
   var MenuView = Backbone.View.extend({
 
     el: "#floating_menu",
@@ -606,28 +647,7 @@ $(function($) {
     },
 
     show_info: function() {
-      iframe = $('#rosetta_doc');
-      iframe.load(function() {
-        var css = {
-          width: "100%",
-          height: "50%"
-        };
-
-        iframe.css(css);
-      });
-      var url_filename = "";
-      var element_name = this.model.get("name");
-      if (this.model.get("element_type") == "mover") {
-        url_filename = "movers.html";
-      } else if (this.model.get("element_type") == "filter") {
-        url_filename = "filters.html";
-      } else if (this.model.get("element_type") == "task_operation") {
-        url_filename = "taskop.html"
-      }
-
-      iframe.attr('src', '/docs/' + url_filename + "#" + element_name);
-
-      $('#rosetta_info_view').modal("show");
+        documentation_modal.render(this.model);
     },
 
     switch_models: function(g) {
